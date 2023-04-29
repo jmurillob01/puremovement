@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,30 @@
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url('css/principal.css')}}">
 </head>
 
 <body>
     <!-- Header -->
     <header>
+        <!-- Modal -->
+        <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="warningModalLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="warningModalContent"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Puremovement</a>
@@ -25,29 +44,44 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
+                        <!-- Ya sea iniciar como cerrar sesión -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled">Disabled</a>
+                            <a class="nav-link" href="#">Sesión</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <main>
 
+    <!-- Main -->
+    <main>
+        <div id="div-graphic-buttons" class="row">
+            <div id="div-graphic" class="col-12 col-md-6">Gráfico</div>
+            <div id="div-buttons" class="col-12 col-md-6">
+                <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-access">Mis recetas</button>
+                <button type="button" id="user-management" class="btn btn-primary btn-principal btn-access">Gestión Usuario</button>
+                <button type="button" id="update-data" class="btn btn-primary btn-principal btn-access">Actualizar Datos</button>
+            </div>
+        </div>
+
+        <div id="div-recipe-ranking" class="row">
+
+            <div id="div-ranking" class="col-12">
+                <div class="container">
+                    <h1 class="h3">Ranking</h1>
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    
+
 </body>
+<!-- <script src="{{url('js/test.js')}}"></script> -->
+<script src="{{url('js/principal.js')}}"></script>
 
 </html>
