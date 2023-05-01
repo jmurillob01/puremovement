@@ -59,7 +59,7 @@
     <!-- Main -->
     <main>
         <div id="div-graphic-buttons" class="row">
-            <div id="div-graphic" class="col-12 col-md-6">Gráfico</div>
+            <div id="div-graphic" class="col-12 col-md-6">Gráfico/Calcular</div>
             <div id="div-buttons" class="col-12 col-md-6">
                 <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-access">Mis recetas</button>
                 <button type="button" id="user-management" class="btn btn-primary btn-principal btn-access">Gestión Usuario</button>
@@ -81,9 +81,7 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script src="{{url('js/principal.js')}}" type="module"></script>
 
 </body>
-
-<script src="{{url('js/principal.js')}}" type="module"></script>
-
 </html>

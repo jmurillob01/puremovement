@@ -18,4 +18,12 @@ Route::get('/', function () {
     return view('principal');
 });
 
+Route::get('/user-register', function(){
+    return view('access_register'); 
+});
+
+Route::get('/user-login', function(){
+    return view('access_login'); 
+});
+
 Route::resource('user', UserController::class);
