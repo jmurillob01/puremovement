@@ -44,6 +44,15 @@
     border: 2px solid #DBDBDB;
 }
 
+.is-invalid-div{
+    margin-left: -10px;
+}
+
+.is-invalid-feedback{
+    color: #9f1d1d;
+    font-size: 15px;
+}
+
 #access-submit{
     margin-top: 20px;
     display: flex;
