@@ -34,6 +34,11 @@
     background-color: #F4F6F9;
 }
 
+/* .alert{
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+} */
+
 .form-label{
     color: #4A4A4A;
     margin: 5px;
