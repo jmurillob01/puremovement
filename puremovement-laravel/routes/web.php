@@ -27,3 +27,7 @@ Route::get('/user-login', function(){
 });
 
 Route::resource('user', UserController::class);
+
+Route::get('viewAccessUser', [UserController::class,'viewAccessUser'])->name('user.viewAccessUser'); // Ruta para la función de ese método
+
+Route::post('checkUserLogin', [UserController::class,'checkUserLogin'])->name('user.checkUserLogin'); 
