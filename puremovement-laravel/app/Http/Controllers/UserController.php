@@ -8,7 +8,11 @@ use App\Exceptions\MyCustomException;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Exception;
+use GuzzleHttp\Promise\Promise;
 use Illuminate\Support\Facades\Crypt;
+
+// require_once '../../../vendor/autoload.php';
+session_start();
 
 use function GuzzleHttp\Promise\all;
 
@@ -35,6 +39,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         // dd($request->all());
         $request->validate([
             'id' => 'required',
@@ -45,7 +50,6 @@ class UserController extends Controller
             'phone' => 'required',
             'email' => 'required'
         ]);
-
 
         if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
             try {
@@ -76,13 +80,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
         $user = null;
 
         try {
             $user = DB::table('user')->where('id', $id)->get();
         } catch (\Throwable $th) {
-            return redirect()->route('user.viewAccessUser', ['form' => "login"])>with('error', "Algo ha ido mal");;
+            return redirect()->route('user.viewAccessUser', ['form' => "login"]) > with('error', "Algo ha ido mal");;
         }
 
         return $user;
@@ -145,12 +148,21 @@ class UserController extends Controller
                 $user = $user[0];
 
                 if (sha1($request->password) == $user->password) {
+                    // Creamos una sesión
+                    echo 
+                    "
+                    <script>
+                    sessionStorage.setItem('id','$user->id')
+                    </script>
+                    ";
+
+                    // sleep(1); Creo que sobra
+
                     return view('principal');
-                }else{
+                } else {
                     return redirect()->route('user.viewAccessUser', ['form' => "login"])->with('error', "Id o contraseña incorrecta");
                 }
             }
-
         } else {
             return redirect()->route('user.viewAccessUser', ['form' => "login"])->with('error', "Id o contraseña incorrecta");
         }
@@ -164,7 +176,7 @@ class UserController extends Controller
             $exist = DB::table('user')->where('id', $id)->get()->count();
         } catch (\Throwable $th) {
             // Excepción
-            return redirect()->route('user.index', ['form' => "login"]);
+            return redirect()->route('user.index', ['form' => "login"])->with('error', "Ha ocurrido un error");;
         }
 
         return $exist;
@@ -187,3 +199,10 @@ class UserController extends Controller
         return view($view);
     }
 }
+
+?>
+<!-- Script -->
+<!-- <script src="/js/access.js" type='module'></script> -->
+<!-- JQuery -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->

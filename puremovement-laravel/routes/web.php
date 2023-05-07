@@ -18,16 +18,21 @@ Route::get('/', function () {
     return view('principal');
 });
 
-Route::get('/user-register', function(){
-    return view('access_register'); 
+Route::get('/user-register', function () {
+    return view('access_register');
 });
 
-Route::get('/user-login', function(){
-    return view('access_login'); 
+Route::get('/user-login', function () {
+    return view('access_login');
 });
 
 Route::resource('user', UserController::class);
 
-Route::get('viewAccessUser', [UserController::class,'viewAccessUser'])->name('user.viewAccessUser'); // Ruta para la función de ese método
+Route::get('viewAccessUser', [UserController::class, 'viewAccessUser'])->name('user.viewAccessUser'); // Ruta para la función de ese método
 
-Route::post('checkUserLogin', [UserController::class,'checkUserLogin'])->name('user.checkUserLogin'); 
+Route::post('checkUserLogin', [UserController::class, 'checkUserLogin'])->name('user.checkUserLogin');
+
+// Esto no lo hará porque se queda en el post
+// Route::get('/checkUserLogin', function () {
+//     return view('access_register');
+// });

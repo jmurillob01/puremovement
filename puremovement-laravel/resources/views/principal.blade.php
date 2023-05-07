@@ -84,4 +84,5 @@
     <script src="{{url('js/principal.js')}}" type="module"></script>
 
 </body>
+
 </html>

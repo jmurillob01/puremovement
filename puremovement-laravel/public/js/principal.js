@@ -3,10 +3,12 @@
 import MessageException from "/js/class/messageException.js";
 
 (function checkSession() {
+    redirectUrl(); // Testear
+
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
-        if (sessionStorage.getItem("nombre")) {
+        if (sessionStorage.getItem("id")) {
             // La sesión está habilitada, añadimos la funcionalidad.
-            sessionStorage.removeItem("nombre");
+            // sessionStorage.removeItem("nombre");
         } else {
             // La sesión no está habilitada, añadimos el requerimiento de inicio de sesión.
             sessionRequired();
@@ -69,8 +71,9 @@ function acountAccessModal() {
     modalFooter.appendChild(accountBtn);
 }
 
-// // Función para redirigir a rutas
-// function redirectUrl(rute){
-//     console.log("Redirect");
-//     // window.location.assign(window.location.href + rute);
-// }
+// Función para redirigir a rutas, evitar errores de ruta con post
+function redirectUrl() {
+    if (window.location.pathname != "/") {
+        window.location.assign(window.location.origin);
+    }
+}
