@@ -20,7 +20,6 @@
 
     </header>
     <main>
-
         <div id="container-buttons" class="container">
             <button class="btn btn-primary btn-principal" onclick="window.location.assign('/user-register')">Registro</button>
             <button class="btn btn-primary btn-return" onclick="window.location.assign('/')">Volver</button>
