@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <!-- css -->
+    <link rel="stylesheet" href="{{url('css/access.css')}}"> <!-- Importo la de acceso para el formulario-->
     <link rel="stylesheet" href="{{url('css/principal.css')}}">
 </head>
 
@@ -35,17 +36,18 @@
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <!-- Nav -->
+        <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">Puremovement</a>
+                <button class="navbar-brand navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
+                        </li> -->
                         <!-- Ya sea iniciar como cerrar sesión -->
                         <li class="nav-item">
                             <a class="nav-link" href="#">Sesión</a>
@@ -58,17 +60,15 @@
 
     <!-- Main -->
     <main>
-        <div id="div-graphic-buttons" class="row">
-            <div id="div-graphic" class="col-12 col-md-6">Gráfico/Calcular</div>
-            <div id="div-buttons" class="col-12 col-md-6">
-                <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-access">Mis recetas</button>
-                <button type="button" id="user-management" class="btn btn-primary btn-principal btn-access">Gestión Usuario</button>
-                <button type="button" id="update-data" class="btn btn-primary btn-principal btn-access">Actualizar Datos</button>
+        <div id="div-graphic-calculate-buttons" class="row">
+            <div id="div-buttons" class="col-12 col-md-5 div-buttons container">
+                <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
+                <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
+                <button type="button" id="update-data" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Actualizar Datos</button>
             </div>
         </div>
 
-        <div id="div-recipe-ranking" class="row">
-
+        <div id="div-recipe-ranking" class="row ontainer">
             <div id="div-ranking" class="col-12">
                 <div class="container">
                     <h1 class="h3">Ranking</h1>
