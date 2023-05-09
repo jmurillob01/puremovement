@@ -30,7 +30,7 @@ function registerValidation() {
     form.password.onblur = function () {
         if (!this.checkValidity()) {
             isValid = false;
-            showFeedBack($(form.password), false, "Requiere de mayúsculas y/o minúsculas o números");
+            showFeedBack($(form.password), false, "Requiere de mayúsculas y/o minúsculas o números. Logitud mínima 5");
         } else {
             showFeedBack($(form.password), true);
         }
