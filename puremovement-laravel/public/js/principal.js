@@ -147,6 +147,9 @@ function calculateImc() {
             // Obtenemos la cifra exacta
             result = Math.trunc(result * 10) / 10;
 
+            // Limpiamos el formulairo
+            clearResultImc();
+
             // Pintamos el valor en el formulario
             showResultImc(result);
 
@@ -173,6 +176,8 @@ function validateImcData() {
     let heightFeedback = document.getElementById("user-height-feedback");
     let generalFeedback = document.getElementById("general-feedback");
 
+    clearResultImc();
+    
     try {
         // Convertimos a números los valores
         weight = parseInt(weight);
@@ -210,17 +215,7 @@ function validateImcData() {
 function showResultImc(result){
 
     let divfather = document.getElementById("form-calculate-imc");
-
-    try {
-        let deleteContainer = document.getElementById("user-imc");
-        let fatherContainer = document.getElementById("user-imc").parentNode;
-
-        fatherContainer.removeChild(deleteContainer);
-    } catch (error) {
-        // No sucede nada
-    }
     
-
     let container = document.createElement("div");
     container.setAttribute("id", "user-imc");
     container.setAttribute("class", "container");
@@ -231,4 +226,15 @@ function showResultImc(result){
 
     container.appendChild(content);
     divfather.appendChild(container);
+}
+
+function clearResultImc(){
+    try {
+        let deleteContainer = document.getElementById("user-imc");
+        let fatherContainer = document.getElementById("user-imc").parentNode;
+
+        fatherContainer.removeChild(deleteContainer);
+    } catch (error) {
+        // No sucede nada
+    }
 }
