@@ -51,27 +51,28 @@ class UserController extends Controller
             'email' => 'required'
         ]);
 
-        if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
-            try {
-                // $user = new UserModel($request->id,  Crypt::encryptString($request->password), $request->name, $request->lastname1, $request->lastname2, $request->phone, $request->email);
-                UserModel::create([
-                    'id' => $request->id,
-                    'password' => sha1($request->password),
-                    'name' => $request->name,
-                    'lastname1' => $request->lastname1,
-                    'lastname2' => $request->lastname2,
-                    'phone' => $request->phone,
-                    'email' => $request->email
-                ]);
-                // return redirect()->route('user.index', ['form' => "register"])->with('success', 'Usuario creado correctamente');
-                return redirect()->route('user.viewAccessUser', ['form' => "register"])->with('success', 'Usuario creado correctamente');
-            } catch (MyCustomException $CUE) { // CreateUserException
-                // return redirect()->route('user.checkId', ['form' => "register"])->with('Error', $CUE->getMessage());
-                return redirect()->route('user.viewAccessUser', ['form' => "register"])->with('error', $CUE->getMessage());
+        try {
+            if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
+                try {
+                    // $user = new UserModel($request->id,  Crypt::encryptString($request->password), $request->name, $request->lastname1, $request->lastname2, $request->phone, $request->email);
+                    UserModel::create([
+                        'id' => $request->id,
+                        'password' => sha1($request->password),
+                        'name' => $request->name,
+                        'lastname1' => $request->lastname1,
+                        'lastname2' => $request->lastname2,
+                        'phone' => $request->phone,
+                        'email' => $request->email
+                    ]);
+                    return redirect()->route('user.viewAccessUserRegister')->with('success', 'Usuario creado correctamente');
+                } catch (MyCustomException $CUE) { // CreateUserException
+                    return redirect()->route('user.viewAccessUserRegister')->with('error', $CUE->getMessage());
+                }
+            } else {
+                return redirect()->route('user.viewAccessUserRegister')->with('error', "El id, teléfono o correo de usuario ya existe");
             }
-        } else {
-            // return redirect()->route('user.index', ['form' => "register"])->with('error', "El id, teléfono o correo de usuario ya existe");
-            return redirect()->route('user.viewAccessUser', ['form' => "register"])->with('error', "El id, teléfono o correo de usuario ya existe");
+        } catch (\Throwable $th) {
+            return redirect()->route('user.viewAccessUserRegister')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
         }
     }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
         try {
             $user = DB::table('user')->where('id', $id)->get();
         } catch (\Throwable $th) {
-            return redirect()->route('user.viewAccessUser', ['form' => "login"]) > with('error', "Algo ha ido mal");;
+            return redirect()->route('user.viewAccessUserLogin') > with('error', "Algo ha ido mal");;
         }
 
         return $user;
@@ -127,7 +128,7 @@ class UserController extends Controller
             })->get()->count();
         } catch (\Throwable $th) {
             // Excepción
-            return redirect()->route('user.viewAccessUser', ['form' => "register"]);
+            return redirect()->route('user.viewAccessUserRegister');
         }
 
         return $exist;
@@ -140,7 +141,6 @@ class UserController extends Controller
 
         if ($exist == 1) {
 
-            // return redirect()->route('user.viewAccessUser', ['form' => "login"])->with('success', "Existe");
             $user = $this->show($request->id);
 
             if ($user != null) {
@@ -149,7 +149,7 @@ class UserController extends Controller
 
                 if (sha1($request->password) == $user->password) {
                     // Creamos una sesión
-                    echo 
+                    echo
                     "
                     <script>
                     sessionStorage.setItem('id','$user->id')
@@ -160,11 +160,11 @@ class UserController extends Controller
 
                     return view('principal');
                 } else {
-                    return redirect()->route('user.viewAccessUser', ['form' => "login"])->with('error', "Id o contraseña incorrecta");
+                    return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
                 }
             }
         } else {
-            return redirect()->route('user.viewAccessUser', ['form' => "login"])->with('error', "Id o contraseña incorrecta");
+            return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
         }
     }
 
@@ -185,18 +185,36 @@ class UserController extends Controller
     // Función para devolver la vista del formulario
     public function viewAccessUser()
     {
-        $form = $_GET['form']; // Obtenemos el parámetro de la ruta a la que queremos ir
-        $view = "";
+        try {
+            $form = $_GET['form']; // Obtenemos el parámetro de la ruta a la que queremos ir
+            $view = "";
 
-        if ($form == "register") {
-            $view = "access_register";
-        } elseif ($form == "login") {
-            $view = "access_login";
-        } else {
+            if ($form == "register") {
+                $view = "access_register";
+            } elseif ($form == "login") {
+                $view = "access_login";
+            } else {
+                $view = "principal";
+            }
+        } catch (\Throwable $th) { // Excepción controlada para evitar errores de ruta
             $view = "principal";
         }
 
+        sleep(1);
+
+        // TODO : Eliminar de la ruta ?form="register"
+
         return view($view);
+    }
+
+    public function viewAccessUserRegister()
+    {
+        return view('access_register');
+    }
+
+    public function viewAccessUserLogin()
+    {
+        return view('access_login');
     }
 }
 

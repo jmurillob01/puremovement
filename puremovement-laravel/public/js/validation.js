@@ -3,12 +3,13 @@
 $(document).ready(function () {
     console.log("Documento ready");
 
-    if (window.location.pathname == "/user-register") {
+    if (window.location.pathname == "/user-register" || window.location.pathname == "/viewAccessUserRegister") {
         registerValidation();
-    } else if (window.location.pathname == "/user-login") {
+    } else if (window.location.pathname == "/user-login" || window.location.pathname == "/viewAccessUserLogin") {
         loginValidation();
     } else {
         console.error("Algo no ha ido como debería");
+        console.error(window.location.pathname);
     }
 });
 
