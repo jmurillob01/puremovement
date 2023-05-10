@@ -208,9 +208,21 @@ function validateImcData() {
 }
 
 function showResultImc(result){
+
     let divfather = document.getElementById("form-calculate-imc");
 
+    try {
+        let deleteContainer = document.getElementById("user-imc");
+        let fatherContainer = document.getElementById("user-imc").parentNode;
+
+        fatherContainer.removeChild(deleteContainer);
+    } catch (error) {
+        // No sucede nada
+    }
+    
+
     let container = document.createElement("div");
+    container.setAttribute("id", "user-imc");
     container.setAttribute("class", "container");
     container.setAttribute("style", "display:flex; justify-content:center");
 

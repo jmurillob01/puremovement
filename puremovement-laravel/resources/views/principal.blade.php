@@ -43,6 +43,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <button class="navbar-brand navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+                <!-- Crear lista desplegable con opciones de cuenta, solo con sesión iniciada -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <!-- <li class="nav-item">
