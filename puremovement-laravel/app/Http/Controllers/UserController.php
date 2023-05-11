@@ -137,35 +137,38 @@ class UserController extends Controller
     // Función para comprobar la existencia de un usuario para el login
     public function checkUserLogin(Request $request)
     {
-        $exist = $this->getCountUserById($request->id); // Comprobamos si el usuario está almacenado
+        try {
+            $exist = $this->getCountUserById($request->id); // Comprobamos si el usuario está almacenado
 
-        if ($exist == 1) {
-
-            $user = $this->show($request->id);
-
-            if ($user != null) {
-
-                $user = $user[0];
-
-                if (sha1($request->password) == $user->password) {
-                    // Creamos una sesión
-                    echo
-                    "
-                    <script>
-                    sessionStorage.setItem('id','$user->id')
-                    </script>
-                    ";
-
-                    // sleep(1); Creo que sobra
-
-                    return view('principal');
-                } else {
-                    return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
+            if ($exist == 1) {
+    
+                $user = $this->show($request->id);
+    
+                if ($user != null) {
+    
+                    $user = $user[0];
+    
+                    if (sha1($request->password) == $user->password) {
+                        // Creamos una sesión
+                        echo
+                        "
+                        <script>
+                        sessionStorage.setItem('id','$user->id')
+                        </script>
+                        ";
+        
+                        return view('principal');
+                    } else {
+                        return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
+                    }
                 }
+            } else {
+                return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
             }
-        } else {
-            return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
+        } catch (\Throwable $th) {
+            return redirect()->route('user.viewAccessUserLogin')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
         }
+       
     }
 
     // Función para obtener la existencia de un usuario por ID
