@@ -1,5 +1,9 @@
 @extends('access')
 
+@section('title')
+login
+@endsection
+
 @section('content')
 <div id="access-content" class="container">
     <!-- Hay que cambiar el action action="{{route('user.store')}}" -->

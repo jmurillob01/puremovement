@@ -1,5 +1,9 @@
 @extends('access')
 
+@section('title')
+registro
+@endsection
+
 @section('content')
 <div id="access-content" class="container">
     <form name="fRegisterUser" id="register-form" class="row" action="{{route('user.store')}}" method="POST"> <!-- class = was-validated -->
