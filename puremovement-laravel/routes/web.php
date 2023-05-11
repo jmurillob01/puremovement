@@ -26,6 +26,11 @@ Route::get('/user-login', function () {
     return view('access_login');
 });
 
+Route::get('/account', function () {
+    return view('account');
+});
+
+
 Route::resource('user', UserController::class);
 
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método

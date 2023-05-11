@@ -7,12 +7,13 @@ import MessageException from "/js/class/messageException.js";
 
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
+            acountAccessNav();
+            toggleNavButtons();
             // La sesión está habilitada, añadimos la funcionalidad.
             // sessionStorage.removeItem("nombre");
         } else {
             // La sesión no está habilitada, añadimos el requerimiento de inicio de sesión.
             sessionRequired();
-            acountAccessNav();
             displayForm();
             calculateImc();
 
@@ -35,28 +36,6 @@ function sessionRequired() {
     acountAccessModal();
 }
 
-// Función para lanzar un modal de advertencia, se pasará un mensaje y un botón
-function throwModalWarning(message, btn) {
-    let header = document.getElementById("warningModalLabel");
-    header.innerHTML = (message.header);
-
-    let body = document.getElementById("warningModalContent");
-    body.innerHTML = (message.message);
-
-    btn.setAttribute("data-bs-target", "#warningModal");
-    btn.setAttribute("data-bs-toggle", "modal");
-}
-
-// Función para mostrar el botón de acceso de cuenta en el nav
-function acountAccessNav() {
-    let navMenu = document.getElementsByClassName("navbar-nav")[0];
-
-    let accountBtn = document.createElement("li");
-    accountBtn.className = ("nav-item bi bi-person-circle");
-
-    navMenu.appendChild(accountBtn);
-}
-
 // Función para mostrar el botón de acceso de cuenta en modal
 function acountAccessModal() {
     let modalFooter = document.getElementsByClassName("modal-footer")[0];
@@ -73,12 +52,7 @@ function acountAccessModal() {
     modalFooter.appendChild(accountBtn);
 }
 
-// Función para redirigir a rutas, evitar errores de ruta con post
-function redirectUrl() {
-    if (window.location.pathname != "/") {
-        window.location.assign(window.location.origin);
-    }
-}
+
 
 function displayForm() {
     let divFather = document.getElementById('div-graphic-calculate-buttons');
@@ -177,7 +151,7 @@ function validateImcData() {
     let generalFeedback = document.getElementById("general-feedback");
 
     clearResultImc();
-    
+
     try {
         // Convertimos a números los valores
         weight = parseInt(weight);
@@ -212,10 +186,10 @@ function validateImcData() {
     return (validHeight && validWeight) ? true : false;
 }
 
-function showResultImc(result){
+function showResultImc(result) {
 
     let divfather = document.getElementById("form-calculate-imc");
-    
+
     let container = document.createElement("div");
     container.setAttribute("id", "user-imc");
     container.setAttribute("class", "container");
@@ -228,7 +202,7 @@ function showResultImc(result){
     divfather.appendChild(container);
 }
 
-function clearResultImc(){
+function clearResultImc() {
     try {
         let deleteContainer = document.getElementById("user-imc");
         let fatherContainer = document.getElementById("user-imc").parentNode;

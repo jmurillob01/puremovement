@@ -10,7 +10,7 @@
     <!-- links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
-    <!-- css -->
+    <!-- css No se si los usaré aquí -->
     <link rel="stylesheet" href="{{url('css/access.css')}}"> <!-- Importo la de acceso para el formulario-->
     <link rel="stylesheet" href="{{url('css/principal.css')}}">
 </head>
@@ -29,10 +29,7 @@
                     <div class="modal-body">
                         <p id="warningModalContent"></p>
                     </div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button> -->
-                    </div>
+                    <div class="modal-footer"></div>
                 </div>
             </div>
         </div>
@@ -58,21 +55,7 @@
 
     <!-- Main -->
     <main>
-        <div id="div-graphic-calculate-buttons" class="row">
-            <div id="div-buttons" class="col-12 col-md-5 div-buttons container">
-                <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
-                <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
-                <button type="button" id="update-data" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Actualizar Datos</button>
-            </div>
-        </div>
-
-        <div id="div-recipe-ranking" class="row ontainer">
-            <div id="div-ranking" class="col-12">
-                <div class="container">
-                    <h1 class="h3">Ranking</h1>
-                </div>
-            </div>
-        </div>
+        
     </main>
     <footer>
 
@@ -80,7 +63,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     <script src="{{url('js/utils.js')}}"></script>
-    <script src="{{url('js/principal.js')}}" type="module"></script>
+    <script src="{{url('js/account.js')}}"></script>
+
+    <!-- <script src="{{url('js/principal.js')}}" type="module"></script>  -->
 
 </body>
 
