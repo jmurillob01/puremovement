@@ -107,6 +107,12 @@ function loginValidation() {
     }
 }
 
+function registerRecipeValidation(){
+    let form = document.forms.fRegisterRecipe;
+
+    let isValid = true;
+}
+
 function showFeedBack(input, valid, message) {
     let validClass = (valid) ? 'is-valid' : 'is-invalid';
     let div = (valid) ? input.nextAll("div.valid-feedback") : input.nextAll("div.invalid-feedback");
