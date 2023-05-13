@@ -55,7 +55,7 @@
 
     <!-- Main -->
     <main>
-    <div class="col-12 col-md-8 container">
+        <div class="col-12 col-md-8 container mt-5">
             @if (Session::get('error'))
             <div class="alert alert-danger">
                 <strong>{{Session::get('error')}}</strong><br>
@@ -63,7 +63,7 @@
             @endif
         </div>
 
-        <div class="col-12 col-md-8 container">
+        <div class="col-12 col-md-8 container mt-5">
             @if (Session::get('success'))
             <div class="alert alert-success">
                 <strong>{{Session::get('success')}}</strong><br>

@@ -9,8 +9,11 @@ Recipes
     <form name="fRegisterRecipe" id="registerRecipe-form" class="row" action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div class="container" id="recipe-header">
+        <div class="container col-6 col-md-6 mt-5" id="recipe-header">
             <h1>Crear Receta</h1>
+        </div>
+        <div class="col-6 col-md-6">
+            <img id="img-preview" width="200" height="200"></img>
         </div>
 
         <div class="col-12 col-md-12">

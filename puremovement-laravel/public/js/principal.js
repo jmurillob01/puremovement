@@ -76,13 +76,13 @@ function displayForm() {
             <hr class="hr-form">
             <div class="col-12 col-md-6">
                 <label for="user-height" class="form-label">Altura</label>
-                <input type="number" class="form-control" id="user-height" name="height " title="height" placeholder="150cm" pattern="^[0-9]{2,3}$" required>
+                <input type="number" class="form-control" id="user-height" name="height " title="height" placeholder="150cm" min="90" max="200" required>
                 <div id="user-height-feedback" class="is-invalid-div container form-feedback"></div>
             </div>
 
             <div class="col-12 col-md-6">
                 <label for="user-weight" class="form-label">Peso</label>
-                <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" pattern="^[0-9]{2,3}$" required>
+                <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
                 <div id="user-weight-feedback" class="is-invalid-div container form-feedback"></div>
             </div>
 

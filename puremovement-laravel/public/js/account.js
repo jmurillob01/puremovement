@@ -59,17 +59,14 @@ function displayImg(){
 
     let objectUrl = URL.createObjectURL(imgFile);
 
-    let container = document.getElementById("recipe-header");
+    // let container = document.getElementById("recipe-header");
 
-    let image = document.createElement("img");
+    let image = document.getElementById("img-preview");
 
     // TODO: Optimizar
-    image.id = "recipe-img";
     image.src = (objectUrl);
-    image.width = ('200');
-    image.height = ('200');
 
-    container.appendChild(image);
+    // container.appendChild(image);
 }
 
 function removeImg(){
