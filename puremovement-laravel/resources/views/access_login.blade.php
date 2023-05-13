@@ -11,7 +11,7 @@ login
         @csrf
 
         <div class="col-12 col-md-6">
-            <label for="user-name" class="form-label">Id Usuario</label>
+            <label for="user-id" class="form-label">Id Usuario</label>
             <input type="text" class="form-control" id="user-id" name="id" title="Permite letras, números y '_' Longitud 4-20" pattern="^[a-zA-Z0-9_]{4,20}$" required>
             <!-- <div id="id-feedback" class="is-invalid-div container"></div> -->
         </div>

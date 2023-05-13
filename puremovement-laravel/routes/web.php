@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,12 +27,12 @@ Route::get('/user-login', function () {
     return view('access_login');
 });
 
-Route::get('/account', function () {
-    return view('account');
+Route::get('/account_createRecipes', function () {
+    return view('account_createRecipes');
 });
 
-
 Route::resource('user', UserController::class);
+Route::resource('recipe', RecipeController::class);
 
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método
 Route::get('viewAccessUserLogin', [UserController::class, 'viewAccessUserLogin'])->name('user.viewAccessUserLogin'); // Ruta para la función de ese método

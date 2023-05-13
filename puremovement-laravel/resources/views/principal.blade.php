@@ -58,6 +58,7 @@
 
     <!-- Main -->
     <main>
+        <!-- Por esto se ve mal en móvil -->
         <div id="div-graphic-calculate-buttons" class="row">
             <div id="div-buttons" class="col-12 col-md-5 div-buttons container">
                 <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
