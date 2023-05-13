@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +32,18 @@ Route::get('/account_createRecipes', function () {
     return view('account_createRecipes');
 });
 
+Route::get('/account_createIngredients', function () {
+    return view('account_createIngredients');
+});
+
 Route::resource('user', UserController::class);
 Route::resource('recipe', RecipeController::class);
+Route::resource('ingredient', IngredientController::class);
 
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método
 Route::get('viewAccessUserLogin', [UserController::class, 'viewAccessUserLogin'])->name('user.viewAccessUserLogin'); // Ruta para la función de ese método
+
+Route::get('createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients'); // Ruta para la función de ese método
 
 
 Route::post('checkUserLogin', [UserController::class, 'checkUserLogin'])->name('user.checkUserLogin');
