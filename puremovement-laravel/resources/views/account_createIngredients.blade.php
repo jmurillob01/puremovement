@@ -4,6 +4,9 @@
 Ingredientes
 @endsection
 
+<!-- 
+    Se puede hacer esto en modal y no haría falta crear otro blade.php
+ -->
 @section('content')
 <div id="recipe-content" class="container">
     <form name="fRegisterIngredient" id="registerIngredient-form" class="row" action="{{route('ingredient.store')}}" method="POST" enctype="multipart/form-data">

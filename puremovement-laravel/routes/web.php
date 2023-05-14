@@ -43,8 +43,11 @@ Route::resource('ingredient', IngredientController::class);
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método
 Route::get('viewAccessUserLogin', [UserController::class, 'viewAccessUserLogin'])->name('user.viewAccessUserLogin'); // Ruta para la función de ese método
 
-Route::get('createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients'); // Ruta para la función de ese método
+// No sé porque tenía esto, dejo por si acaso
+// Route::get('createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients'); // Ruta para la función de ese método
+Route::get('account_createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients');
 
+Route::post('/searchIngredient', [IngredientController::class, 'indexIngredientsLike'])->name('ingredients.indexIngredientsLike');
 
 Route::post('checkUserLogin', [UserController::class, 'checkUserLogin'])->name('user.checkUserLogin');
 

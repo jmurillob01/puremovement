@@ -40,6 +40,7 @@ class IngredientController extends Controller
         ]);
 
         try {
+            // TODO : Se podría hacer una comprobación por nombre, y mostrar un mensaje de alerta
             // if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
             try {
 
@@ -105,6 +106,19 @@ class IngredientController extends Controller
     public function destroy(IngredientModel $ingredientModel)
     {
         //
+    }
+
+    public function indexIngredientsLike()
+    {
+        $error = ['data' => false];
+        $name = $_POST['search_criteria'];
+
+        try {
+            $queryResult = IngredientModel::where('name', 'like', $name.'%')->get();
+            echo json_encode($queryResult);
+        } catch (\Throwable $th) {
+            echo json_encode($error);
+        }
     }
 
     public function account_createIngredients()
