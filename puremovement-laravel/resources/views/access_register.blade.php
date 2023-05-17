@@ -11,7 +11,7 @@ registro
 
         <div class="col-12 col-md-6">
             <label for="user-name" class="form-label">Id Usuario</label>
-            <input type="text" class="form-control" id="user-id" name="id" title="Permite letras, números y '_' Longitud 4-20" pattern="^[a-zA-Z0-9_]{4,20}$" required>
+            <input type="text" class="form-control" id="user-id" name="id" title="Permite letras, números y '_' Longitud 4-20" value="{{old('id')}}" pattern="^[a-zA-Z0-9_]{4,20}$" required>
             <!-- <div id="id-feedback" class="is-invalid-div container"></div> -->
         </div>
 
@@ -23,30 +23,30 @@ registro
 
         <div class="col-12 col-md-4">
             <label for="user-name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="user-name" name="name" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
+            <input type="text" class="form-control" id="user-name" name="name" value="{{old('name')}}" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
             <!-- <div id="name-feedback" class="is-invalid-div container"></div> -->
         </div>
 
         <div class="col-12 col-md-4">
             <label for="user-lastname1" class="form-label">Primer apellido</label>
-            <input type="text" class="form-control" id="user-lastname1" name="lastname1" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
+            <input type="text" class="form-control" id="user-lastname1" name="lastname1" value="{{old('lastname1')}}" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
             <!-- <div id="lastname1-feedback" class="is-invalid-div container"></div> -->
         </div>
 
         <div class="col-12 col-md-4">
             <label for="user-lastname2" class="form-label">Segundo apellido</label>
-            <input type="text" class="form-control" id="user-lastname2" name="lastname2" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
+            <input type="text" class="form-control" id="user-lastname2" name="lastname2" value="{{old('lastname2')}}" pattern="^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$" required>
             <!-- <div id="lastname2-feedback" class="is-invalid-div container"></div> -->
         </div>
 
         <div class="col-12 col-md-6">
             <label for="user-phone" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="user-phone" name="phone" pattern="^[0-9]{9}$" required>
+            <input type="tel" class="form-control" id="user-phone" name="phone" value="{{old('phone')}}" pattern="^[0-9]{9}$" required>
         </div>
 
         <div class="col-12 col-md-6">
             <label for="user-email" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="user-email" name="email" required>
+            <input type="email" class="form-control" id="user-email" name="email" value="{{old('email')}}" required>
         </div>
 
 

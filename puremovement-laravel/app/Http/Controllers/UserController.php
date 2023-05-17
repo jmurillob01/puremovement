@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Exceptions\MyCustomException;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Exception;
 use GuzzleHttp\Promise\Promise;
 use Illuminate\Support\Facades\Crypt;
@@ -41,14 +42,14 @@ class UserController extends Controller
     {
 
         // dd($request->all());
-        $request->validate([
-            'id' => 'required',
-            'password' => 'required',
-            'name' => 'required',
-            'lastname1' => 'required',
-            'lastname2' => 'required',
-            'phone' => 'required',
-            'email' => 'required'
+        $request->validate([ // Mostrar los datos si no es válido
+            'id' => 'required|regex:/^[a-zA-Z0-9_]{4,20}$/',
+            'password' => 'required|regex:/^[A-z0-9_.!¿?¡]{5,20}$/',
+            'name' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+            'lastname1' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+            'lastname2' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+            'phone' => 'required|regex:/^[0-9]{9}$/',
+            'email' => 'required|email'
         ]);
 
         try {
@@ -141,13 +142,13 @@ class UserController extends Controller
             $exist = $this->getCountUserById($request->id); // Comprobamos si el usuario está almacenado
 
             if ($exist == 1) {
-    
+
                 $user = $this->show($request->id);
-    
+
                 if ($user != null) {
-    
+
                     $user = $user[0];
-    
+
                     if (sha1($request->password) == $user->password) {
                         // Creamos una sesión
                         echo
@@ -156,7 +157,7 @@ class UserController extends Controller
                         sessionStorage.setItem('id','$user->id')
                         </script>
                         ";
-        
+
                         return view('principal');
                     } else {
                         return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
@@ -168,7 +169,6 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('user.viewAccessUserLogin')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
         }
-       
     }
 
     // Función para obtener la existencia de un usuario por ID
