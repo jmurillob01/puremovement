@@ -50,8 +50,10 @@ Recipes
                 </select>
             </div>
 
-            <div class="col-4 col-md-4 d-flex justify-content-center align-items-center">
-                <p>Botón para añadir y eliminar</p>
+            <div class="col-4 col-md-4 d-flex flex-column mt-3 gap-2 align-items-center">
+                <p>Añadir / Eliminar</p>
+                <a class="btn btn-primary" id="add-ingredient">>></a>
+                <a class="btn btn-primary" id="remove-ingredient"><<</a>
             </div>
 
             <div class="col-4 col-md-4">
