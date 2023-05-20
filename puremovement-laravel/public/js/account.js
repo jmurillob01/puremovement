@@ -5,6 +5,7 @@
         if (sessionStorage.getItem("id")) {
             acountAccessNav();
             toggleNavButtons();
+            getIngredientsBackEnd();
         } else {
             window.location.assign('/');
         }
@@ -103,14 +104,12 @@ function imgFeedback(msg) {
     `
 }
 
-function getIngredientsBackEnd(search_input) {
+function getIngredientsBackEnd(search_input = "") {
     let search = document.getElementById('search-ingredients');
     let search_criteria = '';
 
     // search.addEventListener('input', event => {
-    search_criteria = search_input.value;
-
-    
+    (search_input != "") ? search_criteria = search_input.value : search_criteria = "";
 
     let searchData = new FormData();
     searchData.append('search_criteria', search_criteria);
@@ -145,10 +144,8 @@ function showResults(data){
 
     removeResults(select);
 
-    let option = document.createElement('option');
-
     for (let element in data){
-
+        let option = document.createElement('option');
         let obj = data[element];
         option.value = (obj.id);
         option.innerHTML = (obj.name);

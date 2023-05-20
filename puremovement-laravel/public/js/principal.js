@@ -16,6 +16,7 @@ import MessageException from "/js/class/messageException.js";
             sessionRequired();
             displayForm();
             calculateImc();
+            // displayImcData();
 
             // sessionStorage.setItem("nombre", "javi");
         }
@@ -46,13 +47,11 @@ function acountAccessModal() {
 
     // Redirigimos a la pestaña de acceso de usuario
     accountBtn.addEventListener("click", function () {
-        window.location.assign("/user-register");
+        window.location.assign("/user/register");
     });
 
     modalFooter.appendChild(accountBtn);
 }
-
-
 
 function displayForm() {
     let divFather = document.getElementById('div-graphic-calculate-buttons');
@@ -61,26 +60,26 @@ function displayForm() {
 
     // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
     container.setAttribute("id", "div-calculate");
-    container.setAttribute("class", "container col-10 col-md-6");
+    container.setAttribute("class", "col-12 col-md-6"); // 
 
     container.innerHTML = (`
-    <div id="form-calculate-imc" class="container calculate-content">
+    <div id="form-calculate-imc" class="container calculate-content ">
     <!-- method="POST" action="{{route('user.checkUserLogin')}}" -->
         <form name="calculateImc" id="calculateImc-form" class="row" method="POST" action="?">
             <?php @csrf ?>
         
             <div class="container col-12 col-md-12 header-form">
                 <h1 class="col-12 col-md-12">Calcular IMC</h1>
-                
             </div>
+            
             <hr class="hr-form">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <label for="user-height" class="form-label">Altura</label>
                 <input type="number" class="form-control" id="user-height" name="height " title="height" placeholder="150cm" min="90" max="200" required>
                 <div id="user-height-feedback" class="is-invalid-div container form-feedback"></div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <label for="user-weight" class="form-label">Peso</label>
                 <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
                 <div id="user-weight-feedback" class="is-invalid-div container form-feedback"></div>
@@ -88,9 +87,10 @@ function displayForm() {
 
             <div id="general-feedback" class="form-feedback col-12 col-md-12"></div>
 
-            <div id="access-submit" class="mb-3">
-            <button id="calculate-imc" class="btn btn-primary" type="button">Calcular</button>
-        </div>
+            <div id="access-submit" class="mb-3 col-12 col-md-12 d-flex justify-content-around">
+                <button id="calculate-imc" class="btn btn-primary" type="button">Calcular</button>
+                <button id="information-imc" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imc-modal" type="button">Información</button>
+            </div>
         </form>
     </div>
     `);

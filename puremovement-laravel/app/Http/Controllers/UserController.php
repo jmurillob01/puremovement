@@ -65,15 +65,15 @@ class UserController extends Controller
                         'phone' => $request->phone,
                         'email' => $request->email
                     ]);
-                    return redirect()->route('user.viewAccessUserRegister')->with('success', 'Usuario creado correctamente');
+                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'success',"message" => 'Usuario creado correctamente']);
                 } catch (MyCustomException $CUE) { // CreateUserException
-                    return redirect()->route('user.viewAccessUserRegister')->with('error', $CUE->getMessage());
+                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'error',"message" =>  $CUE->getMessage()]);
                 }
             } else {
-                return redirect()->route('user.viewAccessUserRegister')->with('error', "El id, teléfono o correo de usuario ya existe");
+                return redirect()->route('user.viewAccessUserRegister', ["type" => "error", "message" => "El id, teléfono o correo de usuario ya existe"]);
             }
         } catch (\Throwable $th) {
-            return redirect()->route('user.viewAccessUserRegister')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
+            return redirect()->route('user.viewAccessUserRegister', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
         }
     }
 
@@ -87,7 +87,7 @@ class UserController extends Controller
         try {
             $user = DB::table('user')->where('id', $id)->get();
         } catch (\Throwable $th) {
-            return redirect()->route('user.viewAccessUserLogin') > with('error', "Algo ha ido mal");;
+            return redirect()->route('user.viewAccessUserLogin', ["type" => "error", "message" => "Algo ha ido mal"]);
         }
 
         return $user;
@@ -160,14 +160,14 @@ class UserController extends Controller
 
                         return view('principal');
                     } else {
-                        return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
+                        return redirect()->route('user.viewAccessUserLogin', ["type" => "error", "message" => "Id o contraseña incorrecta"]);
                     }
                 }
             } else {
-                return redirect()->route('user.viewAccessUserLogin')->with('error', "Id o contraseña incorrecta");
+                return redirect()->route('user.viewAccessUserLogin', ["type" => "error", "message" => "Id o contraseña incorrecta"]);
             }
         } catch (\Throwable $th) {
-            return redirect()->route('user.viewAccessUserLogin')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
+            return redirect()->route('user.viewAccessUserLogin', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
         }
     }
 
@@ -212,12 +212,19 @@ class UserController extends Controller
 
     public function viewAccessUserRegister()
     {
-        return view('access_register');
+        ($_GET['type']) ? $type = $_GET['type'] : $type = '';
+        ($_GET['message']) ? $message = $_GET['message'] : $message = '';
+
+        // return view('access_register');
+        return redirect("/user/register")->with($type, $message);
     }
 
     public function viewAccessUserLogin()
     {
-        return view('access_login');
+        ($_GET['type']) ? $type = $_GET['type'] : $type = '';
+        ($_GET['message']) ? $message = $_GET['message'] : $message = '';
+
+        return redirect("/user/login")->with($type, $message);
     }
 }
 

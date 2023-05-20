@@ -63,16 +63,16 @@ class IngredientController extends Controller
                     'kcal_100g' => $request->kcal_100g,
                     'picture' => $picture
                 ]);
-                return redirect()->route('ingredients.account_createIngredients')->with('success', 'Ingrediente creado correctamente');
+                return redirect()->route('ingredients.account_createIngredients', ["type" => "success", "message" => 'Ingrediente creado correctamente']);
             } catch (MyCustomException $CUE) { // CreateUserException
-                return redirect()->route('ingredients.account_createIngredients')->with('error', $CUE->getMessage());
+                return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
             }
             // } else {
             //     return redirect()->route('user.viewAccessUserRegister')->with('error', "El id, teléfono o correo de usuario ya existe");
             // }
-        } catch (\Throwable $th) {
-            return redirect()->route('ingredients.account_createIngredients')->with('error', "Ha ocurrido un error con el servidor, pongase en contacto con un administrador");
-            // return redirect()->route('ingredients.account_createIngredients')->with('error', $th->getMessage());
+        } catch (\Throwable $th) {            
+            return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
+            // return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
         }
     }
 
@@ -123,6 +123,9 @@ class IngredientController extends Controller
 
     public function account_createIngredients()
     {
-        return view('account_createIngredients');
+        ($_GET['type']) ? $type = $_GET['type'] : $type = '';
+        ($_GET['message']) ? $message = $_GET['message'] : $message = '';
+
+        return redirect("/account/create/ingredients")->with($type, $message);
     }
 }

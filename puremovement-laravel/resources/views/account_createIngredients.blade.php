@@ -59,7 +59,7 @@ Ingredientes
         </div>
 
         <div id="recipe-submit" class="mb-3">
-            <button class="btn btn-primary" type="submit" id="make-recipe">Crear Receta</button>
+            <button class="btn btn-primary" type="submit" id="make-recipe">Crear Ingrediente</button>
         </div>
     </form>
 </div>
