@@ -13,12 +13,13 @@ Recipes
             <h1>Crear Receta</h1>
         </div>
 
-        <div class="col-8 col-md-8">
+        <div class="col-8 col-md-8 mb-5">
             <label for="recipe-name" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="recipe-name" name="recipe_name" title="Nombre para tu receta" placeholder="Nombre de la receta" pattern="^[a-Z0-9]{2,}$" required>
         </div>
+
         <div class="col-4 col-md-4">
-            <img id="img-preview" width="200" height="200"></img>
+            <img id="img-preview" width="150" height="150"></img>
         </div>
 
         <div class="col-12 col-md-12">
@@ -49,8 +50,10 @@ Recipes
                 </select>
             </div>
 
-            <div class="col-4 col-md-4 d-flex justify-content-center align-items-center">
-                <p>Botón para añadir y eliminar</p>
+            <div class="col-4 col-md-4 d-flex flex-column mt-3 gap-2 align-items-center">
+                <p>Añadir / Eliminar</p>
+                <a class="btn btn-primary" id="add-ingredient">>></a>
+                <a class="btn btn-primary" id="remove-ingredient"><<</a>
             </div>
 
             <div class="col-4 col-md-4">
