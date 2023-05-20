@@ -8,6 +8,8 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function GuzzleHttp\Promise\all;
+
 class IngredientController extends Controller
 {
     /**
@@ -79,9 +81,11 @@ class IngredientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(IngredientModel $ingredientModel)
+    public function show($id)
     {
-        //
+        $ingredient = IngredientModel::where('id','=',$id)->get()->toArray();
+
+        return $ingredient;
     }
 
     /**

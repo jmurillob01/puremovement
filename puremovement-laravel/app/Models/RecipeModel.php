@@ -15,7 +15,7 @@ class RecipeModel extends Model
     // No usamos marca de tiempo
     public $timestamps = false;
 
-    protected $fillable = ['name', 'description','total_calories', 'picture', 'id_user'];
+    protected $fillable = ['name', 'description', 'total_calories', 'picture', 'id_user'];
 
     // Relación uno a muchos (inversa)
     public function user(){

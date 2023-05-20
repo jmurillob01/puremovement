@@ -70,4 +70,5 @@ Route::post('/searchIngredient', [IngredientController::class, 'indexIngredients
 // Funciones recetas
 Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->name('recipe.viewCreateRecipe');
 Route::get('validateSelectedIngredients', [RecipeController::class, 'validateSelectedIngredients'])->name('recipe.validateSelectedIngredients');
+Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('recipe.calculateKcal');
 

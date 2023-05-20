@@ -6,9 +6,6 @@ Recipes
 
 @section('content')
 
-<script>
-    let id = (sessionStorage.getItem('id'))
-</script>
 
 <div id="recipe-content" class="container">
     <form name="fRegisterRecipe" id="registerRecipe-form" class="row" action="{{route('recipe.store')}}" method="POST" enctype="multipart/form-data">
@@ -20,7 +17,7 @@ Recipes
 
         <div class="col-8 col-md-8 mb-5">
             <label for="recipe-name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" pattern="^[a-Z0-9]{2,}$" required>
+            <input type="text" class="form-control" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" pattern="^[a-zA-Z0-9 ]{2,50}$" required>
         </div>
 
         <div class="col-4 col-md-4">
@@ -65,11 +62,9 @@ Recipes
                 <label for="selected-ingredients" class="form-label">Ingredientes Seleccionados</label>
                 <select id="selected-ingredients" class="form-select" name="selected_Ingredients[]" size="4" multiple></select>
             </div>
-
         </div>
-        <!-- <input type="hidden" name="id_user" value="<script>id</script>"> -->
         <div id="recipe-submit" class="mb-3">
-            <button class="btn btn-primary" type="submit" id="make-recipe">Crear Receta</button>
+            <button class="btn btn-primary" type="submit" id="make-recipe" onclick=submitFormRecipe()>Crear Receta</button>
         </div>
     </form>
 </div>

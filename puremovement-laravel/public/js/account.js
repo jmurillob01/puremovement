@@ -57,7 +57,6 @@ function validateFile(fileInput) {
 }
 
 function displayImg() {
-
     let selectFile = document.querySelector("#recipe-image");
     let imgFile = (selectFile.files)[0];
 
@@ -132,7 +131,7 @@ function getIngredientsBackEnd(search_input = "") {
             // Función para pintar los resultados en el select
             showResults(data);
         }).catch((error) => {
-            console.error("Error fetch: ", error)
+            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
         console.error(error);
@@ -140,7 +139,9 @@ function getIngredientsBackEnd(search_input = "") {
 }
 
 function showResults(data) {
-    let select = document.getElementById('all-ingredients');
+
+    try{
+        let select = document.getElementById('all-ingredients');
 
     removeResults(select);
 
@@ -152,12 +153,21 @@ function showResults(data) {
 
         select.appendChild(option);
     }
+    }catch(error){
+        // console.error(error);
+    }
+    
 }
 
 function removeResults(select) {
-    while (select.childElementCount > 0) {
-        select.removeChild(select.lastChild);
+    try {
+        while (select.childElementCount > 0) {
+            select.removeChild(select.lastChild);
+        }
+    } catch (error) {
+        // console.error(error);
     }
+
 }
 
 function addIngredient() {
@@ -208,3 +218,29 @@ function removeIngredient() {
         select_destination.appendChild(new_option);
     }
 }
+
+function submitFormRecipe() {
+
+    let select_destination = document.getElementById("selected-ingredients");
+
+    for (let option of select_destination) {
+        option.selected = true;
+    }
+}
+
+// Función para pasar el id del usuario de la sesión
+(function sessionForm() {
+    try {
+        let form = document.getElementById("registerRecipe-form");
+
+        let input = document.createElement("input");
+
+        input.type = ('hidden');
+        input.name = ('id_user');
+        input.value = ((sessionStorage.getItem('id')));
+
+        form.appendChild(input);
+    } catch (error) {
+        console.error(error);
+    }
+})();
