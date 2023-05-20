@@ -37,18 +37,27 @@
             </div>
         </div>
         <!-- Nav -->
-        <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
+       <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
+             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <button class="navbar-brand navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+
+                <!-- Icono temporal de la página class="navbar-brand -->
+                <div class="navbar-brand">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bezier" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5v-1zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
+                        <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5v-1zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z" />
+                    </svg>
+                    <button class="navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+                </div>
+
                 <!-- Crear lista desplegable con opciones de cuenta, solo con sesión iniciada -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul id="navbar-nav" class="navbar-nav">
                         <!-- Ya sea iniciar como cerrar sesión -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sesión</a>
+                            <!-- <a class="nav-link" href="#">Sesión</a> -->
                         </li>
                     </ul>
                 </div>
@@ -58,19 +67,41 @@
 
     <!-- Main -->
     <main>
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{url('src/Carrousel.jpg')}}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url('src/Carrousel_2.jpg')}}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url('src/Carrousel_3.jpg')}}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
         <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
-        <div id="div-graphic-calculate-buttons" class="row ">
-            <div id="div-buttons" class="col-12 col-md-5 div-buttons container">
+        <div id="div-graphic-calculate-buttons" class="container">
+            <div id="div-buttons" class="div-buttons row"> <!-- row col-12 col-md-6 -->
                 <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
                 <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
                 <button type="button" id="update-data" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Actualizar Datos</button>
-            </div>
+            </div> 
         </div>
 
         <!-- <div id="div-recipe-ranking" class="row container">
             <div id="div-ranking" class="col-12">
                 <div class="container">
-                    <h1 class="h3">Ranking</h1>
+                    <h1 class="h3"></h1>
                 </div>
             </div>
         </div> -->

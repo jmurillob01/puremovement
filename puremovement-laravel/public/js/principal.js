@@ -16,6 +16,7 @@ import MessageException from "/js/class/messageException.js";
             sessionRequired();
             displayForm();
             calculateImc();
+            // displayImcData();
 
             // sessionStorage.setItem("nombre", "javi");
         }
@@ -52,8 +53,6 @@ function acountAccessModal() {
     modalFooter.appendChild(accountBtn);
 }
 
-
-
 function displayForm() {
     let divFather = document.getElementById('div-graphic-calculate-buttons');
     let buttons = divFather.lastElementChild;
@@ -61,26 +60,26 @@ function displayForm() {
 
     // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
     container.setAttribute("id", "div-calculate");
-    container.setAttribute("class", "container col-10 col-md-6");
+    container.setAttribute("class", "col-12 col-md-6"); // 
 
     container.innerHTML = (`
-    <div id="form-calculate-imc" class="container calculate-content">
+    <div id="form-calculate-imc" class="container calculate-content ">
     <!-- method="POST" action="{{route('user.checkUserLogin')}}" -->
         <form name="calculateImc" id="calculateImc-form" class="row" method="POST" action="?">
             <?php @csrf ?>
         
             <div class="container col-12 col-md-12 header-form">
                 <h1 class="col-12 col-md-12">Calcular IMC</h1>
-                
             </div>
+            
             <hr class="hr-form">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <label for="user-height" class="form-label">Altura</label>
                 <input type="number" class="form-control" id="user-height" name="height " title="height" placeholder="150cm" min="90" max="200" required>
                 <div id="user-height-feedback" class="is-invalid-div container form-feedback"></div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-12">
                 <label for="user-weight" class="form-label">Peso</label>
                 <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
                 <div id="user-weight-feedback" class="is-invalid-div container form-feedback"></div>
@@ -94,6 +93,22 @@ function displayForm() {
         </form>
     </div>
     `);
+
+    divFather.appendChild(container);
+    divFather.insertBefore(container, buttons);
+}
+
+function displayImcData(){
+    let divFather = document.getElementById('div-graphic-calculate-buttons');
+    let buttons = divFather.lastElementChild;
+    let container = document.createElement("div");
+
+    container.setAttribute("id", "div-calculate");
+    container.setAttribute("class", "container ");
+
+    container.innerHTML = (`
+        <div class="">Información
+    `)
 
     divFather.appendChild(container);
     divFather.insertBefore(container, buttons);
