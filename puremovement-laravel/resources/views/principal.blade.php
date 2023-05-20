@@ -18,7 +18,7 @@
 <body>
     <!-- Header -->
     <header>
-        <!-- Modal -->
+        <!-- Modal warnings-->
         <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -36,6 +36,51 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal IMC INFO -->
+        <div class="modal fade" id="imc-modal" tabindex="-1" aria-labelledby="imcModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="imcModalLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Para adultos de 20 años o más, el IMC se interpreta usando categorías de estado de peso estándar. Estas categorías son iguales para hombres y mujeres de todos los tipos de cuerpo y edades.</p>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">IMC</th>
+                                    <th scope="col">Nivel de peso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Por debajo de 18.5</td>
+                                    <td>Bajo peso</td>
+                                </tr>
+                                <tr>
+                                    <td>18.5 – 24.9</td>
+                                    <td>Normal</td>
+                                </tr>
+                                <tr>
+                                    <td>25.0 – 29.9</td>
+                                    <td>Sobrepeso</td>
+                                </tr>
+                                <tr>
+                                    <td>30.0 o más</td>
+                                    <td>Obesidad</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Nav -->
         <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">

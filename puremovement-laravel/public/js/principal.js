@@ -87,28 +87,13 @@ function displayForm() {
 
             <div id="general-feedback" class="form-feedback col-12 col-md-12"></div>
 
-            <div id="access-submit" class="mb-3">
-            <button id="calculate-imc" class="btn btn-primary" type="button">Calcular</button>
-        </div>
+            <div id="access-submit" class="mb-3 col-12 col-md-12 d-flex justify-content-around">
+                <button id="calculate-imc" class="btn btn-primary" type="button">Calcular</button>
+                <button id="information-imc" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imc-modal" type="button">Información</button>
+            </div>
         </form>
     </div>
     `);
-
-    divFather.appendChild(container);
-    divFather.insertBefore(container, buttons);
-}
-
-function displayImcData(){
-    let divFather = document.getElementById('div-graphic-calculate-buttons');
-    let buttons = divFather.lastElementChild;
-    let container = document.createElement("div");
-
-    container.setAttribute("id", "div-calculate");
-    container.setAttribute("class", "container ");
-
-    container.innerHTML = (`
-        <div class="">Información
-    `)
 
     divFather.appendChild(container);
     divFather.insertBefore(container, buttons);
