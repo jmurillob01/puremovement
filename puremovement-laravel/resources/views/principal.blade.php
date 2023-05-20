@@ -58,8 +58,8 @@
 
     <!-- Main -->
     <main>
-        <!-- Por esto se ve mal en móvil -->
-        <div id="div-graphic-calculate-buttons" class="row">
+        <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
+        <div id="div-graphic-calculate-buttons" class="row ">
             <div id="div-buttons" class="col-12 col-md-5 div-buttons container">
                 <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
                 <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
@@ -67,13 +67,13 @@
             </div>
         </div>
 
-        <div id="div-recipe-ranking" class="row ontainer">
+        <!-- <div id="div-recipe-ranking" class="row container">
             <div id="div-ranking" class="col-12">
                 <div class="container">
                     <h1 class="h3">Ranking</h1>
                 </div>
             </div>
-        </div>
+        </div> -->
     </main>
     <footer>
 
