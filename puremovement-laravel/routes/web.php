@@ -20,19 +20,35 @@ Route::get('/', function () {
     return view('principal');
 });
 
-Route::get('/user-register', function () {
+// Route::get('/user-register', function () {
+//     return view('access_register');
+// });
+
+// Route::get('/user-login', function () {
+//     return view('access_login');
+// });
+
+// Route::get('/account_createRecipes', function () {
+//     return view('account_createRecipes');
+// });
+
+// Route::get('/account_createIngredients', function () {
+//     return view('account_createIngredients');
+// });
+
+Route::get('/user/register', function () {
     return view('access_register');
 });
 
-Route::get('/user-login', function () {
+Route::get('/user/login', function () {
     return view('access_login');
 });
 
-Route::get('/account_createRecipes', function () {
+Route::get('/account/create/recipes', function () {
     return view('account_createRecipes');
 });
 
-Route::get('/account_createIngredients', function () {
+Route::get('/account/create/ingredients', function () {
     return view('account_createIngredients');
 });
 

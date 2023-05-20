@@ -3,9 +3,9 @@
 $(document).ready(function () {
     console.log("Documento ready");
 
-    if (window.location.pathname == "/user-register" || window.location.pathname == "/viewAccessUserRegister") {
+    if (window.location.pathname == "/user/register" || window.location.pathname == "/viewAccessUserRegister") { // El segundo path ya se podría quitar
         registerValidation();
-    } else if (window.location.pathname == "/user-login" || window.location.pathname == "/viewAccessUserLogin") {
+    } else if (window.location.pathname == "/user/login" || window.location.pathname == "/viewAccessUserLogin") { // El segundo path ya se podría quitar
         loginValidation();
     } else {
         console.error("Algo no ha ido como debería");

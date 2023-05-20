@@ -33,24 +33,10 @@
     </header>
     <main>
         <div id="container-buttons" class="container">
-            <button class="btn btn-primary btn-principal" onclick="window.location.assign('/user-register')">Registro</button>
+            <button class="btn btn-primary btn-principal" onclick="window.location.assign('/user/register')">Registro</button>
             <button class="btn btn-primary btn-return" onclick="window.location.assign('/')">Volver</button>
-            <button class="btn btn-primary btn-principal" onclick="window.location.assign('/user-login')">Login</button>
+            <button class="btn btn-primary btn-principal" onclick="window.location.assign('/user/login')">Login</button>
         </div>
-
-        <!-- Hay que testearlo -->
-        <!-- <div class="col-12 col-md-8 container"> 
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Error fatal</strong><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-        </div> -->
 
         <div class="col-12 col-md-8 container">
             @if (Session::get('error'))

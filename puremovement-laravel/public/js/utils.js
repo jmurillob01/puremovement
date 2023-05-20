@@ -50,5 +50,5 @@ function redirectUrl() {
 function closeSession(){
     sessionStorage.removeItem("id");
 
-    window.location.assign("/user-login");
+    window.location.assign("/user/login");
 }

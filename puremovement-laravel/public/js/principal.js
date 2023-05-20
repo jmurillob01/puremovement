@@ -47,7 +47,7 @@ function acountAccessModal() {
 
     // Redirigimos a la pestaña de acceso de usuario
     accountBtn.addEventListener("click", function () {
-        window.location.assign("/user-register");
+        window.location.assign("/user/register");
     });
 
     modalFooter.appendChild(accountBtn);
