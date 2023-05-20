@@ -37,8 +37,8 @@
             </div>
         </div>
         <!-- Nav -->
-       <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
-             <div class="container-fluid">
+        <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -95,7 +95,7 @@
                 <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
                 <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
                 <button type="button" id="update-data" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Actualizar Datos</button>
-            </div> 
+            </div>
         </div>
 
         <!-- <div id="div-recipe-ranking" class="row container">
