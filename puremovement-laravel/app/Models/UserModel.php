@@ -46,4 +46,11 @@ class UserModel extends Model
     public $timestamps = false;
 
     protected $fillable = ['id', 'name', 'lastname1','lastname2', 'phone', 'email', 'password', 'id_rol'];
+
+    // Relación uno a muchos
+    public function recipes(){
+        return $this->hasMany('App\Models\RecipeModel');
+    }
+
+    // Crear modelo para datos usuario
 }

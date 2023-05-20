@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\RecipeModel;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class RecipeController extends Controller
 {
     /**
@@ -28,7 +30,22 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([ // Mostrar los datos si no es válido
+            'name' => 'required|regex:/^[a-zA-Z0-9 ]{2,}$/',
+        ]);
+
+        // Comprobar que al menos tengamos un ingrediente
+        // $this->validateSelectedIngredients($request->selectedIngredients);
+        dd($request->all());
+        // Iniciar transacción
+
+        // Añadir ingredientes a la tabla del medio
+
+        // Calcular calorías
+
+        // Almacenar receta
+
+        // Fin transacción
     }
 
     /**
@@ -61,5 +78,16 @@ class RecipeController extends Controller
     public function destroy(RecipeModel $recipeModel)
     {
         //
+    }
+
+    public function validateSelectedIngredients($select){
+        // dd($select->all());
+    }
+
+    public function viewCreateRecipe(){
+        ($_GET['type']) ? $type = $_GET['type'] : $type = '';
+        ($_GET['message']) ? $message = $_GET['message'] : $message = '';
+
+        return redirect("/account/create/recipes")->with($type, $message);
     }
 }
