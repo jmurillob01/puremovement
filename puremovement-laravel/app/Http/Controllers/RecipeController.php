@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RecipeModel;
+use App\Models\Recipe_IngredientModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\MyCustomException;
@@ -45,7 +46,7 @@ class RecipeController extends Controller
             // dd($request->all());
 
             // Iniciar transacción
-            // DB::beginTransaction();
+            DB::beginTransaction();
 
             // Calcular calorías
             $calories = $this->calculateKcal($request->selected_Ingredients);
@@ -59,25 +60,39 @@ class RecipeController extends Controller
                     'picture' => $request->picture,
                     'id_user' => $request->id_user
                 ]);
-
-                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'success',"message" => "Receta creada correctamente"]);
             }catch (MyCustomException $cus) { // custom
-                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error',"message" =>  $cus->getMessage()]);
+                DB::rollback(); // Detenemos transacción
+                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error',"message" => "Error al crear la receta"]);
             }          
-
-            // Añadir ingredientes a la tabla del medio
-            // try{
-            //     foreach($request->selected_Ingredients as $key => $value){
-            //         $ingredient = new IngredientModel;
-
-            //     }
-            // }catch (MyCustomException $cus) { // CreateUserException
-            //         // return redirect()->route('user.viewAccessUserRegister', ["type" => 'error',"message" =>  $CUE->getMessage()]);
-            // }
-
             
+            $ingredient = new IngredientController;
+            $recipe_ingredient = new Recipe_IngredientController;
+            
+            // Añadir ingredientes y receta a la tabla relacionada
+            try{
+                $recipe = $this->showLastRecipeByUserID($request->id_user);
+                $recipeId = $recipe[0]['id'];
 
+                foreach($request->selected_Ingredients as $key => $value){
+                    $getIngredient = $ingredient->show($value);
+                    $ingredientId = $getIngredient[0]['id'];
+                    
+                    $Recipe_IngredientModel = new Recipe_IngredientModel;
+                    $myRequest = new Request();
+
+                    $Recipe_IngredientModel -> id_recipe = $recipeId;
+                    $Recipe_IngredientModel -> id_ingredient = $ingredientId;
+
+                    $myRequest -> request->add(['id_recipe'=>$Recipe_IngredientModel->id_recipe, 'id_ingredient'=>$Recipe_IngredientModel->id_ingredient]);
+                    $recipe_ingredient->customStore($myRequest);
+                }
+            }catch (MyCustomException $cus) { // custom
+                DB::rollback(); // Detenemos transacción
+                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error',"message" =>  "Error al añadir ingredientes"]);
+            }
             // Fin transacción
+            DB::commit();
+            return redirect()->route('recipe.viewCreateRecipe', ["type" => 'success',"message" =>  "Receta creada correctamente"]);
         } else {
             return redirect()->route('recipe.viewCreateRecipe', ["type" => "error", "message" => "Debe seleccionar al menos un ingrediente"]);
         }
@@ -86,9 +101,18 @@ class RecipeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RecipeModel $recipeModel)
+    public function show($id)
     {
-        //
+         $recipe = RecipeModel::where('id','=',$id)->get()->toArray();
+
+        return $recipe;
+    }
+
+    public function showLastRecipeByUserID($id_user)
+    {
+        $recipe = RecipeModel::where('id_user','=',$id_user)->orderBy('id', 'desc')->take(1)->get()->toArray();
+        
+        return $recipe;
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe_IngredientModel;
 use Illuminate\Http\Request;
+use App\Exceptions\MyCustomException;
+
 
 class Recipe_IngredientController extends Controller
 {
@@ -18,9 +20,9 @@ class Recipe_IngredientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Recipe_IngredientModel $Recipe_IngredientModel)
     {
-        //
+        
     }
 
     /**
@@ -28,7 +30,25 @@ class Recipe_IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // try{
+        //     Recipe_IngredientModel::create([
+    
+        //     ]);
+        // }catch(MyCustomException $cus){
+
+        // }
+    }
+
+    public function customStore(Request $request)
+    {
+        try{
+            Recipe_IngredientModel::create([
+                'id_recipe' => $request->request->get('id_recipe'),
+                'id_ingredient' => $request->request->get('id_ingredient')
+            ]);
+        }catch(MyCustomException $cus){
+            throw(new MyCustomException('Error al añadir ingredientes'));
+        }
     }
 
     /**
