@@ -4,15 +4,21 @@ html{
 }
 
 body {
-    background: rgb(145, 142, 221);
-    background: radial-gradient(circle, rgba(145, 142, 221, 1) 0%, rgba(192, 192, 244, 1) 100%);
+    /* background: rgb(145, 142, 221);
+    background: radial-gradient(circle, rgba(145, 142, 221, 1) 0%, rgba(192, 192, 244, 1) 100%); */
+    background-color: white !important;
 }
 
 /* No es buena práctica pero no me deja sobreescribir el color del nav */
 #navbar-navbar{ 
-    background-color: #eeeded !important;
+    /* background-color: #eeeded; */
+    background-color: white !important;
 }
 
+.logo{
+    margin-left: 10px;
+    max-width: 25px;
+}
 .navbar-nav{
     display: flex;
     align-items: center;
@@ -24,7 +30,8 @@ body {
 
 .navbar-buttom{
     border: 0px;
-    background-color: #eeeded;
+     /* background-color: #eeeded; */
+    background-color: white;
 }
 
 /* .bi-person-circle{
@@ -34,6 +41,7 @@ body {
 .carousel-item img {
     width: 100%;
     max-height: 350px;
+    min-height: 150px;
 }
 
 #div-graphic,
@@ -44,10 +52,10 @@ body {
 }
 
 #div-graphic-calculate-buttons {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
-    /* height: 400px; */
 }
 
 #div-calculate{
@@ -111,6 +119,38 @@ body {
     margin-bottom: 10px;
 }
 
+.register-button{
+    /* border: 2px solid #000000; */
+    /* border-radius: 20px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 5px;
+
+    padding: 15px;
+    /* box-shadow: 0px 0px 40px rgba(0, 0, 0, 1); */
+    
+    margin: 40px !important;
+}
+
 #div-recipe-ranking{
     margin: 20px 0px;
+}
+
+footer{
+    height: 100px;
+    background-color: #000000;
+    margin-top: 30px;
+}
+
+.footer-container{
+    height: 100px;
+    background-color: #000000;
+    color: #F4F6F9;
+    display: flex;
+justify-content: center;
+    align-items: center;
 }
