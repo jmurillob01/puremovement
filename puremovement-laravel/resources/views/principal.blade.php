@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{csrf_token()}}" />
     <title>Puremovement</title>
 
     <!-- links -->
@@ -58,9 +59,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul id="navbar-nav" class="navbar-nav">
                         <!-- Ya sea iniciar como cerrar sesión -->
-                        <li class="nav-item">
-                            <!-- <a class="nav-link" href="#">Sesión</a> -->
-                        </li>
+                        <!-- <li class="nav-item">
+                            test
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -74,31 +75,20 @@
                 <div class="carousel-item active">
                     <img src="{{url('src/banner1.jpg')}}" class="d-block w-100" alt="...">
                 </div>
-                <!-- <div class="carousel-item">
-                    <img src="{{url('src/Carrousel_2.jpg')}}" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{url('src/Carrousel_3.jpg')}}" class="d-block w-100" alt="...">
-                </div> -->
             </div>
-            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button> -->
         </div>
 
         <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
-        <div id="div-graphic-calculate-buttons" class="container">
-             <!-- <div id="div-buttons" class="div-buttons row">  row col-12 col-md-6
-                <button type="button" id="my-recipes" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Mis recetas</button>
-                <button type="button" id="user-management" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Gestión Usuario</button>
-                <button type="button" id="update-data" class="btn btn-primary btn-principal btn-box btn-access col-6 col-md-4">Actualizar Datos</button>
-            </div> -->
+        <div id="div-graphic-calculate-buttons" class="container"></div>
+        <div class="user-content row">
+            <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:200px" -->
+                <canvas id="myChart" width="400" height="100" class="myChart"></canvas>
+            </div>
+            <div class="col-12 col-md-4 p-5">
+                dasdasd
+            </div>
         </div>
+
 
         <!-- <div id="div-recipe-ranking" class="row container">
             <div id="div-ranking" class="col-12">
@@ -112,12 +102,13 @@
     <footer class="text-center text-lg-start bg-white text-muted">
         <!-- Copyright -->
         <div class="footer-container copyright text-center p-4">
-            © 2023 Copyright: 
+            © 2023 Copyright:
             <a class="text-reset fw-bold"> Javier Murillo Burgos</a>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{url('js/utils.js')}}"></script>
     <script src="{{url('js/principal.js')}}" type="module"></script>
 

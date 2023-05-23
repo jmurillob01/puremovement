@@ -43,7 +43,6 @@ class RecipeController extends Controller
         // Comprobar que al menos tengamos un ingrediente
 
         if ($this->validateSelectedIngredients($request->selected_Ingredients)) {
-            // dd($request->all());
 
             // Iniciar transacción
             DB::beginTransaction();

@@ -5,8 +5,6 @@ Recipes
 @endsection
 
 @section('content')
-
-
 <div id="recipe-content" class="container">
     <form name="fRegisterRecipe" id="registerRecipe-form" class="row" action="{{route('recipe.store')}}" method="POST" enctype="multipart/form-data">
         @csrf

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
+use App\Models\DataUserModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +61,8 @@ Route::get('/account/myRecipes', function () {
 Route::resource('user', UserController::class);
 Route::resource('recipe', RecipeController::class);
 Route::resource('ingredient', IngredientController::class);
+Route::resource('data_user', DataUserController::class);
+
 
 // Funciones acceso
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método
@@ -76,3 +80,5 @@ Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->n
 Route::get('validateSelectedIngredients', [RecipeController::class, 'validateSelectedIngredients'])->name('recipe.validateSelectedIngredients');
 Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('recipe.calculateKcal');
 
+// Usuario
+Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');
