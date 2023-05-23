@@ -7,8 +7,9 @@ import MessageException from "/js/class/messageException.js";
 
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
-            acountAccessNav();
+            acountAccessNav(sessionStorage.getItem("id"));
             // toggleNavButtons();
+            userDataStats();
             // La sesión está habilitada, añadimos la funcionalidad.
             // sessionStorage.removeItem("nombre");
         } else {
@@ -26,35 +27,7 @@ import MessageException from "/js/class/messageException.js";
     }
 }())
 
-// Función para asignar a todos los botones el requerimiento de iniciar sesión.
-// function sessionRequired() {
-//     let messageException = new MessageException("Requiere sesión", "Para acceder a esta sección requieres de una cuenta.");
-//     let buttons = document.getElementsByClassName("btn-access");
-
-//     for (let btn of buttons) {
-//         btn.addEventListener("click", throwModalWarning(messageException, btn));
-//     }
-
-//     acountAccessModal();
-// }
-
-// Función para mostrar el botón de acceso de cuenta en modal
-// function acountAccessModal() {
-//     let modalFooter = document.getElementsByClassName("modal-footer")[0];
-
-//     let accountBtn = document.createElement("button");
-//     accountBtn.className = ("btn btn-primary btn-principal");
-//     accountBtn.innerHTML = ("Acceso a cuenta");
-
-//     // Redirigimos a la pestaña de acceso de usuario
-//     accountBtn.addEventListener("click", function () {
-//         window.location.assign("/user/register");
-//     });
-
-//     modalFooter.appendChild(accountBtn);
-// }
-
-function withoutSession(){
+function withoutSession() {
     let divFather = document.getElementById('div-graphic-calculate-buttons');
 
     displayForm(divFather);
@@ -142,7 +115,7 @@ function displayTableForm(divFather) {
     divFather.appendChild(container);
 }
 
-function displayRegisterButton(divFather){
+function displayRegisterButton(divFather) {
     let container = document.createElement("div");
 
     // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
@@ -271,9 +244,78 @@ function clearResultImc() {
     }
 }
 
-function createAccount(){
+function createAccount() {
     let button = document.getElementById("redirect-register");
-    button.addEventListener("click", redirect =>{
+    button.addEventListener("click", redirect => {
         window.location.assign("/user/register");
     });
+}
+
+function createChart(data_user, labels) {
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'IMC',
+            data: data_user,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+}
+
+function userDataStats(){
+    let searchData = new FormData();
+    let id = sessionStorage.getItem("id");
+    searchData.append('id', id);
+
+    let labels = [];
+    let data_user = [];
+
+    // let token = document.querySelector('meta[name="csrf-token"]').content;
+
+    try {
+        fetch('/userDataStats', {
+            method: 'post',
+            headers: {
+                'url': '/userDataStats',
+                'X-CSRF-TOKEN':  document.querySelector('meta[name="csrf-token"]').content
+                // "X-CSRF-Token": document.querySelector('input[name=_token]').value
+            },
+            body: searchData
+        }).then((response) => {
+            if (!response.ok){ // Si no tiene datos tenemos que llenar el array de datos a 0
+                data_user = [0,0,0,0,0];
+                labels = ['-','-','-','-','-'];
+            }else{
+                console.log("Datos")
+            }
+            // if (!response.ok) {
+            //     // No se han obtenido datos
+            //     // throw new Error("Network response was not OK");
+            //     console.log(response);
+            // }
+            return response.json();
+        }).then((data) => {
+            // Función para pintar los resultados en el select
+            console.log(data);
+        }).catch((error) => {
+            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+        })
+
+        createChart(data_user, labels);
+
+    } catch (error) {
+        console.error(error);
+    }
 }

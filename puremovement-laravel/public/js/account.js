@@ -3,8 +3,8 @@
 (function checkSession() {
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
-            acountAccessNav();
-            toggleNavButtons();
+            acountAccessNav(sessionStorage.getItem("id"));
+            // toggleNavButtons();
             getIngredientsBackEnd();
         } else {
             window.location.assign('/');

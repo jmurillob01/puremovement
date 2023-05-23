@@ -13,22 +13,15 @@ function throwModalWarning(message, btn) {
 }
 
 // Función para mostrar el botón de acceso de cuenta en el nav
-function acountAccessNav() {
+function acountAccessNav(id) {
     let navMenu = document.getElementById("navbar-nav");
 
     let li = document.createElement("li");
     li.className = ("class", "nav-item dropdown");
-    li.innerHTML = (`
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-        </a>
-        <ul class="dropdown-menu">
-            <li><button class="dropdown-item">Ajustes de cuenta</button></li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-            <li><button id="close-session" class="dropdown-item">Cerrar sesión</button></li>
-        </ul>
+    
+    navMenu.innerHTML = (`
+        <li class="nav-item nav-custom-buttons">${id}</li>
+        <li class="nav-item nav-custom-buttons">Cerrar sesión</li>
     `);
     navMenu.appendChild(li);
 }
