@@ -52,6 +52,10 @@ Route::get('/account/create/ingredients', function () {
     return view('account_createIngredients');
 });
 
+Route::get('/account/myRecipes', function () {
+    return view('account_userRecipes');
+});
+
 Route::resource('user', UserController::class);
 Route::resource('recipe', RecipeController::class);
 Route::resource('ingredient', IngredientController::class);

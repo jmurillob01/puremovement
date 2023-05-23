@@ -8,14 +8,15 @@ import MessageException from "/js/class/messageException.js";
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
             acountAccessNav();
-            toggleNavButtons();
+            // toggleNavButtons();
             // La sesión está habilitada, añadimos la funcionalidad.
             // sessionStorage.removeItem("nombre");
         } else {
             // La sesión no está habilitada, añadimos el requerimiento de inicio de sesión.
-            sessionRequired();
-            displayForm();
+            // sessionRequired();
+            withoutSession();
             calculateImc();
+            createAccount();
             // displayImcData();
 
             // sessionStorage.setItem("nombre", "javi");
@@ -26,41 +27,47 @@ import MessageException from "/js/class/messageException.js";
 }())
 
 // Función para asignar a todos los botones el requerimiento de iniciar sesión.
-function sessionRequired() {
-    let messageException = new MessageException("Requiere sesión", "Para acceder a esta sección requieres de una cuenta.");
-    let buttons = document.getElementsByClassName("btn-access");
+// function sessionRequired() {
+//     let messageException = new MessageException("Requiere sesión", "Para acceder a esta sección requieres de una cuenta.");
+//     let buttons = document.getElementsByClassName("btn-access");
 
-    for (let btn of buttons) {
-        btn.addEventListener("click", throwModalWarning(messageException, btn));
-    }
+//     for (let btn of buttons) {
+//         btn.addEventListener("click", throwModalWarning(messageException, btn));
+//     }
 
-    acountAccessModal();
-}
+//     acountAccessModal();
+// }
 
 // Función para mostrar el botón de acceso de cuenta en modal
-function acountAccessModal() {
-    let modalFooter = document.getElementsByClassName("modal-footer")[0];
+// function acountAccessModal() {
+//     let modalFooter = document.getElementsByClassName("modal-footer")[0];
 
-    let accountBtn = document.createElement("button");
-    accountBtn.className = ("btn btn-primary btn-principal");
-    accountBtn.innerHTML = ("Acceso a cuenta");
+//     let accountBtn = document.createElement("button");
+//     accountBtn.className = ("btn btn-primary btn-principal");
+//     accountBtn.innerHTML = ("Acceso a cuenta");
 
-    // Redirigimos a la pestaña de acceso de usuario
-    accountBtn.addEventListener("click", function () {
-        window.location.assign("/user/register");
-    });
+//     // Redirigimos a la pestaña de acceso de usuario
+//     accountBtn.addEventListener("click", function () {
+//         window.location.assign("/user/register");
+//     });
 
-    modalFooter.appendChild(accountBtn);
-}
+//     modalFooter.appendChild(accountBtn);
+// }
 
-function displayForm() {
+function withoutSession(){
     let divFather = document.getElementById('div-graphic-calculate-buttons');
-    let buttons = divFather.lastElementChild;
+
+    displayForm(divFather);
+    displayTableForm(divFather);
+    displayRegisterButton(divFather)
+
+}
+function displayForm(divFather) {
     let container = document.createElement("div");
 
     // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
     container.setAttribute("id", "div-calculate");
-    container.setAttribute("class", "col-12 col-md-6"); // 
+    container.setAttribute("class", "col-10 col-md-5");
 
     container.innerHTML = (`
     <div id="form-calculate-imc" class="container calculate-content ">
@@ -89,14 +96,66 @@ function displayForm() {
 
             <div id="access-submit" class="mb-3 col-12 col-md-12 d-flex justify-content-around">
                 <button id="calculate-imc" class="btn btn-primary" type="button">Calcular</button>
-                <button id="information-imc" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imc-modal" type="button">Información</button>
             </div>
         </form>
     </div>
     `);
+    divFather.appendChild(container);
+}
+
+function displayTableForm(divFather) {
+    let container = document.createElement("div");
+
+    // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
+    container.setAttribute("id", "div-calculate");
+    container.setAttribute("class", "col-10 col-md-4");
+
+    container.innerHTML = (`
+    <p>Para adultos de 20 años o más, el IMC se interpreta usando categorías de estado de peso estándar. Estas categorías son iguales para hombres y mujeres de todos los tipos de cuerpo y edades.</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">IMC</th>
+                    <th scope="col">Nivel de peso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Por debajo de 18.5</td>
+                    <td>Bajo peso</td>
+                </tr>
+                <tr>
+                    <td>18.5 – 24.9</td>
+                    <td>Normal</td>
+                </tr>
+                <tr>
+                    <td>25.0 – 29.9</td>
+                    <td>Sobrepeso</td>
+                </tr>
+                <tr>
+                    <td>30.0 o más</td>
+                    <td>Obesidad</td>
+                </tr>
+            </tbody>
+        </table>
+    `);
+    divFather.appendChild(container);
+}
+
+function displayRegisterButton(divFather){
+    let container = document.createElement("div");
+
+    // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
+    container.setAttribute("id", "div-calculate");
+    container.setAttribute("class", "register-button col-8 col-md-4");
+
+    container.innerHTML = (`
+    <hr class="hr-form">
+    <p>Herramientas exclusivas para usuarios registrados</p>
+    <button type="button" id="redirect-register" class="btn btn-info">Crear cuenta</button>
+    `);
 
     divFather.appendChild(container);
-    divFather.insertBefore(container, buttons);
 }
 
 function calculateImc() {
@@ -133,7 +192,6 @@ function calculateImc() {
     });
 }
 
-// TODO : En tiempo real controlar que no se introduzcan letras ni símbolos. Facilitará la validación
 function validateImcData() {
     let weight = document.getElementById("user-weight").value;
     let height = document.getElementById("user-height").value;
@@ -211,4 +269,11 @@ function clearResultImc() {
     } catch (error) {
         // No sucede nada
     }
+}
+
+function createAccount(){
+    let button = document.getElementById("redirect-register");
+    button.addEventListener("click", redirect =>{
+        window.location.assign("/user/register");
+    });
 }
