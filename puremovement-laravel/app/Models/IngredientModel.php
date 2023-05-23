@@ -16,4 +16,9 @@ class IngredientModel extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'fats_100g','proteins_100g', 'carbs_100g', 'kcal_100g', 'picture'];
+
+    // Muchos a muchos
+    public function recipes(){
+        return $this->belongsToMany('App\Models\RecipeModel');
+    }
 }

@@ -57,7 +57,6 @@ function validateFile(fileInput) {
 }
 
 function displayImg() {
-
     let selectFile = document.querySelector("#recipe-image");
     let imgFile = (selectFile.files)[0];
 
@@ -132,19 +131,21 @@ function getIngredientsBackEnd(search_input = "") {
             // Función para pintar los resultados en el select
             showResults(data);
         }).catch((error) => {
-            console.error("Error fetch: " , error)
+            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
         console.error(error);
     }
 }
 
-function showResults(data){
-    let select = document.getElementById('all-ingredients');
+function showResults(data) {
+
+    try{
+        let select = document.getElementById('all-ingredients');
 
     removeResults(select);
 
-    for (let element in data){
+    for (let element in data) {
         let option = document.createElement('option');
         let obj = data[element];
         option.value = (obj.id);
@@ -152,10 +153,94 @@ function showResults(data){
 
         select.appendChild(option);
     }
+    }catch(error){
+        // console.error(error);
+    }
+    
 }
 
-function removeResults(select){
-    while(select.childElementCount > 0){
-        select.removeChild(select.lastChild);
+function removeResults(select) {
+    try {
+        while (select.childElementCount > 0) {
+            select.removeChild(select.lastChild);
+        }
+    } catch (error) {
+        // console.error(error);
+    }
+
+}
+
+function addIngredient() {
+    let select_origin = document.getElementById("all-ingredients");
+    let select_destination = document.getElementById("selected-ingredients");
+
+    let destination_values = [];
+
+    try {
+        // Obtenemos las opciones seleccionadas
+        for (let option of select_destination.options) {
+            destination_values.push(option.value);
+        }
+    } catch (error) {
+        console.error(error)
+    }
+
+
+    // Opciones que queremos añadir
+    for (let option of select_origin.options) {
+        if (option.selected) {
+            if (destination_values.indexOf(option.value) == -1) {
+                let new_option = document.createElement('option');
+                new_option.value = (option.value);
+                new_option.innerHTML = (option.innerHTML);
+                select_destination.appendChild(new_option);
+            }
+        }
     }
 }
+
+function removeIngredient() {
+    let select_destination = document.getElementById("selected-ingredients");
+    let list = {};
+
+    for (let option of select_destination.options) {
+        if (!option.selected) {
+            list[option.value] = option.innerHTML;
+        }
+    }
+
+    select_destination.innerHTML = ("");
+
+    for (let element in list) {
+        let new_option = document.createElement('option');
+        new_option.value = (element);
+        new_option.innerHTML = (list[element]);
+        select_destination.appendChild(new_option);
+    }
+}
+
+function submitFormRecipe() {
+
+    let select_destination = document.getElementById("selected-ingredients");
+
+    for (let option of select_destination) {
+        option.selected = true;
+    }
+}
+
+// Función para pasar el id del usuario de la sesión
+(function sessionForm() {
+    try {
+        let form = document.getElementById("registerRecipe-form");
+
+        let input = document.createElement("input");
+
+        input.type = ('hidden');
+        input.name = ('id_user');
+        input.value = ((sessionStorage.getItem('id')));
+
+        form.appendChild(input);
+    } catch (error) {
+        console.error(error);
+    }
+})();
