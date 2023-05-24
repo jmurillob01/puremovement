@@ -9,7 +9,9 @@ import MessageException from "/js/class/messageException.js";
         if (sessionStorage.getItem("id")) {
             acountAccessNav(sessionStorage.getItem("id"));
             // toggleNavButtons();
+            canvasContainer();
             userDataStats();
+            userDataForm();
             // La sesión está habilitada, añadimos la funcionalidad.
             // sessionStorage.removeItem("nombre");
         } else {
@@ -251,36 +253,60 @@ function createAccount() {
     });
 }
 
+function canvasContainer() {
+    let container = document.createElement("div");
+    let main = document.getElementsByTagName("main")[0];
+
+    container.className = ("user-content row m-3");
+
+    container.innerHTML = (`
+    <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:200px" -->
+        <canvas id="myChart" width="400" height="200" class="myChart"></canvas>
+    </div>
+    <div id="user-data-form" class="col-12 col-md-5 p-5 container">
+        
+    </div>
+    `);
+
+    main.appendChild(container);
+}
+
 function createChart(data_user, labels) {
     const ctx = document.getElementById('myChart');
-
+    Chart.defaults.font.size=12;
     new Chart(ctx, {
         type: 'line',
         data: {
-          labels: labels,
-          datasets: [{
-            label: 'IMC',
-            data: data_user,
-            borderWidth: 1
-          }]
+            labels: labels,
+            datasets: [{
+                label: 'Peso',
+                data: data_user,
+                borderWidth: 1
+            }]
         },
         options: {
-          scales: {
-            y: {
-              beginAtZero: true
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 80,
+                        minRotation: 70
+                    }
+                }
             }
-          }
         }
-      });
+    });
 }
 
-function userDataStats(){
+function userDataStats() {
     let searchData = new FormData();
     let id = sessionStorage.getItem("id");
     searchData.append('id', id);
 
-    let labels = [];
-    let data_user = [];
+    var labels = [];
+    var data_user = [];
 
     // let token = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -289,33 +315,84 @@ function userDataStats(){
             method: 'post',
             headers: {
                 'url': '/userDataStats',
-                'X-CSRF-TOKEN':  document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 // "X-CSRF-Token": document.querySelector('input[name=_token]').value
             },
             body: searchData
         }).then((response) => {
-            if (!response.ok){ // Si no tiene datos tenemos que llenar el array de datos a 0
-                data_user = [0,0,0,0,0];
-                labels = ['-','-','-','-','-'];
-            }else{
-                console.log("Datos")
+            if (!response.ok) { // Si no tiene datos tenemos que llenar el array de datos a 0
+                data_user = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                labels = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
+            } else {
+                return response.json();
             }
-            // if (!response.ok) {
-            //     // No se han obtenido datos
-            //     // throw new Error("Network response was not OK");
-            //     console.log(response);
-            // }
-            return response.json();
         }).then((data) => {
-            // Función para pintar los resultados en el select
-            console.log(data);
+            for (let row in data) {
+                let obj = data[row];
+                let date = obj.date.split(" ")[0];
+                data_user.push(obj.weight);
+                labels.push(date);
+            }
+
+            if (data_user.length < 10) {
+                for (let i = data_user.length; i < 10; i++) {
+                    console.log(i);
+                    data_user.unshift(0);
+                    labels.unshift(0);
+                }
+            }
+            console.log(data_user);
+            console.log(labels);
+
+            // Datos a fuego, borrar
+            // data_user = [50, 55, 50, 55, 50, 55, 55, 55, 55, 65]
+            // labels = ['2023-05-15', '2023-05-17', '2023-05-18', '2023-05-19', '2023-05-20', '2023-05-21', '2023-05-22', '2023-05-23', '2023-05-24', '2023-05-25']
+
+            createChart(data_user, labels);
         }).catch((error) => {
             console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
 
-        createChart(data_user, labels);
+
+
+
+
+
 
     } catch (error) {
         console.error(error);
     }
+}
+
+function userDataForm() {
+    let container = document.getElementById("user-data-form");
+
+    let div_form = document.createElement("div");
+
+    let token = document.querySelector("meta[name='csrf-token']").content;
+    let id = sessionStorage.getItem('id');
+
+    div_form.innerHTML = (`
+    <form id='userData-form' class='row' name='fUserData' action="/userDataStatsPost" method='POST'>
+        <input type="hidden" name="_token" value="${token}" />
+        <input type="hidden" name="id_user" value="${id}"></input>
+        <div class="container col-12 col-md-12 header-form">
+            <label for="user-weight" class="form-label"><h1 class="col-12 col-md-12">Registrar Peso</h1></label>
+        </div>
+
+        <div class="col-12 col-md-12">
+            <hr>
+        </div>
+        <div class="col-12 col-md-12 ">
+            <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
+            <div id="user-weight-feedback" class="is-invalid-div container form-feedback"></div>
+        </div>
+
+        <div id="access-submit" class="mb-3 col-12 col-md-12 d-flex justify-content-around">
+            <button id="calculate-imc" class="btn btn-primary" type="submit">Registrar</button>
+        </div>
+    </form>
+    `);
+
+    container.appendChild(div_form);
 }

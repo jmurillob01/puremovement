@@ -15,5 +15,5 @@ class DataUserModel extends Model
      // No usamos marca de tiempo
      public $timestamps = false;
 
-     protected $fillable = ['height', 'weight', 'date','id_user'];
+     protected $fillable = ['weight','id_user'];
 }

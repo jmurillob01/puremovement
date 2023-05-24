@@ -143,16 +143,16 @@ function showResults(data) {
     try{
         let select = document.getElementById('all-ingredients');
 
-    removeResults(select);
+        removeResults(select);
 
-    for (let element in data) {
-        let option = document.createElement('option');
-        let obj = data[element];
-        option.value = (obj.id);
-        option.innerHTML = (obj.name);
+        for (let element in data) {
+            let option = document.createElement('option');
+            let obj = data[element];
+            option.value = (obj.id);
+            option.innerHTML = (obj.name);
 
-        select.appendChild(option);
-    }
+            select.appendChild(option);
+        }
     }catch(error){
         // console.error(error);
     }

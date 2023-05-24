@@ -78,17 +78,33 @@
             </div>
         </div>
 
-        <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
-        <div id="div-graphic-calculate-buttons" class="container"></div>
-        <div class="user-content row">
-            <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:200px" -->
-                <canvas id="myChart" width="400" height="100" class="myChart"></canvas>
+        <div class="col-12 col-md-8 container mt-5">
+            @if (Session::get('error'))
+            <div class="alert alert-danger">
+                <strong>{{Session::get('error')}}</strong><br>
             </div>
-            <div class="col-12 col-md-4 p-5">
-                dasdasd
-            </div>
+            @endif
         </div>
 
+        <div class="col-12 col-md-8 container">
+            @if (Session::get('success'))
+            <div class="alert alert-success">
+                <strong>{{Session::get('success')}}</strong><br>
+            </div>
+            @endif
+        </div>
+
+        <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
+        <div id="div-graphic-calculate-buttons" class="container"></div>
+        <!-- 
+        <div class="user-content row">
+            <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> style="width: 600px; height:200px"
+                <canvas id="myChart" width="400" height="100" class="myChart"></canvas>
+            </div>
+            <div id="user-data-form" class="col-12 col-md-4 p-5">
+                dasdasd
+            </div>
+        </div> -->
 
         <!-- <div id="div-recipe-ranking" class="row container">
             <div id="div-ranking" class="col-12">

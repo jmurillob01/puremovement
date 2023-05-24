@@ -82,3 +82,5 @@ Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('r
 
 // Usuario
 Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');
+Route::post('/userDataStatsPost', [DataUserController::class, 'userDataDate'])->name('data_user.userDataDate');
+Route::get('viewPrincipal', [DataUserController::class, 'viewPrincipal'])->name('data_user.viewPrincipal');
