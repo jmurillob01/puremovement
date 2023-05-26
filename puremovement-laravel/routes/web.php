@@ -79,6 +79,8 @@ Route::post('/searchIngredient', [IngredientController::class, 'indexIngredients
 Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->name('recipe.viewCreateRecipe');
 Route::get('validateSelectedIngredients', [RecipeController::class, 'validateSelectedIngredients'])->name('recipe.validateSelectedIngredients');
 Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('recipe.calculateKcal');
+Route::post('/recipesLikeName_limit10', [RecipeController::class, 'recipesLikeName_limit10'])->name('recipe.recipesLikeName_limit10');
+
 
 // Usuario
 Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');

@@ -52,11 +52,23 @@ class RecipeController extends Controller
 
             // Añadir la tabla y el autor, necesito el ID para los ingredientes
             try{
+
+                $picture = null;
+
+                if ($_FILES['picture']['name'] != "") { // Si no está vacío
+
+                    $tempName = $_FILES['picture']['tmp_name'];
+
+                    $pictureBin = file_get_contents($tempName); // Extraemos el contenido del archivo a una variable
+
+                    $picture = base64_encode($pictureBin); // Codifica el archivo a formato base 64
+                }
+
                 RecipeModel::create([
                     'name' => $request->name,
                     'description' =>  $request->description,
                     'total_calories' => $calories,
-                    'picture' => $request->picture,
+                    'picture' => $picture,
                     'id_user' => $request->id_user
                 ]);
             }catch (MyCustomException $cus) { // custom
@@ -175,5 +187,25 @@ class RecipeController extends Controller
         ($_GET['message']) ? $message = $_GET['message'] : $message = '';
 
         return redirect("/account/create/recipes")->with($type, $message);
+    }
+
+    public function recipesLikeName_limit10(){
+
+        $error = ['data' => false];
+        $name = $_POST['search_criteria'];
+        $response = "";
+        
+        try {
+            $queryResult = RecipeModel::where('name', 'like', $name.'%')->take(10)->get();
+            // foreach ($queryResult as $clave => $valor) {
+                
+            // }
+            echo json_encode($queryResult);
+            // $this-> base64ImageJson($queryResult);
+        } catch (\Throwable $th) {
+            // echo json_encode($error);
+        }
+        // echo json_encode($name);
+        // dd($name);
     }
 }

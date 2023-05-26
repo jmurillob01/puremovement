@@ -12,6 +12,11 @@ import MessageException from "/js/class/messageException.js";
             canvasContainer();
             userDataStats();
             userDataForm();
+
+            getRecipesBackEnd("");
+            createContainerRecipes("recipes-container"); // Si cambiamos el id habrá que cambiarlo en otros métodos showRecipes()
+            toggleRecipes("recipes-container", true);
+
             // La sesión está habilitada, añadimos la funcionalidad.
             // sessionStorage.removeItem("nombre");
         } else {
@@ -261,7 +266,7 @@ function canvasContainer() {
 
     container.innerHTML = (`
     <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:200px" -->
-        <canvas id="myChart" width="400" height="200" class="myChart"></canvas>
+        <canvas id="myChart" width="500" height="250" class="myChart"></canvas>
     </div>
     <div id="user-data-form" class="col-12 col-md-5 p-5 container">
         
@@ -347,18 +352,14 @@ function userDataStats() {
             // Datos a fuego, borrar
             // data_user = [50, 55, 50, 55, 50, 55, 55, 55, 55, 65]
             // labels = ['2023-05-15', '2023-05-17', '2023-05-18', '2023-05-19', '2023-05-20', '2023-05-21', '2023-05-22', '2023-05-23', '2023-05-24', '2023-05-25']
-
             createChart(data_user, labels);
         }).catch((error) => {
+            data_user = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            labels = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
+            createChart(data_user, labels);
+
             console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
-
-
-
-
-
-
-
     } catch (error) {
         console.error(error);
     }
@@ -395,4 +396,14 @@ function userDataForm() {
     `);
 
     container.appendChild(div_form);
+}
+
+function createContainerRecipes(id){
+    let main = document.getElementsByTagName("main")[0];
+
+    let container = document.createElement("div");
+    container.id = (id);
+    container.className = ("container col-12");
+
+    main.appendChild(container);
 }
