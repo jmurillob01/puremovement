@@ -52,7 +52,7 @@
                         <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5v-1zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z" />
                     </svg> -->
                     <img class="logo" src="{{url('src/logo.png')}}" alt="logo-puremovement">
-                    <button class="navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+                    <button tabindex="1" class="navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
                 </div>
 
                 <!-- Crear lista desplegable con opciones de cuenta, solo con sesión iniciada -->

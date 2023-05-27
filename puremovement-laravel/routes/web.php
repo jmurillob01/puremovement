@@ -80,6 +80,8 @@ Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->n
 Route::get('validateSelectedIngredients', [RecipeController::class, 'validateSelectedIngredients'])->name('recipe.validateSelectedIngredients');
 Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('recipe.calculateKcal');
 Route::post('/recipesLikeName_limit10', [RecipeController::class, 'recipesLikeName_limit10'])->name('recipe.recipesLikeName_limit10');
+Route::post('/recipesLikeName_limit10_user', [RecipeController::class, 'recipesLikeName_limit10_user'])->name('recipe.recipesLikeName_limit10_user');
+Route::post('/deleteRecipeConfirmed', [RecipeController::class, 'destroy'])->name('recipe.destroy');
 
 
 // Usuario

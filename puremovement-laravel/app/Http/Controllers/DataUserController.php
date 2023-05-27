@@ -107,10 +107,12 @@ class DataUserController extends Controller
     {
 
         $request->validate([ // Mostrar los datos si no es válido
-            'weight' => 'required', "digits_between:30,200"
+            'weight' => 'required'
         ]);
 
         try {
+
+            // Se puede controlar con excepción que no meta valores inferiores
             $user = new DataUserModel();
             $user->weight = $request->weight;
             $user->id_user = $request->id_user;

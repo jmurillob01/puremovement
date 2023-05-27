@@ -4,7 +4,7 @@
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
             acountAccessNav(sessionStorage.getItem("id"));
-            // toggleNavButtons();
+            toggleNavButtons();
             getIngredientsBackEnd();
         } else {
             window.location.assign('/');
@@ -24,7 +24,7 @@ function validateFile(fileInput) {
     blockBtn("make-recipe");
 
     // Formatos permitidos
-    let allowedExtensions = ["png", "jpg", "jpeg",];
+    let allowedExtensions = ["png", "jpg", "jpeg"];
     // Tamaño de la imagen
     let size = 5;
 
@@ -44,7 +44,7 @@ function validateFile(fileInput) {
         let aux = imgName.split('.');
         aux = aux[aux.length - 1];
 
-        if (allowedExtensions.includes(aux)) {
+        if (allowedExtensions.includes(aux)) { // TODO: Nombre vacío válido
             displayImg()
 
             imgFeedback("");
@@ -131,10 +131,10 @@ function getIngredientsBackEnd(search_input = "") {
             // Función para pintar los resultados en el select
             showResults(data);
         }).catch((error) => {
-            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+            // console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 }
 
@@ -241,6 +241,6 @@ function submitFormRecipe() {
 
         form.appendChild(input);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 })();

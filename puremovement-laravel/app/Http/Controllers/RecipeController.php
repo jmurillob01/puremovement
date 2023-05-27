@@ -51,7 +51,7 @@ class RecipeController extends Controller
             $calories = $this->calculateKcal($request->selected_Ingredients);
 
             // Añadir la tabla y el autor, necesito el ID para los ingredientes
-            try{
+            try {
 
                 $picture = null;
 
@@ -71,39 +71,39 @@ class RecipeController extends Controller
                     'picture' => $picture,
                     'id_user' => $request->id_user
                 ]);
-            }catch (MyCustomException $cus) { // custom
+            } catch (MyCustomException $cus) { // custom
                 DB::rollback(); // Detenemos transacción
-                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error',"message" => "Error al crear la receta"]);
-            }          
-            
+                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error', "message" => "Error al crear la receta"]);
+            }
+
             $ingredient = new IngredientController;
             $recipe_ingredient = new Recipe_IngredientController;
-            
+
             // Añadir ingredientes y receta a la tabla relacionada
-            try{
+            try {
                 $recipe = $this->showLastRecipeByUserID($request->id_user);
                 $recipeId = $recipe[0]['id'];
 
-                foreach($request->selected_Ingredients as $key => $value){
+                foreach ($request->selected_Ingredients as $key => $value) {
                     $getIngredient = $ingredient->show($value);
                     $ingredientId = $getIngredient[0]['id'];
-                    
+
                     $Recipe_IngredientModel = new Recipe_IngredientModel;
                     $myRequest = new Request();
 
-                    $Recipe_IngredientModel -> id_recipe = $recipeId;
-                    $Recipe_IngredientModel -> id_ingredient = $ingredientId;
+                    $Recipe_IngredientModel->id_recipe = $recipeId;
+                    $Recipe_IngredientModel->id_ingredient = $ingredientId;
 
-                    $myRequest -> request->add(['id_recipe'=>$Recipe_IngredientModel->id_recipe, 'id_ingredient'=>$Recipe_IngredientModel->id_ingredient]);
+                    $myRequest->request->add(['id_recipe' => $Recipe_IngredientModel->id_recipe, 'id_ingredient' => $Recipe_IngredientModel->id_ingredient]);
                     $recipe_ingredient->customStore($myRequest);
                 }
-            }catch (MyCustomException $cus) { // custom
+            } catch (MyCustomException $cus) { // custom
                 DB::rollback(); // Detenemos transacción
-                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error',"message" =>  "Error al añadir ingredientes"]);
+                return redirect()->route('recipe.viewCreateRecipe', ["type" => 'error', "message" =>  "Error al añadir ingredientes"]);
             }
             // Fin transacción
             DB::commit();
-            return redirect()->route('recipe.viewCreateRecipe', ["type" => 'success',"message" =>  "Receta creada correctamente"]);
+            return redirect()->route('recipe.viewCreateRecipe', ["type" => 'success', "message" =>  "Receta creada correctamente"]);
         } else {
             return redirect()->route('recipe.viewCreateRecipe', ["type" => "error", "message" => "Debe seleccionar al menos un ingrediente"]);
         }
@@ -114,15 +114,15 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-         $recipe = RecipeModel::where('id','=',$id)->get()->toArray();
+        $recipe = RecipeModel::where('id', '=', $id)->get()->toArray();
 
         return $recipe;
     }
 
     public function showLastRecipeByUserID($id_user)
     {
-        $recipe = RecipeModel::where('id_user','=',$id_user)->orderBy('id', 'desc')->take(1)->get()->toArray();
-        
+        $recipe = RecipeModel::where('id_user', '=', $id_user)->orderBy('id', 'desc')->take(1)->get()->toArray();
+
         return $recipe;
     }
 
@@ -147,7 +147,18 @@ class RecipeController extends Controller
      */
     public function destroy(RecipeModel $recipeModel)
     {
-        //
+        $error = ['data' => false];
+        $id = $_POST['id'];
+        $response = "";
+
+        try {
+            $queryResult = RecipeModel::where('id', $id)->delete();
+
+            echo json_encode("Borrado correctamente");
+        } catch (\Throwable $th) {
+            // Se debería devolver error
+            echo json_encode("");
+        }
     }
 
     /**
@@ -165,11 +176,12 @@ class RecipeController extends Controller
         return $response;
     }
 
-    public function calculateKcal($select){
+    public function calculateKcal($select)
+    {
 
         $total_Kcal = 0;
 
-        foreach($select as $key=> $value){
+        foreach ($select as $key => $value) {
             // dd($select);
             $ingredient = new IngredientController();
 
@@ -189,17 +201,34 @@ class RecipeController extends Controller
         return redirect("/account/create/recipes")->with($type, $message);
     }
 
-    public function recipesLikeName_limit10(){
-
+    public function recipesLikeName_limit10()
+    {
         $error = ['data' => false];
         $name = $_POST['search_criteria'];
+
         $response = "";
-        
+
         try {
-            $queryResult = RecipeModel::where('name', 'like', $name.'%')->take(10)->get();
-            // foreach ($queryResult as $clave => $valor) {
-                
-            // }
+            $queryResult = RecipeModel::where('name', 'like', $name . '%')->take(10)->get();
+
+            echo json_encode($queryResult);
+        } catch (\Throwable $th) {
+            // echo json_encode($error);
+        }
+        // echo json_encode($name);
+        // dd($name);
+    }
+
+    public function recipesLikeName_limit10_user()
+    {
+        $error = ['data' => false];
+        $name = $_POST['search_criteria'];
+        $id = $_POST['id'];
+        $response = "";
+
+        try {
+
+            $queryResult = RecipeModel::where('name', 'like', $name . '%')->where('id_user', $id)->get();
             echo json_encode($queryResult);
             // $this-> base64ImageJson($queryResult);
         } catch (\Throwable $th) {

@@ -8,17 +8,14 @@ import MessageException from "/js/class/messageException.js";
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
             acountAccessNav(sessionStorage.getItem("id"));
-            // toggleNavButtons();
+            toggleNavButtons();
             canvasContainer();
             userDataStats();
             userDataForm();
 
             getRecipesBackEnd("");
             createContainerRecipes("recipes-container"); // Si cambiamos el id habrá que cambiarlo en otros métodos showRecipes()
-            toggleRecipes("recipes-container", true);
-
-            // La sesión está habilitada, añadimos la funcionalidad.
-            // sessionStorage.removeItem("nombre");
+            toggleRecipes("recipes-container");
         } else {
             // La sesión no está habilitada, añadimos el requerimiento de inicio de sesión.
             // sessionRequired();
@@ -341,13 +338,13 @@ function userDataStats() {
 
             if (data_user.length < 10) {
                 for (let i = data_user.length; i < 10; i++) {
-                    console.log(i);
+                    // console.log(i);
                     data_user.unshift(0);
                     labels.unshift(0);
                 }
             }
-            console.log(data_user);
-            console.log(labels);
+            // console.log(data_user);
+            // console.log(labels);
 
             // Datos a fuego, borrar
             // data_user = [50, 55, 50, 55, 50, 55, 55, 55, 55, 65]
@@ -385,7 +382,7 @@ function userDataForm() {
             <hr>
         </div>
         <div class="col-12 col-md-12 ">
-            <input type="number" class="form-control" id="user-weight" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
+            <input type="number" class="form-control" id="user-weight" step="0.01" name="weight" title="weight" placeholder="50Kg" min="30" max="200" required>
             <div id="user-weight-feedback" class="is-invalid-div container form-feedback"></div>
         </div>
 
