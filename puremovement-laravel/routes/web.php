@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\Recipe_IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Models\DataUserModel;
@@ -62,6 +63,7 @@ Route::resource('user', UserController::class);
 Route::resource('recipe', RecipeController::class);
 Route::resource('ingredient', IngredientController::class);
 Route::resource('data_user', DataUserController::class);
+Route::resource('recipe_ingredient', Recipe_IngredientController::class);
 
 
 // Funciones acceso
@@ -74,6 +76,11 @@ Route::post('checkUserLogin', [UserController::class, 'checkUserLogin'])->name('
     // Route::get('createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients'); // Ruta para la función de ese método
 Route::get('account_createIngredients', [IngredientController::class, 'account_createIngredients'])->name('ingredients.account_createIngredients');
 Route::post('/searchIngredient', [IngredientController::class, 'indexIngredientsLike'])->name('ingredients.indexIngredientsLike');
+Route::post('/getIngredient', [IngredientController::class, 'getIngredients'])->name('ingredients.getIngredients');
+
+
+// Relación de ingredientes y recetas
+Route::post('/getIngredientsRecipe', [Recipe_IngredientController::class, 'showIngredients'])->name('recipe_ingredient.showIngredients');
 
 // Funciones recetas
 Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->name('recipe.viewCreateRecipe');
@@ -82,7 +89,7 @@ Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('r
 Route::post('/recipesLikeName_limit10', [RecipeController::class, 'recipesLikeName_limit10'])->name('recipe.recipesLikeName_limit10');
 Route::post('/recipesLikeName_limit10_user', [RecipeController::class, 'recipesLikeName_limit10_user'])->name('recipe.recipesLikeName_limit10_user');
 Route::post('/deleteRecipeConfirmed', [RecipeController::class, 'destroy'])->name('recipe.destroy');
-
+Route::post('/showRecipe', [RecipeController::class, 'showRecipe'])->name('recipe.showRecipe');
 
 // Usuario
 Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');

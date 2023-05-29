@@ -265,10 +265,10 @@ function showRecipesUser(json_recipes) {
 
         // Comprobar si tiene imagen, si no hay se pone una por defecto
         if (obj.picture == null) {
-            picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}' height="250px"></img>`
+            picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}' height="200px"></img>`
         } else {
             // picture = obj.picture;
-            picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name}' height="250px"></img>`
+            picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name}' height="200px"></img>`
             // Hay que decodificar o mejor traerla desde el servidor ? No hace falta, solo es mostrar
         }
 
@@ -303,12 +303,12 @@ function showRecipesUser(json_recipes) {
             id: deleteIds[btnId]
         }
 
-        let btnAux = document.getElementById(deleteIds[btnId]);
+        let btnDelete = document.getElementById(deleteIds[btnId]);
 
-        btnAux.setAttribute("data-bs-target", "#warningModal");
-        btnAux.setAttribute("data-bs-toggle", "modal");
+        btnDelete.setAttribute("data-bs-target", "#warningModal");
+        btnDelete.setAttribute("data-bs-toggle", "modal");
 
-        btnAux.addEventListener("click", myFunc => {
+        btnDelete.addEventListener("click", myFunc => {
             let header = document.getElementById("warningModalLabel");
             header.innerHTML = (message.header);
 
@@ -329,9 +329,8 @@ function showRecipesUser(json_recipes) {
 
             acceptBtn.addEventListener("click", myFunc => {
 
-                // Hacer split, quedarme con la posición [2] y mandarlo
                 try {
-                    let id = message.id.split('-')[2];
+                    let id = message.id.split('-')[2]; // Id de la receta
                     let searchData = new FormData();
                     searchData.append('id', id);
 
@@ -343,14 +342,13 @@ function showRecipesUser(json_recipes) {
                         },
                         body: searchData
                     }).then((response) => {
-                        if(!response.ok){
+                        if (!response.ok) {
                             throw new Error("Network response was not OK");
                         }
                         return response.json();
                     }).then((data) => {
-                        // console.log(data);
-                        location. reload();
                         // Refrescar página
+                        location.reload();
                     }).catch((error) => {
                         console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
                     })
@@ -360,4 +358,167 @@ function showRecipesUser(json_recipes) {
             });
         });
     }
+
+    for (let btnId in viewsIds) {
+        let message = {
+            header: "Receta: ",
+            id: viewsIds[btnId]
+        }
+
+
+
+        let btnView = document.getElementById(viewsIds[btnId]);
+
+        btnView.setAttribute("data-bs-target", "#viewRecipeModal");
+        btnView.setAttribute("data-bs-toggle", "modal");
+
+        // Poner directamente la función sin arrow
+        btnView.addEventListener("click", myFunc => {
+            recipeContentModal(message)
+        });
+    }
+}
+
+function recipeContentModal(message) {
+    let header = document.getElementById("viewRecipeModalLabel");
+    header.innerHTML = (message.header);
+
+    let body = document.getElementById("viewRecipeModalContent");
+
+    while (body.childElementCount > 0) {// Eliminamos el contenido
+        body.lastChild.remove()
+    }
+
+    getRecipeByIdFetch(message, body);
+
+    let footer = document.getElementById("viewRecipeModalFooter");
+    if (footer.childElementCount > 1) { footer.lastChild.remove() }; // Eliminamos el botón de modificar datos
+
+    let updateBtn = document.createElement("button");
+    updateBtn.id = "update-recipe";
+    updateBtn.type = "button";
+    updateBtn.className = "btn btn-primary";
+    updateBtn.innerHTML = "Modificar";
+
+    footer.appendChild(updateBtn);
+
+    // Función al hacer click en abrir en ventana nueva para actualizar la receta
+}
+
+function getRecipeByIdFetch(message, bodyModal) {
+    let id = message.id.split('-')[2]; // Id de la receta
+    let searchData = new FormData();
+    searchData.append('id', id);
+
+    return fetch('/showRecipe', {
+        method: 'post',
+        headers: {
+            'url': '/showRecipe',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: searchData
+    }).then((response) => {
+        if (!response.ok) {
+            // No se han obtenido datos
+            throw new Error("Network response was not OK");
+        }
+        return response.json();
+    }).then((response) => {
+        viewContentRecipe(response, bodyModal);
+    }).catch((error) => {
+        console.log("Error fetch"); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+    })
+}
+
+function viewContentRecipe(data, body) {
+    let content = document.createElement("div");
+    content.className = "container";
+
+    let obj = data[0];
+
+    content.innerHTML = (`
+        <b>Nombre: </b> ${obj.name} <br>
+        <b>Descripción: </b> ${obj.description} <br>
+        <b>Calorías totales: </b> ${obj.total_calories} <br>
+        <b>Id receta: </b> ${obj.id} <br>
+        <b>Ingredientes: </b>
+    `);
+
+    let searchData = new FormData();
+    searchData.append('id_recipe', obj.id);
+
+    // Fetch para obtener los ingredientes de la receta
+    fetch('/getIngredientsRecipe', {
+        method: 'post',
+        headers: {
+            'url': '/getIngredientsRecipe',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: searchData
+    }).then((response) => {
+        if (!response.ok) {
+            // No se han obtenido datos
+            throw new Error("Network response was not OK");
+        }
+        return response.json();
+    }).then((response) => {
+        appendRecipesIngredients(response, content);
+    }).catch((error) => {
+        console.log(error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+    })
+
+    // Añadimos contenido al modal
+    body.appendChild(content);
+}
+
+function appendRecipesIngredients(data, content) {
+
+    let containerIngredients = document.createElement("div");
+    containerIngredients.className = ("d-flex flex-wrap");
+
+    for (let item in data) {
+        let ulIngredient = document.createElement("ul");
+        ulIngredient.className = "row col-6";
+
+        let searchData = new FormData();
+        searchData.append('id', data[item].id_ingredient);
+
+        // Fetch para obtener los ingredientes de la receta
+        fetch('/getIngredient', {
+            method: 'post',
+            headers: {
+                'url': '/getIngredient',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: searchData
+        }).then((response) => {
+            if (!response.ok) {
+                // No se han obtenido datos
+                throw new Error("Network response was not OK");
+            }
+            return response.json();
+        }).then((response) => {
+            // append datos ingrediente en el content
+            let obj = response[0];
+
+            let liIngredient = document.createElement("li");
+            liIngredient.innerHTML = (`
+                ${obj.name}
+                <ul>
+                    <li>Grasas: ${obj.fats_100g}</li> 
+                    <li>Proteinas: ${obj.proteins_100g}</li>
+                    <li>Carbohidratos: ${obj.carbs_100g}</li>
+                    <li>KCal en 100g: ${obj.kcal_100g}</li>
+                </ul>
+            `);
+
+            ulIngredient.appendChild(liIngredient);
+
+            containerIngredients.appendChild(ulIngredient);
+        }).catch((error) => {
+            console.log(error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+        })
+    }
+
+    content.appendChild(containerIngredients);
 }

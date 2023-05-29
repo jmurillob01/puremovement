@@ -11,6 +11,8 @@
 //     }
 // }())
 
+"use strict"; 
+
 (function iife(){
     getRecipesBackEndUser("");
     toggleRecipesUser("recipes-container", true);

@@ -22,7 +22,6 @@ class Recipe_IngredientController extends Controller
      */
     public function create(Recipe_IngredientModel $Recipe_IngredientModel)
     {
-        
     }
 
     /**
@@ -32,22 +31,25 @@ class Recipe_IngredientController extends Controller
     {
         // try{
         //     Recipe_IngredientModel::create([
-    
+
         //     ]);
         // }catch(MyCustomException $cus){
 
         // }
     }
 
+    /**
+     * 
+     */
     public function customStore(Request $request)
     {
-        try{
+        try {
             Recipe_IngredientModel::create([
                 'id_recipe' => $request->request->get('id_recipe'),
                 'id_ingredient' => $request->request->get('id_ingredient')
             ]);
-        }catch(MyCustomException $cus){
-            throw(new MyCustomException('Error al añadir ingredientes'));
+        } catch (MyCustomException $cus) {
+            throw (new MyCustomException('Error al añadir ingredientes'));
         }
     }
 
@@ -57,6 +59,21 @@ class Recipe_IngredientController extends Controller
     public function show(Recipe_IngredientModel $recipe_IngredientModel)
     {
         //
+    }
+
+    /**
+     * Obtenemos los ingredientes de una receta
+     */
+    public function showIngredients()
+    {
+        $id_recipe = $_POST['id_recipe'];
+
+        try {
+            $recipes = Recipe_IngredientModel::where('id_recipe', '=', $id_recipe)->get();
+            echo json_encode($recipes);
+        } catch (\Throwable $th) {
+            echo json_encode("");
+        }
     }
 
     /**

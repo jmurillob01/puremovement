@@ -33,11 +33,12 @@
                     </div>
                     <div id="warningModalFooter" class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        
                     </div>
                 </div>
             </div>
         </div>
+        
+        @yield('modalRecipes')
 
         <!-- Nav -->
         <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
@@ -76,7 +77,6 @@
             </div>
             @endif
         </div>
-
         <div class="col-12 col-md-8 container">
             @yield('content')
         </div>

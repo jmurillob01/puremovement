@@ -88,6 +88,18 @@ class IngredientController extends Controller
         return $ingredient;
     }
 
+    public function getIngredients()
+    {
+        $id = $_POST['id'];
+
+        try {
+            $recipes = IngredientModel::select("id", "name", "fats_100g", "proteins_100g", "carbs_100g", "kcal_100g")->where('id', '=', $id)->get();
+            echo json_encode($recipes);
+        } catch (\Throwable $th) {
+            echo json_encode("");
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

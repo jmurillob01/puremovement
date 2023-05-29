@@ -227,7 +227,6 @@ class RecipeController extends Controller
         $response = "";
 
         try {
-
             $queryResult = RecipeModel::where('name', 'like', $name . '%')->where('id_user', $id)->get();
             echo json_encode($queryResult);
             // $this-> base64ImageJson($queryResult);
@@ -236,5 +235,16 @@ class RecipeController extends Controller
         }
         // echo json_encode($name);
         // dd($name);
+    }
+
+    public function showRecipe()
+    {
+        $id = $_POST['id'];
+        try {
+            $recipe = RecipeModel::where('id', '=', $id)->get();
+            echo json_encode($recipe);
+        } catch (\Throwable $th) {
+            echo json_encode("");
+        }
     }
 }
