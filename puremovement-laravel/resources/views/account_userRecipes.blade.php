@@ -20,6 +20,22 @@ Recipes
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="updateRecipeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateRecipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateRecipeModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="updateRecipeModalContent" class="modal-body">
+            </div>
+            <!-- <div id="updateRecipeModalFooter" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div> -->
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('content')

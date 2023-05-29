@@ -139,7 +139,21 @@ class RecipeController extends Controller
      */
     public function update(Request $request, RecipeModel $recipeModel)
     {
-        //
+        $request->validate([ // Mostrar los datos si no es válido
+            'name' => 'required|regex:/^[a-zA-Z0-9 ]{2,50}$/'
+        ]);
+
+        try{
+            if ($request->description != null) {
+                RecipeModel::where('id', '=', $request->id)->update(array('name' => $request->name, 'description' => $request->description));
+            }else{
+                RecipeModel::where('id', '=', $request->id)->update(array('name' => $request->name));
+            }
+            return redirect()->route('recipe.viewUpdateRecipe', ["type" => "success", "message" => "Actualizado correctamente"]);
+        }catch(\Throwable $th){
+            echo $th->getMessage();
+            return redirect()->route('recipe.viewUpdateRecipe', ["type" => "error", "message" => "Error"]);
+        }
     }
 
     /**
@@ -199,6 +213,14 @@ class RecipeController extends Controller
         ($_GET['message']) ? $message = $_GET['message'] : $message = '';
 
         return redirect("/account/create/recipes")->with($type, $message);
+    }
+
+    public function viewUpdateRecipe()
+    {
+        ($_GET['type']) ? $type = $_GET['type'] : $type = '';
+        ($_GET['message']) ? $message = $_GET['message'] : $message = '';
+
+        return redirect("/account/myRecipes")->with($type, $message);
     }
 
     public function recipesLikeName_limit10()

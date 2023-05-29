@@ -84,12 +84,14 @@ Route::post('/getIngredientsRecipe', [Recipe_IngredientController::class, 'showI
 
 // Funciones recetas
 Route::get('viewCreateRecipe', [RecipeController::class, 'viewCreateRecipe'])->name('recipe.viewCreateRecipe');
+Route::get('viewUpdateRecipe', [RecipeController::class, 'viewUpdateRecipe'])->name('recipe.viewUpdateRecipe');
 Route::get('validateSelectedIngredients', [RecipeController::class, 'validateSelectedIngredients'])->name('recipe.validateSelectedIngredients');
 Route::get('calculateKcal', [RecipeController::class, 'calculateKcal'])->name('recipe.calculateKcal');
 Route::post('/recipesLikeName_limit10', [RecipeController::class, 'recipesLikeName_limit10'])->name('recipe.recipesLikeName_limit10');
 Route::post('/recipesLikeName_limit10_user', [RecipeController::class, 'recipesLikeName_limit10_user'])->name('recipe.recipesLikeName_limit10_user');
 Route::post('/deleteRecipeConfirmed', [RecipeController::class, 'destroy'])->name('recipe.destroy');
 Route::post('/showRecipe', [RecipeController::class, 'showRecipe'])->name('recipe.showRecipe');
+Route::post('/updateRecipe', [RecipeController::class, 'update'])->name('recipe.update');
 
 // Usuario
 Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');

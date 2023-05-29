@@ -245,6 +245,7 @@ function showRecipesUser(json_recipes) {
     let recipes_cont = document.createElement("div");
     let deleteIds = [];
     let viewsIds = [];
+    let updateIds = [];
 
     if (father.childElementCount > 1) {
         father.lastChild.remove();
@@ -257,8 +258,10 @@ function showRecipesUser(json_recipes) {
         let obj = json_recipes[row];
         let uniqueRecipe = document.createElement("div");
         let picture_input;
+
         let id_delete_btn = `delete-btn-${obj.id}`;
         let id_view_btn = `view-btn-${obj.id}`;
+        let id_update_btn = `update-btn-${obj.id}`;
 
         uniqueRecipe.id = (obj.id);
         uniqueRecipe.className = ("d-flex justify-content-center col-6 col-md-4 mb-5");
@@ -282,6 +285,7 @@ function showRecipesUser(json_recipes) {
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <button id="${id_view_btn}" type="button" class="btn btn-info">Ver</button>
+                        <button id="${id_update_btn}" type="button" class="btn btn-warning">Actualizar</button>
                         <button id="${id_delete_btn}" type="button" class="btn btn-danger">Eliminar</button>
                     </li>
                 </ul>
@@ -291,6 +295,7 @@ function showRecipesUser(json_recipes) {
         recipes_cont.appendChild(uniqueRecipe);
         deleteIds.push(id_delete_btn);
         viewsIds.push(id_view_btn);
+        updateIds.push(id_update_btn);
     }
 
     father.appendChild(recipes_cont);
@@ -365,8 +370,6 @@ function showRecipesUser(json_recipes) {
             id: viewsIds[btnId]
         }
 
-
-
         let btnView = document.getElementById(viewsIds[btnId]);
 
         btnView.setAttribute("data-bs-target", "#viewRecipeModal");
@@ -375,6 +378,24 @@ function showRecipesUser(json_recipes) {
         // Poner directamente la función sin arrow
         btnView.addEventListener("click", myFunc => {
             recipeContentModal(message)
+        });
+    }
+
+    for (let btnId in updateIds) {
+        let message = {
+            header: "Receta: ",
+            id: updateIds[btnId]
+        }
+
+        let btnUpdate = document.getElementById(updateIds[btnId]);
+
+        // Se puede usar otro modal en vez del mismo
+        btnUpdate.setAttribute("data-bs-target", "#updateRecipeModal");
+        btnUpdate.setAttribute("data-bs-toggle", "modal");
+
+        // Poner directamente la función sin arrow
+        btnUpdate.addEventListener("click", myFunc => {
+            recipeContentModalUpdate(message);
         });
     }
 }
@@ -389,23 +410,28 @@ function recipeContentModal(message) {
         body.lastChild.remove()
     }
 
-    getRecipeByIdFetch(message, body);
+    getRecipeByIdFetch(message, body, "view");
+
+    let footer = document.getElementById("viewRecipeModalFooter");
+    if (footer.childElementCount > 1) { footer.lastChild.remove() };
+}
+
+function recipeContentModalUpdate(message){
+    let header = document.getElementById("updateRecipeModalLabel");
+    header.innerHTML = (message.header);
+
+    let body = document.getElementById("updateRecipeModalContent");
+
+    while (body.childElementCount > 0) {// Eliminamos el contenido
+        body.lastChild.remove()
+    }
+    getRecipeByIdFetch(message, body, "update");
 
     let footer = document.getElementById("viewRecipeModalFooter");
     if (footer.childElementCount > 1) { footer.lastChild.remove() }; // Eliminamos el botón de modificar datos
-
-    let updateBtn = document.createElement("button");
-    updateBtn.id = "update-recipe";
-    updateBtn.type = "button";
-    updateBtn.className = "btn btn-primary";
-    updateBtn.innerHTML = "Modificar";
-
-    footer.appendChild(updateBtn);
-
-    // Función al hacer click en abrir en ventana nueva para actualizar la receta
 }
 
-function getRecipeByIdFetch(message, bodyModal) {
+function getRecipeByIdFetch(message, bodyModal, option) {
     let id = message.id.split('-')[2]; // Id de la receta
     let searchData = new FormData();
     searchData.append('id', id);
@@ -424,9 +450,15 @@ function getRecipeByIdFetch(message, bodyModal) {
         }
         return response.json();
     }).then((response) => {
-        viewContentRecipe(response, bodyModal);
+        if(option == "view"){
+            // Ver contenido
+            viewContentRecipe(response, bodyModal);
+        }else if (option == "update"){
+            // Actualizar contenido
+            updateContentRecipe(response, bodyModal)
+        }
     }).catch((error) => {
-        console.log("Error fetch"); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+        console.log(error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
     })
 }
 
@@ -521,4 +553,42 @@ function appendRecipesIngredients(data, content) {
     }
 
     content.appendChild(containerIngredients);
+}
+
+function updateContentRecipe(data, body){
+    let content = document.createElement("div");
+    let token = document.querySelector("meta[name='csrf-token']").content;
+
+    let obj = data[0];
+    content.className = "container";
+
+    // Cambiar action por ruta fasilito
+    content.innerHTML = (`
+    <form name="fUpdateRecipe" id="updateRecipe-form" class="row" action="/updateRecipe" method="POST">
+        <input type="hidden" name="_token" value="${token}" />
+
+        <div class="col-12 col-md-12 row">
+            <div class="col-12 col-md-6 content-item">
+                <label for="recipe-id" class="form-label content-label">Id receta</label>
+                <input type="text" class="form-control content-item-name" id="recipe-id" name="id" title="Id de tu receta" value="${obj.id}" readonly="readonly">
+            </div>
+
+            <div class="col-12 col-md-6 content-item">
+                <label for="recipe-name" class="form-label content-label">Nombre</label>
+                <input type="text" class="form-control content-item-name" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" value="${obj.name}" pattern="^[a-zA-Z0-9 ]{2,50}$" required>
+            </div>
+            
+            <div class="col-12 col-md-12 content-item">
+                <label for="recipe-description" class="form-label content-label">Descripción</label>
+                <textarea rows="5" class="form-control" id="recipe-description" name="description" title="Descripción para tu receta" placeholder="Descripción de la receta" value="${obj.description}"></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-primary col-4" type="submit" id="update-recipe">Actualizar Receta</button>
+        <button type="button" class="btn btn-secondary col-4" data-bs-dismiss="modal">Cancelar</button>
+    </form>
+    `);
+
+    // Añadimos contenido al modal
+    body.appendChild(content);
 }
