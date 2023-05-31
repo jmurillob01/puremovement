@@ -121,7 +121,17 @@ class IngredientController extends Controller
      */
     public function destroy(IngredientModel $ingredientModel)
     {
-        //
+        $error = ['data' => false];
+        $id = $_POST['id'];
+
+        try {
+            $queryResult = IngredientModel::where('id', $id)->delete();
+
+            echo json_encode("Borrado correctamente");
+        } catch (\Throwable $th) {
+            // Se debería devolver error
+            echo json_encode("");
+        }
     }
 
     public function indexIngredientsLike()
@@ -143,5 +153,14 @@ class IngredientController extends Controller
         ($_GET['message']) ? $message = $_GET['message'] : $message = '';
 
         return redirect("/account/create/ingredients")->with($type, $message);
+    }
+
+    public function getAllIngredients(){
+        try {
+            $queryResult = IngredientModel::select('id', 'name')->get();
+            echo json_encode($queryResult);
+        } catch (\Throwable $th) {
+            echo json_encode($th);
+        }
     }
 }

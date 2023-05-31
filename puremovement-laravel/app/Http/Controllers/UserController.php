@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Crypt;
 // require_once '../../../vendor/autoload.php';
 session_start();
 
-use function GuzzleHttp\Promise\all;
 
 class UserController extends Controller
 {
@@ -65,9 +64,9 @@ class UserController extends Controller
                         'phone' => $request->phone,
                         'email' => $request->email
                     ]);
-                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'success',"message" => 'Usuario creado correctamente']);
+                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'success', "message" => 'Usuario creado correctamente']);
                 } catch (MyCustomException $CUE) { // CreateUserException
-                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'error',"message" =>  $CUE->getMessage()]);
+                    return redirect()->route('user.viewAccessUserRegister', ["type" => 'error', "message" =>  $CUE->getMessage()]);
                 }
             } else {
                 return redirect()->route('user.viewAccessUserRegister', ["type" => "error", "message" => "El id, teléfono o correo de usuario ya existe"]);
@@ -93,6 +92,18 @@ class UserController extends Controller
         return $user;
     }
 
+    public function getUserById()
+    {
+        $id = $_POST['id'];
+
+        try {
+            $queryResult = UserModel::where('id',  $id)->get();
+            echo json_encode($queryResult);
+        } catch (\Throwable $th) {
+            echo json_encode($th);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -106,7 +117,21 @@ class UserController extends Controller
      */
     public function update(Request $request, UserModel $userModel)
     {
-        //
+        $request->validate([ // Mostrar los datos si no es válido
+            'id' => 'required|regex:/^[a-zA-Z0-9_]{4,20}$/',
+            'name' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+            'lastname1' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+            'lastname2' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
+        ]);
+
+        try{
+            UserModel::where('id', '=', $request->id)->update(array('name' => $request->name, 'lastname1' => $request->lastname1, 'lastname2' => $request->lastname2));
+
+            return redirect("/account/myRecipes");
+        }catch(\Throwable $th){
+            echo $th->getMessage();
+            return redirect("/account/myRecipes");
+        }
     }
 
     /**
@@ -114,7 +139,17 @@ class UserController extends Controller
      */
     public function destroy(UserModel $userModel)
     {
-        //
+        $error = ['data' => false];
+        $email = $_POST['email'];
+
+        try {
+            $queryResult = UserModel::where('email', $email)->delete();
+
+            echo json_encode("Borrado correctamente");
+        } catch (\Throwable $th) {
+            // Se debería devolver error
+            echo json_encode("");
+        }
     }
 
     // Función para comprobar registro de usuarios
@@ -226,11 +261,15 @@ class UserController extends Controller
 
         return redirect("/user/login")->with($type, $message);
     }
+
+    public function getAllUsers(){
+        try {
+            $queryResult = UserModel::select('name', 'email', 'id_rol')->get();
+            echo json_encode($queryResult);
+        } catch (\Throwable $th) {
+            echo json_encode($th);
+        }
+    }
 }
 
 ?>
-<!-- Script -->
-<!-- <script src="/js/access.js" type='module'></script> -->
-<!-- JQuery -->
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->

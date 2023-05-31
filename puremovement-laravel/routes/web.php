@@ -51,7 +51,7 @@ Route::get('/account/create/recipes', function () {
     return view('account_createRecipes');
 });
 
-Route::get('/account/create/ingredients', function () {
+Route::get('/account/admin/create/ingredients', function () {
     return view('account_createIngredients');
 });
 
@@ -70,6 +70,10 @@ Route::resource('recipe_ingredient', Recipe_IngredientController::class);
 Route::get('viewAccessUserRegister', [UserController::class, 'viewAccessUserRegister'])->name('user.viewAccessUserRegister'); // Ruta para la función de ese método
 Route::get('viewAccessUserLogin', [UserController::class, 'viewAccessUserLogin'])->name('user.viewAccessUserLogin'); // Ruta para la función de ese método
 Route::post('checkUserLogin', [UserController::class, 'checkUserLogin'])->name('user.checkUserLogin');
+Route::post('/getUserById', [UserController::class, 'getUserById'])->name('user.getUserById');
+Route::post('/updateUserSettings', [UserController::class, 'update'])->name('user.update');
+Route::post('/deleteUsers', [UserController::class, 'destroy'])->name('user.destroy');
+Route::get('/getSystemUsers', [UserController::class, 'getAllUsers'])->name('user.getAllUsers');
 
 // Funciones ingredientes
     // No sé porque tenía esto, dejo por si acaso
@@ -93,7 +97,11 @@ Route::post('/deleteRecipeConfirmed', [RecipeController::class, 'destroy'])->nam
 Route::post('/showRecipe', [RecipeController::class, 'showRecipe'])->name('recipe.showRecipe');
 Route::post('/updateRecipe', [RecipeController::class, 'update'])->name('recipe.update');
 
-// Usuario
+// Usuario datos
 Route::post('/userDataStats', [DataUserController::class, 'userDataStats'])->name('data_user.userDataStats');
 Route::post('/userDataStatsPost', [DataUserController::class, 'userDataDate'])->name('data_user.userDataDate');
 Route::get('viewPrincipal', [DataUserController::class, 'viewPrincipal'])->name('data_user.viewPrincipal');
+
+// Ingredientes
+Route::get('/getIngredientsSystem', [IngredientController::class, 'getAllIngredients'])->name('ingredient.getAllIngredients');
+Route::post('/deleteIngredients', [IngredientController::class, 'destroy'])->name('ingredient.destroy');
