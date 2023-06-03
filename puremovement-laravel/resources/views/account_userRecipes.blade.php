@@ -41,7 +41,7 @@ Recipes
                 <h1 class="modal-title fs-5" id="userOptionModalLabel">Modal title</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="userOptionModalContent" class="modal-body">
+            <div id="userOptionModalContent" class="modal-body col-12 m-auto">
             </div>
             <!-- <div id="userOptionModalFooter" class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -66,7 +66,7 @@ Recipes
 
 @section('content')
 <div id="recipe-content" class="container">
-    <div id="admin-container" class="col-12 row">
+    <div id="admin-container" class="col-12 row admin-container">
 
     </div>
     <div id="recipes-container">

@@ -19,15 +19,11 @@ import MessageException from "/js/class/messageException.js";
         } else {
             // La sesión no está habilitada, añadimos el requerimiento de inicio de sesión.
             // sessionRequired();
+            disableButtonNav();
             withoutSession();
             calculateImc();
             createAccount();
-            // displayImcData();
-
-            // sessionStorage.setItem("nombre", "javi");
         }
-    } else { // El navegador no soporta el almacenamiento de sesión.
-        // Mandar excepción y bloquear la función de inicio de sesión.
     }
 }())
 
@@ -78,6 +74,10 @@ function displayForm(divFather) {
     </div>
     `);
     divFather.appendChild(container);
+}
+
+function disableButtonNav(){
+    document.getElementById("navbar-toggler").style.display = "none";
 }
 
 function displayTableForm(divFather) {
@@ -262,8 +262,8 @@ function canvasContainer() {
     container.className = ("user-content row m-3");
 
     container.innerHTML = (`
-    <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:200px" -->
-        <canvas id="myChart" width="500" height="250" class="myChart"></canvas>
+    <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> <!-- style="width: 600px; height:500px" -->
+        <canvas id="myChart" class="myChart"></canvas>
     </div>
     <div id="user-data-form" class="col-12 col-md-5 p-5 container">
         
@@ -275,7 +275,7 @@ function canvasContainer() {
 
 function createChart(data_user, labels) {
     const ctx = document.getElementById('myChart');
-    Chart.defaults.font.size=12;
+    Chart.defaults.font.size=10;
     new Chart(ctx, {
         type: 'line',
         data: {

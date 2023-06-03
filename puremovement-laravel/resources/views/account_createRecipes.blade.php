@@ -9,7 +9,6 @@ Recipes
     <form name="fRegisterRecipe" id="registerRecipe-form" class="row recipe-form" action="{{route('recipe.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
-
         <div tabindex="0" class="container col-12 col-md-12 mt-5 content-header" id="recipe-header">
             <h1>Crear Receta</h1>
         </div>
@@ -28,7 +27,7 @@ Recipes
         
 
         <div class="col-12 col-md-6 content-item d-flex justify-content-center">
-            <img id="img-preview" class="content-item-img" width="410" height="300"></img>
+            <img id="img-preview" class="content-item-img" width="280" height="220"></img>
         </div>
 
 
@@ -44,20 +43,20 @@ Recipes
             <input type="search" name="search-ingredients" id="search-ingredients" class="col-12 col-md-12 form-control" oninput='getIngredientsBackEnd(this)'>
         </div>
 
-        <div class="col-12 col-md-12 mb-4 d-flex ">
-            <div class="col-4 col-md-4 content-item">
+        <div class="col-12 col-md-12 mb-4 d-flex flex-column">
+            <div class="col-12 col-md-12 content-item">
                 <label for="all-ingredients" class="form-label content-label">Seleccionar Ingredientes</label>
                 <select id="all-ingredients" class="form-select" name="allIngredients[]" size="4" multiple></select>
             </div>
 
-            <div class="col-4 col-md-4 d-flex flex-column gap-2 align-items-center content-item">
+            <div class="col-12 col-md-12 d-flex flex-column gap-2 align-items-center content-item">
                 <p class="form-label content-label">Añadir / Eliminar</p>
                 <!-- <label for="add-ingredient">Añadir</label><label for="remove-ingredient">Eliminar</label> -->
-                <a tabindex="0" class="btn btn-primary" id="add-ingredient" name="add-ingredient" title="Añadir" onclick="addIngredient()">>></a>
-                <a tabindex="0" class="btn btn-primary" id="remove-ingredient" name="remove-ingredient"title="Eliminar"  onclick="removeIngredient()"><<</a>
+                <a tabindex="0" class="btn btn-primary" id="add-ingredient" name="add-ingredient" title="Añadir" onclick="addIngredient()">Añadir</a>
+                <a tabindex="0" class="btn btn-primary" id="remove-ingredient" name="remove-ingredient"title="Eliminar"  onclick="removeIngredient()">Eliminar</a>
             </div>
 
-            <div class="col-4 col-md-4 content-item">
+            <div class="col-12 col-md-12 content-item">
                 <label for="selected-ingredients" class="form-label content-label">Ingredientes Seleccionados</label>
                 <select id="selected-ingredients" class="form-select" name="selected_Ingredients[]" size="4" multiple></select>
             </div>

@@ -3,6 +3,11 @@
 (function checkSession() {
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
+            // if(window.location.pathname == /account/create/recipes){
+            //     window.location.assign('/');
+            // }
+
+            console.log("login");
             acountAccessNav(sessionStorage.getItem("id"));
             toggleNavButtons();
             getIngredientsBackEnd();
@@ -28,48 +33,59 @@ function validateFile(fileInput) {
     // Tamaño de la imagen
     let size = 5;
 
-    // Datos de la imagen
-    let fakePath = fileInput.value;
-    let imgArray = fakePath.split("\\");
-    let position = imgArray.length - 1;
-    let imgName = imgArray[position];
-
-    // Comprobación del formato de la imagen
-    let firstPoint = imgName.indexOf('.');
-    let lastPoint = imgName.lastIndexOf('.');
-
-    if (firstPoint != lastPoint) {
-        imgFeedback("El nombre de la imagen no es válido")
-    } else {
-        let aux = imgName.split('.');
-        aux = aux[aux.length - 1];
-
-        if (allowedExtensions.includes(aux)) { // TODO: Nombre vacío válido
-            displayImg()
-
-            imgFeedback("");
-
-            enableBtn("make-recipe")
+    try {
+        // Datos de la imagen
+        let fakePath = fileInput.value;
+        let imgArray = fakePath.split("\\");
+        let position = imgArray.length - 1;
+        let imgName = imgArray[position];
+    
+        // Comprobación del formato de la imagen
+        let firstPoint = imgName.indexOf('.');
+        let lastPoint = imgName.lastIndexOf('.');
+    
+        if (firstPoint != lastPoint) {
+            imgFeedback("El nombre de la imagen no es válido")
         } else {
-            imgFeedback("Extensión no válida")
+            let aux = imgName.split('.');
+            aux = aux[aux.length - 1];
+    
+            if (allowedExtensions.includes(aux)) { // TODO: Comprobar porque el botón está bloqueado, donde salta exc
+                displayImg();
+                imgFeedback("");
+                enableBtn("make-recipe");
+            }else if(imgName == ""){
+                imgFeedback("");
+                enableBtn("make-recipe");
+            }else {
+                console.log(imgName);
+                imgFeedback("Extensión no válida");
+            }
         }
+    } catch (error) {
+        // No hace nada, evitamos error
     }
 }
 
 function displayImg() {
-    let selectFile = document.querySelector("#recipe-image");
-    let imgFile = (selectFile.files)[0];
-
-    let objectUrl = URL.createObjectURL(imgFile);
-
-    // let container = document.getElementById("recipe-header");
-
-    let image = document.getElementById("img-preview");
-
-    // TODO: Optimizar
-    image.src = (objectUrl);
-
-    // container.appendChild(image);
+    try {
+        let selectFile = document.querySelector("#recipe-image");
+        let imgFile = (selectFile.files)[0];
+    
+        let objectUrl = URL.createObjectURL(imgFile);
+    
+        // let container = document.getElementById("recipe-header");
+    
+        let image = document.getElementById("img-preview");
+    
+        // TODO: Optimizar
+        image.src = (objectUrl);
+    
+        // container.appendChild(image);
+        
+    } catch (error) {
+        
+    }
 }
 
 function removeImg() {

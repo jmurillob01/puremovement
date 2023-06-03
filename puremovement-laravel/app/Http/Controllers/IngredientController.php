@@ -40,38 +40,37 @@ class IngredientController extends Controller
             'carbs_100g' => 'required',
             'kcal_100g' => 'required',
         ]);
-
         try {
             // TODO : Se podría hacer una comprobación por nombre, y mostrar un mensaje de alerta
-            // if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
-            try {
+            if ($this->checkNameIngredient($request->name) == 0) {
+                try {
 
-                $picture = null;
+                    $picture = null;
 
-                if ($_FILES['picture']['name'] != "") { // Si no está vacío
+                    if ($_FILES['picture']['name'] != "") { // Si no está vacío
 
-                    $tempName = $_FILES['picture']['tmp_name'];
+                        $tempName = $_FILES['picture']['tmp_name'];
 
-                    $pictureBin = file_get_contents($tempName); // Extraemos el contenido del archivo a una variable
+                        $pictureBin = file_get_contents($tempName); // Extraemos el contenido del archivo a una variable
 
-                    $picture = base64_encode($pictureBin); // Codifica el archivo a formato base 64
+                        $picture = base64_encode($pictureBin); // Codifica el archivo a formato base 64
+                    }
+
+                    IngredientModel::create([
+                        'name' => $request->name,
+                        'fats_100g' => $request->fats_100g,
+                        'proteins_100g' => $request->proteins_100g,
+                        'carbs_100g' => $request->carbs_100g,
+                        'kcal_100g' => $request->kcal_100g,
+                        'picture' => $picture
+                    ]);
+                    return redirect()->route('ingredients.account_createIngredients', ["type" => "success", "message" => 'Ingrediente creado correctamente']);
+                } catch (MyCustomException $CUE) { // CreateUserException
+                    return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
                 }
-
-                IngredientModel::create([
-                    'name' => $request->name,
-                    'fats_100g' => $request->fats_100g,
-                    'proteins_100g' => $request->proteins_100g,
-                    'carbs_100g' => $request->carbs_100g,
-                    'kcal_100g' => $request->kcal_100g,
-                    'picture' => $picture
-                ]);
-                return redirect()->route('ingredients.account_createIngredients', ["type" => "success", "message" => 'Ingrediente creado correctamente']);
-            } catch (MyCustomException $CUE) { // CreateUserException
-                return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
+            }else {
+                return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => "Error: Ingrediente ya existente"]);
             }
-            // } else {
-            //     return redirect()->route('user.viewAccessUserRegister')->with('error', "El id, teléfono o correo de usuario ya existe");
-            // }
         } catch (\Throwable $th) {            
             return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
             // return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
@@ -152,7 +151,7 @@ class IngredientController extends Controller
         ($_GET['type']) ? $type = $_GET['type'] : $type = '';
         ($_GET['message']) ? $message = $_GET['message'] : $message = '';
 
-        return redirect("/account/create/ingredients")->with($type, $message);
+        return redirect("/account/admin/create/ingredients")->with($type, $message);
     }
 
     public function getAllIngredients(){
@@ -162,5 +161,17 @@ class IngredientController extends Controller
         } catch (\Throwable $th) {
             echo json_encode($th);
         }
+    }
+
+    public function checkNameIngredient($name){
+        $response = 0;
+        
+        try {
+            $response = IngredientModel::where('name', $name)->get()->count();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
+        return $response;
     }
 }

@@ -41,7 +41,7 @@
         <!-- Nav -->
         <nav id="navbar-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -94,25 +94,8 @@
             @endif
         </div>
 
-        <!-- Por esto se ve mal en móvil. Si pongo container se arregla pero se fastidia la vista -->
         <div id="div-graphic-calculate-buttons" class="container"></div>
-        <!-- 
-        <div class="user-content row">
-            <div id="canvas-container" class="canvas-container container col-12 col-md-6 p-5"> style="width: 600px; height:200px"
-                <canvas id="myChart" width="400" height="100" class="myChart"></canvas>
-            </div>
-            <div id="user-data-form" class="col-12 col-md-4 p-5">
-                dasdasd
-            </div>
-        </div> -->
 
-        <!-- <div id="div-recipe-ranking" class="row container">
-            <div id="div-ranking" class="col-12">
-                <div class="container">
-                    <h1 class="h3"></h1>
-                </div>
-            </div>
-        </div> -->
     </main>
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-white text-muted">

@@ -1,16 +1,3 @@
-// (function checkSession() {
-//     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
-//         if (sessionStorage.getItem("id")) {
-//             acountAccessNav(sessionStorage.getItem("id"));
-//             toggleNavButtons();
-//         } else {
-//             window.location.assign('/');
-//         }
-//     } else { // El navegador no soporta el almacenamiento de sesión.
-//         // Mandar excepción y bloquear la función de inicio de sesión.
-//     }
-// }())
-
 "use strict";
 
 (function iife() {
@@ -18,31 +5,65 @@
     // Funciones administrador
     // Crear dos botones, uno para redirigir a los ingredientes
     // Otro botón para gestionar usuarios
-    adminButtons("admin-container");
-    toggleButtons();
 
+    checkAdmin();
+
+    
     // Botón común para ajustar datos de cuenta
     getRecipesBackEndUser("");
-    toggleRecipesUser("recipes-container", true);
 
+    toggleRecipesUser("recipes-container", true);
+    
+    footerUser();
 }());
 
 function adminButtons(id_father) {
     let fatherContent = document.getElementById(id_father);
 
     fatherContent.innerHTML = (`
-        <button id="account-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto">Gestionar cuenta</button>
-        <button id="users-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto">Gestionar usuarios</button>
-        <button id="create-ingredients" type="button" class="btn btn-primary col-5 col-md-2 m-auto">Crear ingredientes</button>
-        <button id="ingredients-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto">Gestionar ingredientes</button>
+        <button id="account-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar cuenta</button>
+        <button id="users-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar usuarios</button>
+        <button id="create-ingredients" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Crear ingredientes</button>
+        <button id="ingredients-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar ingredientes</button>
         `);
+}
+
+function checkAdmin() {
+    let userId = document.getElementById("user-recipes").innerHTML;
+
+    let searchData = new FormData();
+    searchData.append('id', userId);
+
+    let responseAdmin = false;
+
+    // Fetch para obtener los ingredientes de la receta
+    fetch('/getUserById', {
+        method: 'post',
+        headers: {
+            'url': '/getUserById',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: searchData,
+    }).then((response) => {
+        return response.json();
+    }).then((response) => {
+        if (response[0].id_rol == 1){
+            adminButtons("admin-container");
+            toggleButtons();
+        }else{
+            userButtons("admin-container");
+            toggleButtons();
+        }
+    }).catch((error) => {
+        console.log(error);
+    })
 }
 
 function userButtons(id_father) {
     let fatherContent = document.getElementById(id_father);
 
     fatherContent.innerHTML = (`
-        <button id="account-settings" type="button" class="btn btn-primary col-6 m-auto">Gestionar cuenta</button>
+        <button id="account-settings" type="button" class="btn btn-primary user-option-button col-12 user-btns">Gestionar cuenta</button>
         `);
 }
 
@@ -85,14 +106,14 @@ function toggleButtons() {
 
     try {
         let btn = document.getElementById("create-ingredients");
-        btn.setAttribute("data-bs-target", "#user-options");
-        btn.setAttribute("data-bs-toggle", "modal");
+        // btn.setAttribute("data-bs-target", "#user-options");
+        // btn.setAttribute("data-bs-toggle", "modal");
 
         btn.addEventListener("click", myFunc => {
             window.location.assign("/account/admin/create/ingredients");
         });
     } catch (error) {
-        console.log(error);
+        // No hace nada
     }
 
     try {
@@ -112,7 +133,7 @@ function getUserData(modal) {
     let userId = document.getElementById("user-recipes").innerHTML;
 
     let searchData = new FormData();
-    searchData.append('id', "javi");
+    searchData.append('id', userId);
 
     // Fetch para obtener los ingredientes de la receta
     fetch('/getUserById', {
@@ -141,7 +162,7 @@ function updateMyUserSettings(modal, userId, data) {
     <form name="fUpdateUser" id="updateUser-form" class="row" action="/updateUserSettings" method="POST">
         <input type="hidden" name="_token" value="${token}" />
 
-        <div class="col-12 col-md-12 row">
+        <div class="col-12 row d-flex justify-content-center m-auto">
             <div class="col-12 col-md-6 content-item">
                 <label for="user-id" class="form-label content-label">Id usuario</label>
                 <input type="text" class="form-control content-item-name" id="user-id" name="id" title="Id del usuario" value="${userId}" readonly="readonly">
@@ -163,8 +184,10 @@ function updateMyUserSettings(modal, userId, data) {
             </div>
         </div>
 
-        <button class="btn btn-primary col-4" type="submit" id="update-recipe">Actualizar Usuario</button>
-        <button type="button" class="btn btn-secondary col-4" data-bs-dismiss="modal">Cancelar</button>
+        <div class="col-12 d-flex justify-content-around mt-3">
+            <button type="button" class="btn btn-secondary col-5" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary col-5" type="submit" id="update-recipe">Actualizar Usuario</button>
+        </div>
     </form>
     `);
 }
@@ -205,7 +228,7 @@ function getIngredientsSystem(modal) {
 
 function showUsersSystem(modal, data) {
     modal.header.innerHTML = ("Usuarios del sistema");
-    modal.body.innerHTML = (`<table class="table">
+    modal.body.innerHTML = (`<table class="table text-center">
     <thead>
       <tr>
         <th scope="col">Email</th>
@@ -228,9 +251,8 @@ function showUsersSystem(modal, data) {
         `);
 
         tbody.appendChild(tr);
-        
-        if(data[key].id_rol == 1){ // Es admin
-            console.log(data[key]);
+
+        if (data[key].id_rol == 1) { // Es admin
             document.getElementById(data[key].email).disabled = true;
         }
     }
@@ -239,7 +261,7 @@ function showUsersSystem(modal, data) {
 
     for (let btn of btns) {
 
-        
+
 
         btn.addEventListener("click", myFunc => {
 
@@ -270,7 +292,7 @@ function showUsersSystem(modal, data) {
 
 function showIngredientsSystem(modal, data) {
     modal.header.innerHTML = ("Ingredientes del sistema");
-    modal.body.innerHTML = (`<table class="table">
+    modal.body.innerHTML = (`<table class="table text-center">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -286,9 +308,8 @@ function showIngredientsSystem(modal, data) {
     tbody.innerHTML = "";
 
     for (let key in data) {
-
         let tr = document.createElement("tr");
-        console.log(data[key]);
+        // tr.className = ("m-auto");
         tr.innerHTML = (`
             <td>${data[key].id}</td>
             <td>${data[key].name}</td> 

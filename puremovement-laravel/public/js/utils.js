@@ -187,8 +187,6 @@ function toggleRecipesUser(id_container) {
                 <input type="search" name="search-ingredients" id="search-ingredients" class="recipe-search-label form-control" oninput="getRecipesBackEndUser(this)">
             </div>
         `);
-
-        // father.appendChild(recipes_container);
     } catch (error) {
         console.error(error);
     }
@@ -226,7 +224,7 @@ function showRecipes(json_recipes) {
             ${picture_input}
             <div class="card-body">
                 <h5 class="card-title">${obj.name}</h5>
-                <p class="card-text">${obj.description}</p>
+                
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">${obj.total_calories} Kcal totales</li>
@@ -251,8 +249,8 @@ function showRecipesUser(json_recipes) {
         father.lastChild.remove();
     }
 
-    // father.innerHTML = ("");
     recipes_cont.className = ("container m-auto mt-5 row");
+    recipes_cont.id = ("recipes-container-user");
 
     for (let row in json_recipes) {
         let obj = json_recipes[row];
@@ -268,10 +266,10 @@ function showRecipesUser(json_recipes) {
 
         // Comprobar si tiene imagen, si no hay se pone una por defecto
         if (obj.picture == null) {
-            picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}' height="200px"></img>`
+            picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}'></img>`
         } else {
             // picture = obj.picture;
-            picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name}' height="200px"></img>`
+            picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name}'></img>`
             // Hay que decodificar o mejor traerla desde el servidor ? No hace falta, solo es mostrar
         }
 
@@ -280,13 +278,13 @@ function showRecipesUser(json_recipes) {
                 ${picture_input}
                 <div class="card-body">
                     <h5 class="card-title">${obj.name}</h5>
-                    <p class="card-text">${obj.description}</p>
+                    
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <button id="${id_view_btn}" type="button" class="btn btn-info">Ver</button>
-                        <button id="${id_update_btn}" type="button" class="btn btn-warning">Actualizar</button>
-                        <button id="${id_delete_btn}" type="button" class="btn btn-danger">Eliminar</button>
+                        <button id="${id_view_btn}" type="button" class="btn btn-info btn-recipes">Ver</button>
+                        <button id="${id_update_btn}" type="button" class="btn btn-warning btn-recipes">Actualizar</button>
+                        <button id="${id_delete_btn}" type="button" class="btn btn-danger btn-recipes">Eliminar</button>
                     </li>
                 </ul>
             </div>
@@ -591,4 +589,10 @@ function updateContentRecipe(data, body){
 
     // Añadimos contenido al modal
     body.appendChild(content);
+}
+
+function footerUser(){
+    let recipes = document.getElementById("recipes-container-user");
+
+    console.log(recipes);
 }
