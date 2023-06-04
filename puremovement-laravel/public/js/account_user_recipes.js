@@ -8,13 +8,10 @@
 
     checkAdmin();
 
-    
     // Botón común para ajustar datos de cuenta
     getRecipesBackEndUser("");
 
     toggleRecipesUser("recipes-container", true);
-    
-    footerUser();
 }());
 
 function adminButtons(id_father) {

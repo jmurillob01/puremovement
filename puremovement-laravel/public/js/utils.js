@@ -278,7 +278,6 @@ function showRecipesUser(json_recipes) {
                 ${picture_input}
                 <div class="card-body">
                     <h5 class="card-title">${obj.name}</h5>
-                    
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -297,6 +296,7 @@ function showRecipesUser(json_recipes) {
     }
 
     father.appendChild(recipes_cont);
+    footerUser();
 
 
     for (let btnId in deleteIds) {
@@ -593,6 +593,11 @@ function updateContentRecipe(data, body){
 
 function footerUser(){
     let recipes = document.getElementById("recipes-container-user");
-
-    console.log(recipes);
+    let footer = document.getElementsByTagName("footer")[0];
+    if (recipes.childElementCount == 0 && screen.width > 500) {
+        footer.style.marginTop = "270px";
+    }else if(recipes.childElementCount == 0 && screen.width < 500){
+        footer.style.marginTop = "70px";
+    }
+    console.log(screen.width);
 }

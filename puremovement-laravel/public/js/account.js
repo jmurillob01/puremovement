@@ -6,8 +6,6 @@
             // if(window.location.pathname == /account/create/recipes){
             //     window.location.assign('/');
             // }
-
-            console.log("login");
             acountAccessNav(sessionStorage.getItem("id"));
             toggleNavButtons();
             getIngredientsBackEnd();
