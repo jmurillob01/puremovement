@@ -1,7 +1,7 @@
 @extends('account')
 
 @section('title')
-Recipes
+User
 @endsection
 
 @section('modalRecipes')
@@ -43,9 +43,6 @@ Recipes
             </div>
             <div id="userOptionModalContent" class="modal-body col-12 m-auto">
             </div>
-            <!-- <div id="userOptionModalFooter" class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div> -->
         </div>
     </div>
 </div>

@@ -51,7 +51,6 @@ Recipes
 
             <div class="col-12 col-md-12 d-flex flex-column gap-2 align-items-center content-item">
                 <p class="form-label content-label">Añadir / Eliminar</p>
-                <!-- <label for="add-ingredient">Añadir</label><label for="remove-ingredient">Eliminar</label> -->
                 <a tabindex="0" class="btn btn-primary color-btn" id="add-ingredient" name="add-ingredient" title="Añadir" onclick="addIngredient()">Añadir</a>
                 <a tabindex="0" class="btn btn-primary color-btn" id="remove-ingredient" name="remove-ingredient" title="Eliminar" onclick="removeIngredient()">Eliminar</a>
             </div>

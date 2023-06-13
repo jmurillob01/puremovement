@@ -51,10 +51,6 @@
                 <!-- Crear lista desplegable con opciones de cuenta, solo con sesión iniciada -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul id="navbar-nav" class="navbar-nav">
-                        <!-- Ya sea iniciar como cerrar sesión -->
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Sesión</a>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -100,7 +96,6 @@
     <!-- Script plantillas -->
     @yield('scripts')
 
-    <!-- <script src="{{url('js/principal.js')}}" type="module"></script>  -->
 </body>
 
 </html>

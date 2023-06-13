@@ -6,8 +6,7 @@ login
 
 @section('content')
 <div id="access-content" class="container">
-    <!-- Hay que cambiar el action action="{{route('user.store')}}" -->
-    <form name="fLoginUser" id="login-form" class="form row" method="POST" action="{{route('user.checkUserLogin')}}"> <!-- class = was-validated -->
+    <form name="fLoginUser" id="login-form" class="form row" method="POST" action="{{route('user.checkUserLogin')}}">
         @csrf
 
         <div class="col-12">
