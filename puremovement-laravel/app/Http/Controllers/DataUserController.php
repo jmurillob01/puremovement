@@ -91,7 +91,7 @@ class DataUserController extends Controller
         $id = $_POST['id'];
 
         try {
-            $queryResult = DataUserModel::where('id_user', $id)->take(10)->get();
+            $queryResult = DataUserModel::where('id_user', $id)->orderBy('date', 'desc')->take(10)->get();
             echo json_encode($queryResult);
         } catch (\Throwable $th) {
             echo json_encode($error);

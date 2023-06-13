@@ -140,7 +140,7 @@ class RecipeController extends Controller
     public function update(Request $request, RecipeModel $recipeModel)
     {
         $request->validate([ // Mostrar los datos si no es válido
-            'name' => 'required|regex:/^[a-zA-Z0-9 ]{2,50}$/'
+            'name' => 'required|regex:/^[a-zA-Z0-9 áéíóú]{2,50}$/'
         ]);
 
         try{

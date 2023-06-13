@@ -56,8 +56,10 @@ class IngredientController extends Controller
                         $picture = base64_encode($pictureBin); // Codifica el archivo a formato base 64
                     }
 
+                    $name = ucfirst(strtolower($request->name));
+
                     IngredientModel::create([
-                        'name' => $request->name,
+                        'name' => $name,
                         'fats_100g' => $request->fats_100g,
                         'proteins_100g' => $request->proteins_100g,
                         'carbs_100g' => $request->carbs_100g,

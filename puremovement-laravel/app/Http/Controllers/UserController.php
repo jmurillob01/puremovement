@@ -54,9 +54,11 @@ class UserController extends Controller
         try {
             if ($this->getUserExistence($request->id, $request->phone, $request->email) == 0) {
                 try {
+
+                    $id = strtolower($request->id);
                     // $user = new UserModel($request->id,  Crypt::encryptString($request->password), $request->name, $request->lastname1, $request->lastname2, $request->phone, $request->email);
                     UserModel::create([
-                        'id' => $request->id,
+                        'id' => $id,
                         'password' => sha1($request->password),
                         'name' => $request->name,
                         'lastname1' => $request->lastname1,
