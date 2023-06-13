@@ -4,14 +4,11 @@ html {
 }
 
 body {
-    /* background: rgb(145, 142, 221);
-    background: radial-gradient(circle, rgba(145, 142, 221, 1) 0%, rgba(192, 192, 244, 1) 100%); */
     background-color: white !important;
 }
 
 /* No es buena práctica pero no me deja sobreescribir el color del nav */
 #navbar-navbar {
-    /* background-color: #eeeded; */
     background-color: white !important;
 }
 
@@ -32,17 +29,12 @@ body {
 
 .navbar-buttom {
     border: 0px;
-    /* background-color: #eeeded; */
     background-color: white;
 }
 
 .nav-custom-buttons:hover {
     cursor: pointer;
 }
-
-/* .bi-person-circle{
-    font-size:33px;
-} */
 
 .carousel-item img {
     width: 100%;
