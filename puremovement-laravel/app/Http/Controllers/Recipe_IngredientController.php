@@ -22,24 +22,11 @@ class Recipe_IngredientController extends Controller
      */
     public function create(Recipe_IngredientModel $Recipe_IngredientModel)
     {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // try{
-        //     Recipe_IngredientModel::create([
-
-        //     ]);
-        // }catch(MyCustomException $cus){
-
-        // }
-    }
-
-    /**
-     * 
      */
     public function customStore(Request $request)
     {

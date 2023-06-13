@@ -6,15 +6,8 @@ use App\Models\UserModel;
 use Illuminate\Http\Request;
 use App\Exceptions\MyCustomException;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Exception;
-use GuzzleHttp\Promise\Promise;
-use Illuminate\Support\Facades\Crypt;
 
-// require_once '../../../vendor/autoload.php';
 session_start();
-
 
 class UserController extends Controller
 {
@@ -56,7 +49,6 @@ class UserController extends Controller
                 try {
 
                     $id = strtolower($request->id);
-                    // $user = new UserModel($request->id,  Crypt::encryptString($request->password), $request->name, $request->lastname1, $request->lastname2, $request->phone, $request->email);
                     UserModel::create([
                         'id' => $id,
                         'password' => sha1($request->password),
@@ -119,7 +111,7 @@ class UserController extends Controller
      */
     public function update(Request $request, UserModel $userModel)
     {
-        $request->validate([ // Mostrar los datos si no es válido
+        $request->validate([
             'id' => 'required|regex:/^[a-zA-Z0-9_]{4,20}$/',
             'name' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
             'lastname1' => 'required|regex:/^[ a-zA-Záéíóúäëïöüàèìòù]{3,20}$/',
@@ -149,7 +141,6 @@ class UserController extends Controller
 
             echo json_encode("Borrado correctamente");
         } catch (\Throwable $th) {
-            // Se debería devolver error
             echo json_encode("");
         }
     }
@@ -242,8 +233,6 @@ class UserController extends Controller
 
         sleep(1);
 
-        // TODO : Eliminar de la ruta ?form="register"
-
         return view($view);
     }
 
@@ -252,7 +241,6 @@ class UserController extends Controller
         ($_GET['type']) ? $type = $_GET['type'] : $type = '';
         ($_GET['message']) ? $message = $_GET['message'] : $message = '';
 
-        // return view('access_register');
         return redirect("/user/register")->with($type, $message);
     }
 

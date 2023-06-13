@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\DataUserModel;
 use App\Exceptions\MyCustomException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DataUserController extends Controller
 {
@@ -119,13 +118,10 @@ class DataUserController extends Controller
 
             $data = $this->show($user);
 
-            // Iniciar transacción
-            // DB::beginTransaction();
-
             if (count($data) == 0) { // No hay datos
                 $okey = $this -> store($user);
             }else{ // Hay datos
-                $today = $this->checkToday($data); // Comprobar
+                $today = $this->checkToday($data);
 
                 if($today){ // Si hay registros de hoy
                     $user -> id = $data[0]["id"];
@@ -135,20 +131,15 @@ class DataUserController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            // return redirect()->route('data_user.viewPrincipal', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
             return redirect()->route('data_user.viewPrincipal', ["type" => "error", "message" => $th->getMessage()]);
         }
 
         return redirect()->route('data_user.viewPrincipal');
-
-        // Borrar una vez terminado el mensaje
-        // if($okey){
-        //     return redirect()->route('data_user.viewPrincipal', ["type" => "success", "message" => "Dato registrado"]);
-        // }else{
-        //     return redirect()->route('data_user.viewPrincipal', ["type" => "error", "message" => "error"]);
-        // }
     }
 
+    /**
+     * Comprobamos el día de hoy
+     */
     public function checkToday($data){
         date_default_timezone_set('Europe/Amsterdam');
 
@@ -157,6 +148,9 @@ class DataUserController extends Controller
         return $date == $today;
     }   
 
+    /**
+     * Devolvemos a la vista principal
+     */
     public function viewPrincipal()
     {
         (isset($_GET['type'])) ? (($_GET['type']) ? $type = $_GET['type'] : $type = '') : $type = '';

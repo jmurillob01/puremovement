@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IngredientModel;
 use App\Exceptions\MyCustomException;
-use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-use function GuzzleHttp\Promise\all;
 
 class IngredientController extends Controller
 {
@@ -41,7 +37,6 @@ class IngredientController extends Controller
             'kcal_100g' => 'required',
         ]);
         try {
-            // TODO : Se podría hacer una comprobación por nombre, y mostrar un mensaje de alerta
             if ($this->checkNameIngredient($request->name) == 0) {
                 try {
 
@@ -75,7 +70,6 @@ class IngredientController extends Controller
             }
         } catch (\Throwable $th) {            
             return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => "Ha ocurrido un error con el servidor, pongase en contacto con un administrador"]);
-            // return redirect()->route('ingredients.account_createIngredients', ["type" => "error", "message" => $CUE->getMessage()]);
         }
     }
 
@@ -89,6 +83,9 @@ class IngredientController extends Controller
         return $ingredient;
     }
 
+    /**
+     * Obtenemos el ingrediente
+     */
     public function getIngredients()
     {
         $id = $_POST['id'];
@@ -135,6 +132,9 @@ class IngredientController extends Controller
         }
     }
 
+    /**
+     * Obtener ingrediente por nombre
+     */
     public function indexIngredientsLike()
     {
         $error = ['data' => false];
@@ -148,6 +148,9 @@ class IngredientController extends Controller
         }
     }
 
+    /**
+     * Feedback
+     */
     public function account_createIngredients()
     {
         ($_GET['type']) ? $type = $_GET['type'] : $type = '';
@@ -156,6 +159,9 @@ class IngredientController extends Controller
         return redirect("/account/admin/create/ingredients")->with($type, $message);
     }
 
+    /**
+     * Listado de todos los ingredientes
+     */
     public function getAllIngredients(){
         try {
             $queryResult = IngredientModel::select('id', 'name')->get();
@@ -165,6 +171,9 @@ class IngredientController extends Controller
         }
     }
 
+    /**
+     * Comprobar nombre del ingrediente
+     */
     public function checkNameIngredient($name){
         $response = 0;
         

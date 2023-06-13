@@ -7,10 +7,6 @@ use App\Models\Recipe_IngredientModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\MyCustomException;
-use App\Models\IngredientModel;
-use PhpParser\Node\Stmt\TryCatch;
-
-use function GuzzleHttp\Promise\all;
 
 class RecipeController extends Controller
 {
@@ -38,9 +34,6 @@ class RecipeController extends Controller
         $request->validate([ // Mostrar los datos si no es válido
             'name' => 'required|regex:/^[a-zA-Z0-9 ]{2,50}$/'
         ]);
-
-        // dd($request->all());
-        // Comprobar que al menos tengamos un ingrediente
 
         if ($this->validateSelectedIngredients($request->selected_Ingredients)) {
 
@@ -119,6 +112,9 @@ class RecipeController extends Controller
         return $recipe;
     }
 
+    /**
+     * Ver recetas de usuario
+     */
     public function showLastRecipeByUserID($id_user)
     {
         $recipe = RecipeModel::where('id_user', '=', $id_user)->orderBy('id', 'desc')->take(1)->get()->toArray();
@@ -170,7 +166,6 @@ class RecipeController extends Controller
 
             echo json_encode("Borrado correctamente");
         } catch (\Throwable $th) {
-            // Se debería devolver error
             echo json_encode("");
         }
     }
@@ -190,13 +185,15 @@ class RecipeController extends Controller
         return $response;
     }
 
+    /**
+     * Calcular KCal
+     */
     public function calculateKcal($select)
     {
 
         $total_Kcal = 0;
 
         foreach ($select as $key => $value) {
-            // dd($select);
             $ingredient = new IngredientController();
 
             $result = $ingredient->show($value);
@@ -207,6 +204,9 @@ class RecipeController extends Controller
         return $total_Kcal;
     }
 
+    /**
+     * Devolver vistas
+     */
     public function viewCreateRecipe()
     {
         ($_GET['type']) ? $type = $_GET['type'] : $type = '';
@@ -215,6 +215,9 @@ class RecipeController extends Controller
         return redirect("/account/create/recipes")->with($type, $message);
     }
 
+    /**
+     * Devolver vistas
+     */
     public function viewUpdateRecipe()
     {
         ($_GET['type']) ? $type = $_GET['type'] : $type = '';
@@ -223,6 +226,9 @@ class RecipeController extends Controller
         return redirect("/account/myRecipes")->with($type, $message);
     }
 
+    /**
+     * Mostrar 10 recetas
+     */
     public function recipesLikeName_limit10()
     {
         $error = ['data' => false];
@@ -237,10 +243,12 @@ class RecipeController extends Controller
         } catch (\Throwable $th) {
             // echo json_encode($error);
         }
-        // echo json_encode($name);
-        // dd($name);
+
     }
 
+    /**
+     * Mostrar 10 recetas de usuario
+     */
     public function recipesLikeName_limit10_user()
     {
         $error = ['data' => false];
@@ -255,10 +263,11 @@ class RecipeController extends Controller
         } catch (\Throwable $th) {
             // echo json_encode($error);
         }
-        // echo json_encode($name);
-        // dd($name);
     }
 
+    /**
+     * Mostrar receta
+     */
     public function showRecipe()
     {
         $id = $_POST['id'];
