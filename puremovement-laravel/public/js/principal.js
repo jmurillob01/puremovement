@@ -3,7 +3,7 @@
 import MessageException from "/js/class/messageException.js";
 
 (function checkSession() {
-    redirectUrl(); // Testear
+    redirectUrl(); 
 
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
@@ -27,14 +27,21 @@ import MessageException from "/js/class/messageException.js";
     }
 }())
 
+/**
+ * Sin sesión
+ */
 function withoutSession() {
     let divFather = document.getElementById('div-graphic-calculate-buttons');
 
     displayForm(divFather);
     displayTableForm(divFather);
     displayRegisterButton(divFather)
-
 }
+
+/**
+ * Mostramos el formulario
+ * @param {*} divFather 
+ */
 function displayForm(divFather) {
     let container = document.createElement("div");
 
@@ -76,14 +83,20 @@ function displayForm(divFather) {
     divFather.appendChild(container);
 }
 
+/**
+ * Ocultamos el botón
+ */
 function disableButtonNav(){
     document.getElementById("navbar-toggler").style.display = "none";
 }
 
+/**
+ * Mostramos la tabla de información
+ * @param {*} divFather 
+ */
 function displayTableForm(divFather) {
     let container = document.createElement("div");
 
-    // Se tiene que poder de otra forma, mirar ejercicio del cubo que se mueve
     container.setAttribute("id", "div-calculate");
     container.setAttribute("class", "col-10 col-md-4");
 
@@ -119,6 +132,10 @@ function displayTableForm(divFather) {
     divFather.appendChild(container);
 }
 
+/**
+ * Habilitar botón de registro
+ * @param {*} divFather 
+ */
 function displayRegisterButton(divFather) {
     let container = document.createElement("div");
 
@@ -135,6 +152,9 @@ function displayRegisterButton(divFather) {
     divFather.appendChild(container);
 }
 
+/**
+ * Calcular IMC
+ */
 function calculateImc() {
     let calculate = document.getElementById("calculate-imc");
 
@@ -163,12 +183,14 @@ function calculateImc() {
             // Pintamos el valor en el formulario
             showResultImc(result);
 
-            // Eliminamos el formulario de datos
-            // document.getElementById("div-calculate").remove();
         }
     });
 }
 
+/**
+ * Validamos información
+ * @returns boolean
+ */
 function validateImcData() {
     let weight = document.getElementById("user-weight").value;
     let height = document.getElementById("user-height").value;
@@ -221,6 +243,10 @@ function validateImcData() {
     return (validHeight && validWeight) ? true : false;
 }
 
+/**
+ * Mostramos resultados IMC
+ * @param {*} result 
+ */
 function showResultImc(result) {
 
     let divfather = document.getElementById("form-calculate-imc");
@@ -237,6 +263,9 @@ function showResultImc(result) {
     divfather.appendChild(container);
 }
 
+/**
+ * Borramos datos
+ */
 function clearResultImc() {
     try {
         let deleteContainer = document.getElementById("user-imc");
@@ -248,6 +277,9 @@ function clearResultImc() {
     }
 }
 
+/**
+ * Creamos cuenta
+ */
 function createAccount() {
     let button = document.getElementById("redirect-register");
     button.addEventListener("click", redirect => {
@@ -255,6 +287,9 @@ function createAccount() {
     });
 }
 
+/**
+ * Contenedor del canvas
+ */
 function canvasContainer() {
     let container = document.createElement("div");
     let main = document.getElementsByTagName("main")[0];
@@ -273,6 +308,11 @@ function canvasContainer() {
     main.appendChild(container);
 }
 
+/**
+ * Creamos gráfico
+ * @param {*} data_user 
+ * @param {*} labels 
+ */
 function createChart(data_user, labels) {
 
     data_user = data_user.reverse();
@@ -306,6 +346,9 @@ function createChart(data_user, labels) {
     });
 }
 
+/**
+ * Datos del usuario
+ */
 function userDataStats() {
     let searchData = new FormData();
     let id = sessionStorage.getItem("id");
@@ -314,15 +357,12 @@ function userDataStats() {
     var labels = [];
     var data_user = [];
 
-    // let token = document.querySelector('meta[name="csrf-token"]').content;
-
     try {
         fetch('/userDataStats', {
             method: 'post',
             headers: {
                 'url': '/userDataStats',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                // "X-CSRF-Token": document.querySelector('input[name=_token]').value
             },
             body: searchData
         }).then((response) => {
@@ -347,19 +387,13 @@ function userDataStats() {
                     labels.unshift(0);
                 }
             }
-            // console.log(data_user);
-            // console.log(labels);
-
-            // Datos a fuego, borrar
-            // data_user = [50, 55, 50, 55, 50, 55, 55, 55, 55, 65]
-            // labels = ['2023-05-15', '2023-05-17', '2023-05-18', '2023-05-19', '2023-05-20', '2023-05-21', '2023-05-22', '2023-05-23', '2023-05-24', '2023-05-25']
             createChart(data_user, labels);
         }).catch((error) => {
             data_user = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             labels = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'];
             createChart(data_user, labels);
 
-            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+            // console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
         console.error(error);
@@ -399,6 +433,10 @@ function userDataForm() {
     container.appendChild(div_form);
 }
 
+/**
+ * Contenedor de recetas
+ * @param {*} id 
+ */
 function createContainerRecipes(id){
     let main = document.getElementsByTagName("main")[0];
 

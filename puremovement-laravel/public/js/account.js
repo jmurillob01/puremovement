@@ -3,17 +3,12 @@
 (function checkSession() {
     if (window.sessionStorage) { // El navegador soporta almacenamiento de sesión.
         if (sessionStorage.getItem("id")) {
-            // if(window.location.pathname == /account/create/recipes){
-            //     window.location.assign('/');
-            // }
             acountAccessNav(sessionStorage.getItem("id"));
             toggleNavButtons();
             getIngredientsBackEnd();
         } else {
             window.location.assign('/');
         }
-    } else { // El navegador no soporta el almacenamiento de sesión.
-        // Mandar excepción y bloquear la función de inicio de sesión.
     }
 }())
 
@@ -64,6 +59,9 @@ function validateFile(fileInput) {
     }
 }
 
+/**
+ * Mostramos la imagen
+ */
 function displayImg() {
     try {
         let selectFile = document.querySelector("#recipe-image");
@@ -80,6 +78,9 @@ function displayImg() {
     }
 }
 
+/**
+ * Eliminamos la imagen
+ */
 function removeImg() {
     try {
         let image = document.getElementById("img-preview");
@@ -91,18 +92,30 @@ function removeImg() {
     }
 }
 
+/**
+ * Bloqueamos el botón
+ * @param {*} id 
+ */
 function blockBtn(id) {
     let btn = document.getElementById(id);
 
     btn.disabled = true;
 }
 
+/**
+ * Habilitamos el botón
+ * @param {*} id 
+ */
 function enableBtn(id) {
     let btn = document.getElementById(id);
 
     btn.disabled = false;
 }
 
+/**
+ * Feedback de la imagen
+ * @param {*} msg 
+ */
 function imgFeedback(msg) {
     let container = document.getElementById("img-recipe-feedback");
 
@@ -111,11 +124,14 @@ function imgFeedback(msg) {
     `
 }
 
+/**
+ * Obtener ingredientes del servidor
+ * @param {*} search_input 
+ */
 function getIngredientsBackEnd(search_input = "") {
     let search = document.getElementById('search-ingredients');
     let search_criteria = '';
 
-    // search.addEventListener('input', event => {
     (search_input != "") ? search_criteria = search_input.value : search_criteria = "";
 
     let searchData = new FormData();
@@ -146,6 +162,10 @@ function getIngredientsBackEnd(search_input = "") {
     }
 }
 
+/**
+ * Mostramos los resultados
+ * @param {*} data 
+ */
 function showResults(data) {
 
     try{
@@ -167,6 +187,10 @@ function showResults(data) {
     
 }
 
+/**
+ * Eliminamos resultados
+ * @param {*} select 
+ */
 function removeResults(select) {
     try {
         while (select.childElementCount > 0) {
@@ -178,6 +202,9 @@ function removeResults(select) {
 
 }
 
+/**
+ * Añadimos ingredientes
+ */
 function addIngredient() {
     let select_origin = document.getElementById("all-ingredients");
     let select_destination = document.getElementById("selected-ingredients");
@@ -207,6 +234,9 @@ function addIngredient() {
     }
 }
 
+/**
+ * Eliminamos ingrediente
+ */
 function removeIngredient() {
     let select_destination = document.getElementById("selected-ingredients");
     let list = {};
@@ -227,6 +257,9 @@ function removeIngredient() {
     }
 }
 
+/**
+ * Submit
+ */
 function submitFormRecipe() {
 
     let select_destination = document.getElementById("selected-ingredients");

@@ -140,9 +140,4 @@ function showFeedBack(input, valid, message) {
     if (!valid) { parent.appendChild(divFeedback.appendChild(messageNode)); }
 }
 
-/**
- * La idea es al cargar la página cargar esta función con patrón IIFE, la función tendrá eventlistener que se ejecutarán al hacer lo contrario que focus. Cuando el puntero se quite hará la función de validación respectiva 
- * Hacer un control para determinar el nombre del formulario, y en base a ese formulario llamar a una función o a otra, porq dará error si el form no tiene esos input
- * Ver que hacemos con el segundo apellido, obligatorio o no
- */
 

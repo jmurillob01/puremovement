@@ -12,6 +12,11 @@ function throwModalWarning(message, btn) {
     btn.setAttribute("data-bs-toggle", "modal");
 }
 
+/**
+ * Modal de advertencia
+ * @param {*} message 
+ * @param {*} btn 
+ */
 function throwModalWarningDelete(message, btn) {
     let header = document.getElementById("warningModalLabel");
     header.innerHTML = (message.header);
@@ -43,6 +48,9 @@ function acountAccessNav(id) {
     navMenu.appendChild(li);
 }
 
+/**
+ * Habilitar botón nav
+ */
 function toggleNavButtons() {
     let closeBtn = document.getElementById("close-session");
     let recipeBtn = document.getElementById("make-recipes");
@@ -68,20 +76,33 @@ function redirectUrl() {
     }
 }
 
+/**
+ * Cerramos sesión
+ */
 function closeSession() {
     sessionStorage.removeItem("id");
 
     window.location.assign("/user/login");
 }
 
+/**
+ * Crear receta
+ */
 function makeRecipe() {
     window.location.assign("/account/create/recipes");
 }
 
+/**
+ * Receta de usuario
+ */
 function userRecipe() {
     window.location.assign("/account/myRecipes");
 }
 
+/**
+ * Obtener recetas del servidor
+ * @param {*} search_input 
+ */
 function getRecipesBackEnd(search_input = "") {
     let search_criteria = '';
 
@@ -99,24 +120,24 @@ function getRecipesBackEnd(search_input = "") {
             body: searchData
         }).then((response) => {
             if (!response.ok) {
-                // // No se han obtenido datos
-                // throw new Error("Network response was not OK");
-                console.log("No hay recetas con ese nombre");
+                // console.log("No hay recetas con ese nombre");
             }
-            // console.log(response);
             return response.json();
         }).then((data) => {
             // Función para pintar los resultados en el select
             showRecipes(data);
-            // showResults(data);
         }).catch((error) => {
-            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+            // console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
         console.error(error);
     }
 }
 
+/**
+ * Recetas servidor de usuarios
+ * @param {*} search_input 
+ */
 function getRecipesBackEndUser(search_input = "") {
     let search_criteria = '';
     let id = document.getElementById("user-recipes").innerHTML;
@@ -137,18 +158,14 @@ function getRecipesBackEndUser(search_input = "") {
             body: searchData
         }).then((response) => {
             if (!response.ok) {
-                // // No se han obtenido datos
-                // throw new Error("Network response was not OK");
-                console.log("No hay recetas con ese nombre");
+                // console.log("No hay recetas con ese nombre");
             }
-            // console.log(response);
             return response.json();
         }).then((data) => {
             // Función para pintar los resultados en el select
             showRecipesUser(data);
-            // showResults(data);
         }).catch((error) => {
-            console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+            // console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
         })
     } catch (error) {
         console.error(error);
@@ -170,13 +187,15 @@ function toggleRecipes(id_container) {
                 <input type="search" name="search-ingredients" id="search-ingredients"class="recipe-search-label" oninput="getRecipesBackEnd(this)">
             </div>
         `);
-
-        // father.appendChild(recipes_container);
     } catch (error) {
         console.error(error);
     }
 }
 
+/**
+ * Habilitamos recetas de usuario
+ * @param {*} id_container 
+ */
 function toggleRecipesUser(id_container) {
     try {
         let father = document.getElementById(id_container);
@@ -192,6 +211,10 @@ function toggleRecipesUser(id_container) {
     }
 }
 
+/**
+ * Mostrar recetas
+ * @param {*} json_recipes 
+ */
 function showRecipes(json_recipes) {
     let father = document.getElementById("recipes-container");
 
@@ -199,7 +222,6 @@ function showRecipes(json_recipes) {
         father.lastChild.remove();
     }
     let recipes_cont = document.createElement("div");
-    // father.innerHTML = ("");
     recipes_cont.className = ("container m-auto mt-5 row");
 
     for (let row in json_recipes) {
@@ -214,11 +236,8 @@ function showRecipes(json_recipes) {
         if (obj.picture == null) {
             picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}' height="250px"></img>`
         } else {
-            // picture = obj.picture;
             picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name} height="250px"'></img>`
-            // Hay que decodificar o mejor traerla desde el servidor ? No hace falta, solo es mostrar
         }
-        // <img src="${picture}" class="card-img-top" alt="${obj.name}">
         uniqueRecipe.innerHTML = (`
         <div class="card" style="width: 18rem;">
             ${picture_input}
@@ -238,6 +257,10 @@ function showRecipes(json_recipes) {
     father.appendChild(recipes_cont);
 }
 
+/**
+ * Mostrar receta usuario
+ * @param {*} json_recipes 
+ */
 function showRecipesUser(json_recipes) {
     let father = document.getElementById("recipes-container");
     let recipes_cont = document.createElement("div");
@@ -264,13 +287,10 @@ function showRecipesUser(json_recipes) {
         uniqueRecipe.id = (obj.id);
         uniqueRecipe.className = ("d-flex justify-content-center col-6 col-md-4 mb-5");
 
-        // Comprobar si tiene imagen, si no hay se pone una por defecto
         if (obj.picture == null) {
             picture_input = `<img src='../src/image_unavailable.jpg' class='card-img-top' alt='${obj.name}'></img>`
         } else {
-            // picture = obj.picture;
             picture_input = `<img src='data:image/jpg;base64,${obj.picture}' class='card-img-top' alt='${obj.name}'></img>`
-            // Hay que decodificar o mejor traerla desde el servidor ? No hace falta, solo es mostrar
         }
 
         uniqueRecipe.innerHTML = (`
@@ -353,7 +373,7 @@ function showRecipesUser(json_recipes) {
                         // Refrescar página
                         location.reload();
                     }).catch((error) => {
-                        console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
+                        // console.error("Error fetch: ", error); // Mensaje a futuro -> Como uso el mismo script, salta excepción porque no tiene los parámetros necesarios
                     })
                 } catch (error) {
                     console.error(error);
@@ -373,7 +393,6 @@ function showRecipesUser(json_recipes) {
         btnView.setAttribute("data-bs-target", "#viewRecipeModal");
         btnView.setAttribute("data-bs-toggle", "modal");
 
-        // Poner directamente la función sin arrow
         btnView.addEventListener("click", myFunc => {
             recipeContentModal(message)
         });
@@ -391,13 +410,16 @@ function showRecipesUser(json_recipes) {
         btnUpdate.setAttribute("data-bs-target", "#updateRecipeModal");
         btnUpdate.setAttribute("data-bs-toggle", "modal");
 
-        // Poner directamente la función sin arrow
         btnUpdate.addEventListener("click", myFunc => {
             recipeContentModalUpdate(message);
         });
     }
 }
 
+/**
+ * Modal con el contenido de la receta
+ * @param {*} message 
+ */
 function recipeContentModal(message) {
     let header = document.getElementById("viewRecipeModalLabel");
     header.innerHTML = (message.header);
@@ -414,6 +436,10 @@ function recipeContentModal(message) {
     if (footer.childElementCount > 1) { footer.lastChild.remove() };
 }
 
+/**
+ * Modal actualización receta
+ * @param {*} message 
+ */
 function recipeContentModalUpdate(message){
     let header = document.getElementById("updateRecipeModalLabel");
     header.innerHTML = (message.header);
@@ -429,6 +455,13 @@ function recipeContentModalUpdate(message){
     if (footer.childElementCount > 1) { footer.lastChild.remove() }; // Eliminamos el botón de modificar datos
 }
 
+/**
+ * Obtenemos la receta
+ * @param {*} message 
+ * @param {*} bodyModal 
+ * @param {*} option 
+ * @returns 
+ */
 function getRecipeByIdFetch(message, bodyModal, option) {
     let id = message.id.split('-')[2]; // Id de la receta
     let searchData = new FormData();
@@ -460,6 +493,11 @@ function getRecipeByIdFetch(message, bodyModal, option) {
     })
 }
 
+/**
+ * Ver el contenido de la receta
+ * @param {*} data 
+ * @param {*} body 
+ */
 function viewContentRecipe(data, body) {
     let content = document.createElement("div");
     content.className = "container";
@@ -501,6 +539,11 @@ function viewContentRecipe(data, body) {
     body.appendChild(content);
 }
 
+/**
+ * Ingredientes de recetas
+ * @param {*} data 
+ * @param {*} content 
+ */
 function appendRecipesIngredients(data, content) {
 
     let containerIngredients = document.createElement("div");
@@ -553,6 +596,11 @@ function appendRecipesIngredients(data, content) {
     content.appendChild(containerIngredients);
 }
 
+/**
+ * Actualizar contenido
+ * @param {*} data 
+ * @param {*} body 
+ */
 function updateContentRecipe(data, body){
     let content = document.createElement("div");
     let token = document.querySelector("meta[name='csrf-token']").content;
@@ -592,6 +640,9 @@ function updateContentRecipe(data, body){
     body.appendChild(content);
 }
 
+/**
+ * Footer del usuario
+ */
 function footerUser(){
     let recipes = document.getElementById("recipes-container-user");
     let footer = document.getElementsByTagName("footer")[0];

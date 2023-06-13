@@ -5,7 +5,6 @@ class MessageException{
     #message;
 
     constructor(header, message){
-        // Hay que controlar que el mensaje que se pasa sea correcto
         this.#header = header;
         this.#message = message;
     }
