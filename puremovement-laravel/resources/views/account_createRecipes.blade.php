@@ -27,7 +27,7 @@ Recipes
         
 
         <div class="col-12 col-md-6 content-item d-flex justify-content-center">
-            <img id="img-preview" class="content-item-img" width="280" height="220"></img>
+            <img id="img-preview" class="content-item-img" src="{{url('src/image_unavailable.jpg')}}" alt="Imagen Receta" width="280" height="220">
         </div>
 
 
@@ -52,8 +52,8 @@ Recipes
             <div class="col-12 col-md-12 d-flex flex-column gap-2 align-items-center content-item">
                 <p class="form-label content-label">Añadir / Eliminar</p>
                 <!-- <label for="add-ingredient">Añadir</label><label for="remove-ingredient">Eliminar</label> -->
-                <a tabindex="0" class="btn btn-primary" id="add-ingredient" name="add-ingredient" title="Añadir" onclick="addIngredient()">Añadir</a>
-                <a tabindex="0" class="btn btn-primary" id="remove-ingredient" name="remove-ingredient"title="Eliminar"  onclick="removeIngredient()">Eliminar</a>
+                <a tabindex="0" class="btn btn-primary color-btn" id="add-ingredient" name="add-ingredient" title="Añadir" onclick="addIngredient()">Añadir</a>
+                <a tabindex="0" class="btn btn-primary color-btn" id="remove-ingredient" name="remove-ingredient" title="Eliminar" onclick="removeIngredient()">Eliminar</a>
             </div>
 
             <div class="col-12 col-md-12 content-item">
@@ -62,7 +62,7 @@ Recipes
             </div>
         </div>
         <div id="recipe-submit" class="mb-3">
-            <button class="btn btn-primary" type="submit" id="make-recipe" onclick=submitFormRecipe()>Crear Receta</button>
+            <button class="btn btn-primary color-btn" type="submit" id="make-recipe" onclick=submitFormRecipe()>Crear Receta</button>
         </div>
     </form>
 </div>

@@ -274,6 +274,10 @@ function canvasContainer() {
 }
 
 function createChart(data_user, labels) {
+
+    data_user = data_user.reverse();
+    labels = labels.reverse();
+
     const ctx = document.getElementById('myChart');
     Chart.defaults.font.size=10;
     new Chart(ctx, {
@@ -387,7 +391,7 @@ function userDataForm() {
         </div>
 
         <div id="access-submit" class="mb-3 col-12 col-md-12 d-flex justify-content-around">
-            <button id="calculate-imc" class="btn btn-primary" type="submit">Registrar</button>
+            <button id="calculate-imc" class="btn btn-primary color-btn" type="submit">Registrar</button>
         </div>
     </form>
     `);

@@ -1,16 +1,13 @@
 "use strict";
 
 (function iife() {
-
-    // Funciones administrador
-    // Crear dos botones, uno para redirigir a los ingredientes
-    // Otro botón para gestionar usuarios
-
+    // Comprobamos si el usuario es administrador o no
     checkAdmin();
 
     // Botón común para ajustar datos de cuenta
     getRecipesBackEndUser("");
 
+    // Habilitamos las recetas del usuario
     toggleRecipesUser("recipes-container", true);
 }());
 
@@ -18,10 +15,10 @@ function adminButtons(id_father) {
     let fatherContent = document.getElementById(id_father);
 
     fatherContent.innerHTML = (`
-        <button id="account-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar cuenta</button>
-        <button id="users-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar usuarios</button>
-        <button id="create-ingredients" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Crear ingredientes</button>
-        <button id="ingredients-settings" type="button" class="btn btn-primary col-5 col-md-2 m-auto user-btns">Gestionar ingredientes</button>
+        <button id="account-settings" type="button" class="btn btn-primary color-btn col-5 col-md-2 m-auto user-btns">Gestionar cuenta</button>
+        <button id="users-settings" type="button" class="btn btn-primary color-btn col-5 col-md-2 m-auto user-btns">Gestionar usuarios</button>
+        <button id="create-ingredients" type="button" class="btn btn-primary color-btn col-5 col-md-2 m-auto user-btns">Crear ingredientes</button>
+        <button id="ingredients-settings" type="button" class="btn btn-primary color-btn col-5 col-md-2 m-auto user-btns">Gestionar ingredientes</button>
         `);
 }
 
@@ -60,7 +57,7 @@ function userButtons(id_father) {
     let fatherContent = document.getElementById(id_father);
 
     fatherContent.innerHTML = (`
-        <button id="account-settings" type="button" class="btn btn-primary user-option-button col-12 user-btns">Gestionar cuenta</button>
+        <button id="account-settings" type="button" class="btn btn-primary color-btn user-option-button col-12 user-btns">Gestionar cuenta</button>
         `);
 }
 
@@ -183,14 +180,14 @@ function updateMyUserSettings(modal, userId, data) {
 
         <div class="col-12 d-flex justify-content-around mt-3">
             <button type="button" class="btn btn-secondary col-5" data-bs-dismiss="modal">Cancelar</button>
-            <button class="btn btn-primary col-5" type="submit" id="update-recipe">Actualizar Usuario</button>
+            <button class="btn btn-primary col-5 color-btn" type="submit" id="update-user">Actualizar Usuario</button>
         </div>
     </form>
     `);
 }
 
 function getUsersSystem(modal) {
-    // Fetch para obtener los usuarios de la receta
+    // Fetch para obtener los usuarios del sistema
     fetch('/getSystemUsers', {
         method: 'get',
         headers: {
@@ -207,7 +204,7 @@ function getUsersSystem(modal) {
 }
 
 function getIngredientsSystem(modal) {
-    // Fetch para obtener los usuarios de la receta
+    // Fetch para obtener los ingredientes del sistema
     fetch('/getIngredientsSystem', {
         method: 'get',
         headers: {
@@ -223,6 +220,11 @@ function getIngredientsSystem(modal) {
     })
 }
 
+/**
+ * Función para mostrar los usuarios del sistema
+ * @param {*} modal 
+ * @param {*} data 
+ */
 function showUsersSystem(modal, data) {
     modal.header.innerHTML = ("Usuarios del sistema");
     modal.body.innerHTML = (`<table class="table text-center">
@@ -257,8 +259,6 @@ function showUsersSystem(modal, data) {
     let btns = document.getElementsByClassName("delete-users-btns");
 
     for (let btn of btns) {
-
-
 
         btn.addEventListener("click", myFunc => {
 

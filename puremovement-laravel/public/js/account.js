@@ -22,7 +22,6 @@ function validateFile(fileInput) {
 
     removeImg(); // Eliminamos una posible imagen
 
-    // TODO : Condición para validar solo si tiene una imágen y eliminar feedback
     // Método para deshabilitar el botón 
     blockBtn("make-recipe");
 
@@ -43,12 +42,13 @@ function validateFile(fileInput) {
         let lastPoint = imgName.lastIndexOf('.');
     
         if (firstPoint != lastPoint) {
-            imgFeedback("El nombre de la imagen no es válido")
+            removeImg();
+            imgFeedback("El nombre de la imagen no es válido");
         } else {
             let aux = imgName.split('.');
             aux = aux[aux.length - 1];
     
-            if (allowedExtensions.includes(aux)) { // TODO: Comprobar porque el botón está bloqueado, donde salta exc
+            if (allowedExtensions.includes(aux)) {
                 displayImg();
                 imgFeedback("");
                 enableBtn("make-recipe");
@@ -56,7 +56,6 @@ function validateFile(fileInput) {
                 imgFeedback("");
                 enableBtn("make-recipe");
             }else {
-                console.log(imgName);
                 imgFeedback("Extensión no válida");
             }
         }
@@ -71,16 +70,11 @@ function displayImg() {
         let imgFile = (selectFile.files)[0];
     
         let objectUrl = URL.createObjectURL(imgFile);
-    
-        // let container = document.getElementById("recipe-header");
-    
+        
         let image = document.getElementById("img-preview");
     
-        // TODO: Optimizar
         image.src = (objectUrl);
-    
-        // container.appendChild(image);
-        
+            
     } catch (error) {
         
     }
@@ -88,12 +82,12 @@ function displayImg() {
 
 function removeImg() {
     try {
-        let image = document.getElementById("recipe-img");
+        let image = document.getElementById("img-preview");
         let container = image.parentElement;
 
-        container.removeChild(image);
+        image.src = "/src/image_unavailable.jpg";
     } catch (error) {
-
+        // console.error(error);
     }
 }
 

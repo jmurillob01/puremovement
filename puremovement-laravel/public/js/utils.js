@@ -560,12 +560,11 @@ function updateContentRecipe(data, body){
     let obj = data[0];
     content.className = "container";
 
-    // Cambiar action por ruta fasilito
     content.innerHTML = (`
     <form name="fUpdateRecipe" id="updateRecipe-form" class="row" action="/updateRecipe" method="POST">
         <input type="hidden" name="_token" value="${token}" />
 
-        <div class="col-12 col-md-12 row">
+        <div class="col-12 row d-flex justify-content-center m-auto">
             <div class="col-12 col-md-6 content-item">
                 <label for="recipe-id" class="form-label content-label">Id receta</label>
                 <input type="text" class="form-control content-item-name" id="recipe-id" name="id" title="Id de tu receta" value="${obj.id}" readonly="readonly">
@@ -573,7 +572,7 @@ function updateContentRecipe(data, body){
 
             <div class="col-12 col-md-6 content-item">
                 <label for="recipe-name" class="form-label content-label">Nombre</label>
-                <input type="text" class="form-control content-item-name" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" value="${obj.name}" pattern="^[a-zA-Z0-9 ]{2,50}$" required>
+                <input type="text" class="form-control content-item-name" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" value="${obj.name}" pattern="^[a-zA-Z0-9 áéíóú]{2,50}$" required>
             </div>
             
             <div class="col-12 col-md-12 content-item">
@@ -582,9 +581,11 @@ function updateContentRecipe(data, body){
             </div>
         </div>
 
-        <button class="btn btn-primary col-4" type="submit" id="update-recipe">Actualizar Receta</button>
-        <button type="button" class="btn btn-secondary col-4" data-bs-dismiss="modal">Cancelar</button>
-    </form>
+        <div class="col-12 d-flex justify-content-around mt-3">
+        <button type="button" class="btn btn-secondary col-5" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary col-5 color-btn" type="submit" id="update-recipe">Actualizar Receta</button>
+        </div>
+        </form>
     `);
 
     // Añadimos contenido al modal
@@ -595,9 +596,12 @@ function footerUser(){
     let recipes = document.getElementById("recipes-container-user");
     let footer = document.getElementsByTagName("footer")[0];
     if (recipes.childElementCount == 0 && screen.width > 500) {
-        footer.style.marginTop = "270px";
+        let height = (screen.height / 3 + 120) + "px";
+        footer.style.marginTop = height
+    }else if(screen.width > 500){
+        let height = screen.height / 5 + "px";
+        footer.style.marginTop = height
     }else if(recipes.childElementCount == 0 && screen.width < 500){
         footer.style.marginTop = "70px";
     }
-    console.log(screen.width);
 }

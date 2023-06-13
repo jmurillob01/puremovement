@@ -183,7 +183,19 @@ footer {
     }
 
     .btn-recipes{
-        width: 95px;
-        margin: 5px;
+        width: 100px;
+        margin: 1px;
     }
+}
+
+.color-btn{
+    background-color: rgb(13,202,240);
+    border-color: rgb(13,202,240);
+    color: #000000;
+}
+
+.color-btn:hover{
+    background-color: rgb(58, 209, 240);
+    border-color: rgb(58, 209, 240);
+    color: #000000;
 }

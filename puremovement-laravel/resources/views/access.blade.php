@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access - @yield('title')</title>
+    <link rel="icon" type="image/jpg" href="{{url('src/logo.png')}}"/>
 
     <!-- links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -42,7 +43,7 @@
 
         <hr class="access-hr col-10 col-md-6">
 
-        <div class="col-12 col-md-8 container">
+        <div class="col-10 col-md-6 container mt-3">
             @if (Session::get('error'))
             <div class="alert alert-danger">
                 <strong>{{Session::get('error')}}</strong><br>
@@ -50,7 +51,7 @@
             @endif
         </div>
 
-        <div class="col-12 col-md-8 container">
+        <div class="col-10 col-md-6 container  mt-3">
             @if (Session::get('success'))
             <div class="alert alert-success">
                 <strong>{{Session::get('success')}}</strong><br>
