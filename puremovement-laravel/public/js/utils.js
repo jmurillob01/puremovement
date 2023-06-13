@@ -504,9 +504,12 @@ function viewContentRecipe(data, body) {
 
     let obj = data[0];
 
+    let desc;
+    (obj.description == null) ? desc = " ": desc = obj.description;
+
     content.innerHTML = (`
         <b>Nombre: </b> ${obj.name} <br>
-        <b>Descripción: </b> ${obj.description} <br>
+        <b>Descripción: </b> ${desc} <br>
         <b>Calorías totales: </b> ${obj.total_calories} <br>
         <b>Id receta: </b> ${obj.id} <br>
         <b>Ingredientes: </b>
@@ -608,6 +611,9 @@ function updateContentRecipe(data, body){
     let obj = data[0];
     content.className = "container";
 
+    let desc;
+    (obj.description == null) ? desc = " " : desc =  obj.description;
+
     content.innerHTML = (`
     <form name="fUpdateRecipe" id="updateRecipe-form" class="row" action="/updateRecipe" method="POST">
         <input type="hidden" name="_token" value="${token}" />
@@ -625,7 +631,7 @@ function updateContentRecipe(data, body){
             
             <div class="col-12 col-md-12 content-item">
                 <label for="recipe-description" class="form-label content-label">Descripción</label>
-                <textarea rows="5" class="form-control" id="recipe-description" name="description" title="Descripción para tu receta" placeholder="Descripción de la receta" value="${obj.description}"></textarea>
+                <textarea rows="5" class="form-control" id="recipe-description" name="description" title="Descripción para tu receta" placeholder="Descripción de la receta">${desc}</textarea>
             </div>
         </div>
 

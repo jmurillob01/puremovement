@@ -43,7 +43,7 @@ Ingredientes
 
         <div class="col-6 col-md-6 content-item">
             <label for="ingredient-kcal" class="form-label">Kcal</label>
-            <input type="number" class="form-control" id="ingredient-kcal" name="kcal_100g" title="kcal del ingrediente mayor a 0 y menor a 100" placeholder="25" step="0.01" min="0" max="100" required>
+            <input type="number" class="form-control" id="ingredient-kcal" name="kcal_100g" title="kcal del ingrediente mayor a 0 y menor a 100" placeholder="25" step="0.01" min="0" max="500" required>
         </div>
 
         <div id="recipe-submit" class="mt-3 mb-5">
