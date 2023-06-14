@@ -32,7 +32,7 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $request->validate([ // Mostrar los datos si no es válido
-            'name' => 'required|regex:/^[a-zA-Z0-9 ]{2,50}$/'
+            'name' => 'required|regex:/^[a-zA-Z0-9 áéíóú]{2,50}$/'
         ]);
 
         if ($this->validateSelectedIngredients($request->selected_Ingredients)) {

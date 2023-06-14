@@ -16,7 +16,7 @@ Recipes
         <div class="col-12 col-md-6">
             <div class="col-12 col-md-12 content-item">
                 <label for="recipe-name" class="form-label content-label">Nombre</label>
-                <input type="text" class="form-control content-item-name" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" pattern="^[a-zA-Z0-9 ]{2,50}$" required>
+                <input type="text" class="form-control content-item-name" id="recipe-name" name="name" title="Nombre para tu receta" placeholder="Nombre de la receta" pattern="^[a-zA-Z0-9 áéíóú]{2,50}$" required>
             </div>
             
             <div class="col-12 col-md-12 content-item">
