@@ -47,7 +47,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <button tabindex="1" class="navbar-brand navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+                
+                <div class="navbar-brand">
+                    <img class="logo" src="{{url('src/logo.png')}}" alt="logo-puremovement">
+                    <button tabindex="1" class="navbar-buttom" onclick="window.location.assign('/')">Puremovement</button>
+                </div>
+
                 <!-- Crear lista desplegable con opciones de cuenta, solo con sesión iniciada -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul id="navbar-nav" class="navbar-nav">
