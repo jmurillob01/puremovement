@@ -653,7 +653,7 @@ function footerUser(){
     let recipes = document.getElementById("recipes-container-user");
     let footer = document.getElementsByTagName("footer")[0];
     if (recipes.childElementCount == 0 && screen.width > 500) {
-        let height = (screen.height / 3 + 120) + "px";
+        let height = (screen.height / 2 + 200) + "px";
         footer.style.marginTop = height
     }else if(screen.width > 500){
         let height = screen.height / 5 + "px";
